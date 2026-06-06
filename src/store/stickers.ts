@@ -5,44 +5,46 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 /**
  * Colección de figuritas del usuario (local-first).
- * `owned[n]` = cantidad de figuritas número `n` (0 = no la tengo, >1 = repetidas).
+ * `owned[code]` = cantidad de la figurita `code` (ej. "MEX1"). 0 = no la tengo,
+ * >1 = repetidas.
  */
 interface StickersState {
   version: number;
-  owned: Record<number, number>;
+  owned: Record<string, number>;
   /** Alterna tener/no tener (0 ↔ 1). */
-  toggle: (n: number) => void;
+  toggle: (code: string) => void;
   /** Fija la cantidad exacta (no negativa). */
-  setCount: (n: number, count: number) => void;
-  increment: (n: number) => void;
-  decrement: (n: number) => void;
-  /** Marca un rango como obtenido (1 c/u) sin pisar repetidas existentes. */
-  markRange: (from: number, to: number, owned: boolean) => void;
+  setCount: (code: string, count: number) => void;
+  increment: (code: string) => void;
+  decrement: (code: string) => void;
+  /** Marca un conjunto de códigos como obtenido (1 c/u) sin pisar repetidas. */
+  markCodes: (codes: string[], owned: boolean) => void;
   reset: () => void;
 }
 
 export const useStickersStore = create<StickersState>()(
   persist(
     (set) => ({
-      version: 1,
+      version: 2,
       owned: {},
 
-      toggle: (n) => set((s) => ({ owned: { ...s.owned, [n]: (s.owned[n] ?? 0) > 0 ? 0 : 1 } })),
+      toggle: (code) =>
+        set((s) => ({ owned: { ...s.owned, [code]: (s.owned[code] ?? 0) > 0 ? 0 : 1 } })),
 
-      setCount: (n, count) =>
-        set((s) => ({ owned: { ...s.owned, [n]: Math.max(0, Math.floor(count)) } })),
+      setCount: (code, count) =>
+        set((s) => ({ owned: { ...s.owned, [code]: Math.max(0, Math.floor(count)) } })),
 
-      increment: (n) => set((s) => ({ owned: { ...s.owned, [n]: (s.owned[n] ?? 0) + 1 } })),
+      increment: (code) => set((s) => ({ owned: { ...s.owned, [code]: (s.owned[code] ?? 0) + 1 } })),
 
-      decrement: (n) =>
-        set((s) => ({ owned: { ...s.owned, [n]: Math.max(0, (s.owned[n] ?? 0) - 1) } })),
+      decrement: (code) =>
+        set((s) => ({ owned: { ...s.owned, [code]: Math.max(0, (s.owned[code] ?? 0) - 1) } })),
 
-      markRange: (from, to, owned) =>
+      markCodes: (codes, owned) =>
         set((s) => {
           const next = { ...s.owned };
-          for (let i = from; i <= to; i++) {
-            if (owned) next[i] = Math.max(1, next[i] ?? 0);
-            else next[i] = 0;
+          for (const code of codes) {
+            if (owned) next[code] = Math.max(1, next[code] ?? 0);
+            else next[code] = 0;
           }
           return { owned: next };
         }),
@@ -51,10 +53,16 @@ export const useStickersStore = create<StickersState>()(
     }),
     {
       name: 'm26-stickers',
-      version: 1,
+      version: 2,
       skipHydration: true,
       storage: createJSONStorage(() => localStorage),
       partialize: (s) => ({ version: s.version, owned: s.owned }),
+      // v1 usaba claves numéricas (índices 1..N), incompatibles con los códigos
+      // oficiales (MEX1, FWC1, …): se descarta la colección vieja.
+      migrate: (_persisted, version) => {
+        if (version < 2) return { version: 2, owned: {} } as Partial<StickersState>;
+        return _persisted as Partial<StickersState>;
+      },
     },
   ),
 );

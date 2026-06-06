@@ -97,19 +97,29 @@ export function validateData(): string[] {
       );
   }
 
-  // Figuritas: secciones contiguas que cubren 1..total sin huecos ni solapamientos.
-  let cursor = 1;
-  const ordered = [...stickerAlbum.sections].sort((a, b) => a.from - b.from);
-  for (const s of ordered) {
-    if (s.from !== cursor)
-      issues.push(`Figuritas: hueco/solapamiento en sección "${s.title}" (esperaba ${cursor}).`);
-    if (s.to < s.from) issues.push(`Figuritas: rango inválido en "${s.title}".`);
-    cursor = s.to + 1;
+  // Figuritas: códigos únicos en todo el álbum y total base = 980.
+  const allCodes = stickerAlbum.sections.flatMap((s) => s.codes);
+  if (new Set(allCodes).size !== allCodes.length)
+    issues.push('Figuritas: hay códigos duplicados.');
+  for (const s of stickerAlbum.sections) {
+    if (s.codes.length === 0) issues.push(`Figuritas: sección "${s.title}" sin códigos.`);
   }
-  if (cursor - 1 !== stickerAlbum.total)
-    issues.push(
-      `Figuritas: el total (${stickerAlbum.total}) no coincide con las secciones (${cursor - 1}).`,
-    );
+  const baseCount = stickerAlbum.sections
+    .filter((s) => s.kind !== 'promo')
+    .reduce((n, s) => n + s.codes.length, 0);
+  if (baseCount !== stickerAlbum.total)
+    issues.push(`Figuritas: el total base (${stickerAlbum.total}) no coincide con las secciones (${baseCount}).`);
+  if (stickerAlbum.total !== 980)
+    issues.push(`Figuritas: se esperaban 980 del set base, hay ${stickerAlbum.total}.`);
+  const teamSections = stickerAlbum.sections.filter((s) => s.kind === 'team');
+  if (teamSections.length !== 48)
+    issues.push(`Figuritas: se esperaban 48 secciones de equipo, hay ${teamSections.length}.`);
+  for (const s of teamSections) {
+    if (s.codes.length !== 20)
+      issues.push(`Figuritas: la selección "${s.title}" tiene ${s.codes.length} (esperaba 20).`);
+    if (s.teamId && !teamsById[s.teamId])
+      issues.push(`Figuritas: sección de equipo desconocido "${s.teamId}".`);
+  }
 
   return issues;
 }

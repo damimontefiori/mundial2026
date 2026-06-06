@@ -156,22 +156,23 @@ export interface StandingRow {
 
 // ── Figuritas ────────────────────────────────────────────────────────────
 
-export type StickerKind = 'special' | 'team' | 'legend' | 'stadium' | 'badge';
+export type StickerKind = 'special' | 'team' | 'legend' | 'promo';
 
 export interface StickerSection {
   id: string;
   title: string;
   kind: StickerKind;
-  /** Primer número de figurita (inclusive). */
-  from: number;
-  /** Último número de figurita (inclusive). */
-  to: number;
+  /**
+   * Códigos oficiales de las figuritas de la sección, en orden de álbum.
+   * Ej: `['00','FWC1',…]`, `['MEX1',…,'MEX20']`. Ver `src/data/stickers.ts`.
+   */
+  codes: string[];
   /** Cuando kind === 'team', referencia al equipo. */
   teamId?: string;
 }
 
 export interface StickerAlbum {
-  /** Total de figuritas del álbum. */
+  /** Total de figuritas del **set base** (no incluye la promo Coca-Cola). */
   total: number;
   sections: StickerSection[];
 }

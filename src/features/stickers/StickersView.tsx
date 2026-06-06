@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useRef, useState } from 'react';
-import { stickerAlbum } from '@/data/stickers';
+import { stickerAlbum, baseStickerCodes } from '@/data/stickers';
 import { cn } from '@/lib/cn';
 import { useStickersStore } from '@/store/stickers';
 import { PageHeader } from '@/components/PageHeader';
@@ -10,35 +10,36 @@ import { SearchIcon } from '@/components/icons';
 
 type Mode = 'have' | 'addRepe' | 'subRepe';
 
+/** Todos los códigos del álbum (incluida la promo), para la búsqueda. */
+const allCodes = stickerAlbum.sections.flatMap((s) => s.codes);
+
 function Cell({
-  n,
+  code,
   count,
-  mode,
   highlighted,
   onAct,
 }: {
-  n: number;
+  code: string;
   count: number;
-  mode: Mode;
   highlighted: boolean;
-  onAct: (n: number) => void;
+  onAct: (code: string) => void;
 }) {
   const owned = count > 0;
   return (
     <button
-      id={`fig-${n}`}
-      onClick={() => onAct(n)}
+      id={`fig-${code}`}
+      onClick={() => onAct(code)}
       aria-pressed={owned}
-      aria-label={`Figurita ${n}${owned ? ', la tengo' : ', me falta'}${count > 1 ? `, ${count} repetidas` : ''}`}
+      aria-label={`Figurita ${code}${owned ? ', la tengo' : ', me falta'}${count > 1 ? `, ${count} repetidas` : ''}`}
       className={cn(
-        'relative flex aspect-square items-center justify-center rounded-lg border text-sm font-semibold transition-colors',
+        'relative flex aspect-square items-center justify-center rounded-lg border text-xs font-bold transition-colors',
         owned
           ? 'border-primary bg-primary text-primary-foreground'
           : 'border-border bg-card text-muted-foreground hover:bg-muted',
         highlighted && 'ring-2 ring-accent ring-offset-2 ring-offset-background',
       )}
     >
-      {n}
+      {code}
       {count > 1 ? (
         <span className="absolute -right-1 -top-1 rounded-full bg-accent px-1 text-[0.6rem] font-bold text-accent-foreground">
           ×{count}
@@ -53,45 +54,45 @@ export function StickersView() {
   const toggle = useStickersStore((s) => s.toggle);
   const increment = useStickersStore((s) => s.increment);
   const decrement = useStickersStore((s) => s.decrement);
-  const markRange = useStickersStore((s) => s.markRange);
+  const markCodes = useStickersStore((s) => s.markCodes);
 
   const [mode, setMode] = useState<Mode>('have');
   const [onlyMissing, setOnlyMissing] = useState(false);
   const [search, setSearch] = useState('');
-  const [highlight, setHighlight] = useState<number | null>(null);
+  const [highlight, setHighlight] = useState<string | null>(null);
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Progreso sobre el set base (980), sin contar la promo Coca-Cola.
   const stats = useMemo(() => {
-    const total = stickerAlbum.total;
+    const total = baseStickerCodes.length;
     let have = 0;
     let repes = 0;
-    for (let n = 1; n <= total; n++) {
-      const c = owned[n] ?? 0;
+    for (const code of baseStickerCodes) {
+      const c = owned[code] ?? 0;
       if (c > 0) have += 1;
       if (c > 1) repes += c - 1;
     }
     return { total, have, missing: total - have, repes };
   }, [owned]);
 
-  const act = (n: number) => {
-    if (mode === 'have') toggle(n);
-    else if (mode === 'addRepe') increment(n);
-    else decrement(n);
+  const act = (code: string) => {
+    if (mode === 'have') toggle(code);
+    else if (mode === 'addRepe') increment(code);
+    else decrement(code);
   };
 
   const onSearch = (value: string) => {
     setSearch(value);
-    const n = parseInt(value, 10);
     if (searchTimer.current) clearTimeout(searchTimer.current);
-    if (!Number.isNaN(n) && n >= 1 && n <= stickerAlbum.total) {
-      searchTimer.current = setTimeout(() => {
-        setHighlight(n);
-        document
-          .getElementById(`fig-${n}`)
-          ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        setTimeout(() => setHighlight(null), 1800);
-      }, 250);
-    }
+    const q = value.trim().toUpperCase();
+    if (!q) return;
+    searchTimer.current = setTimeout(() => {
+      const match = allCodes.find((c) => c === q) ?? allCodes.find((c) => c.startsWith(q));
+      if (!match) return;
+      setHighlight(match);
+      document.getElementById(`fig-${match}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => setHighlight(null), 1800);
+    }, 250);
   };
 
   return (
@@ -104,10 +105,7 @@ export function StickersView() {
             <div>
               <p className="text-2xl font-bold">
                 {stats.have}
-                <span className="text-base font-medium text-muted-foreground">
-                  {' '}
-                  / {stats.total}
-                </span>
+                <span className="text-base font-medium text-muted-foreground"> / {stats.total}</span>
               </p>
               <p className="text-sm text-muted-foreground">
                 {Math.round((stats.have / stats.total) * 100)}% del álbum
@@ -125,11 +123,10 @@ export function StickersView() {
           <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
           <input
             type="search"
-            inputMode="numeric"
             value={search}
             onChange={(e) => onSearch(e.target.value)}
-            placeholder="Buscar figurita por número…"
-            className="h-11 w-full rounded-xl border border-border bg-card pl-10 pr-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            placeholder="Buscar por código (ej. MEX1, FWC1, CC3)…"
+            className="h-11 w-full rounded-xl border border-border bg-card pl-10 pr-3 text-base uppercase outline-none placeholder:normal-case focus-visible:ring-2 focus-visible:ring-ring"
           />
         </div>
 
@@ -160,14 +157,13 @@ export function StickersView() {
 
       <div className="space-y-5 px-4 pb-6">
         {stickerAlbum.sections.map((section) => {
-          const numbers: number[] = [];
-          for (let n = section.from; n <= section.to; n++) {
-            if (!onlyMissing || (owned[n] ?? 0) === 0) numbers.push(n);
-          }
-          let sectionHave = 0;
-          for (let n = section.from; n <= section.to; n++)
-            if ((owned[n] ?? 0) > 0) sectionHave += 1;
-          const sectionTotal = section.to - section.from + 1;
+          const visible = section.codes.filter(
+            (code) => !onlyMissing || (owned[code] ?? 0) === 0,
+          );
+          const sectionHave = section.codes.filter((code) => (owned[code] ?? 0) > 0).length;
+          const sectionTotal = section.codes.length;
+          const firstCode = section.codes[0];
+          const lastCode = section.codes[section.codes.length - 1];
 
           return (
             <section key={section.id}>
@@ -175,18 +171,18 @@ export function StickersView() {
                 <div className="min-w-0">
                   <h2 className="truncate font-bold">{section.title}</h2>
                   <p className="tabular text-xs text-muted-foreground">
-                    #{section.from}–{section.to} · {sectionHave}/{sectionTotal}
+                    {firstCode}–{lastCode} · {sectionHave}/{sectionTotal}
                   </p>
                 </div>
                 <div className="flex shrink-0 gap-1.5">
                   <button
-                    onClick={() => markRange(section.from, section.to, true)}
+                    onClick={() => markCodes(section.codes, true)}
                     className="rounded-lg border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground hover:bg-muted"
                   >
                     Todas
                   </button>
                   <button
-                    onClick={() => markRange(section.from, section.to, false)}
+                    onClick={() => markCodes(section.codes, false)}
                     className="rounded-lg border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground hover:bg-muted"
                   >
                     Limpiar
@@ -194,19 +190,18 @@ export function StickersView() {
                 </div>
               </div>
 
-              {numbers.length === 0 ? (
+              {visible.length === 0 ? (
                 <p className="rounded-xl border border-dashed border-border px-3 py-4 text-center text-sm text-muted-foreground">
                   ¡Sección completa! 🎉
                 </p>
               ) : (
-                <div className="grid grid-cols-5 gap-1.5 sm:grid-cols-8">
-                  {numbers.map((n) => (
+                <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-6">
+                  {visible.map((code) => (
                     <Cell
-                      key={n}
-                      n={n}
-                      count={owned[n] ?? 0}
-                      mode={mode}
-                      highlighted={highlight === n}
+                      key={code}
+                      code={code}
+                      count={owned[code] ?? 0}
+                      highlighted={highlight === code}
                       onAct={act}
                     />
                   ))}

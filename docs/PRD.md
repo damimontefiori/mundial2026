@@ -66,4 +66,4 @@ Extras incluidos (sin recargar la experiencia): equipo favorito destacado, expor
   ver `DATA_SOURCES.md` para fuentes y proceso de actualización.
 - **Asignación de terceros**: se implementa una regla determinística sin revancha de grupo; si la
   FIFA publica una tabla específica, se ajusta el dataset (es data-driven).
-- **Figuritas**: numeración de ejemplo; se ajusta a la oficial cuando esté disponible.
+- **Figuritas**: numeración **oficial** del álbum Panini (set base 980, códigos `MEX1`, `FWC1`, …).

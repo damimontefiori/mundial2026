@@ -41,8 +41,9 @@ muestran con `@/lib/dates`.
 ### Figuritas — `stickers.ts`
 
 `StickerAlbum { total, sections: StickerSection[] }`, con
-`StickerSection { id, title, kind, from, to, teamId? }`. Las secciones cubren `1..total` sin huecos
-ni solapamientos (validado).
+`StickerSection { id, title, kind, codes: string[], teamId? }`. Numeración **oficial por código**
+(no secuencial): `00`, `FWC1`, `MEX1`, `CC3`… `total` = set base (980); las secciones de equipo
+llevan 20 códigos (`XXX1`–`XXX20`). Validado: códigos únicos, 980 base, 48×20.
 
 ## 2) Estado local (`src/store`, Zustand + persist)
 
@@ -61,7 +62,7 @@ Persistido en `localStorage`. Cada store tiene `version` para migraciones.
 ### `stickers` (`m26-stickers`)
 
 ```ts
-{ version: number; owned: Record<StickerNumber, number> } // cantidad (0 = falta, >1 = repetidas)
+{ version: number; owned: Record<StickerCode, number> } // "MEX1" → cantidad (0 = falta, >1 = repe)
 ```
 
 ### `preferences` (`m26-preferences`)

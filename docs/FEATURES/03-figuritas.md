@@ -7,23 +7,25 @@ cuántas **repetidas** tiene.
 
 ## Alcance
 
-- **Grilla del álbum** por secciones (especiales, estadios, 48 equipos, leyendas).
+- **Grilla del álbum** por secciones (apertura `00`/`FWC1-8`, 48 equipos, Museo FIFA, promo Coca-Cola).
 - **Marcar obtenidas** (tap) y **gestionar repetidas** con los modos: Tengo / ＋Repe / −Repe.
-- **Progreso**: tarjeta con “tenés X de TOTAL”, porcentaje, faltantes y repetidas; barra de progreso.
-- **Buscador por número**: salta y resalta la figurita.
+- **Progreso**: tarjeta con “tenés X de 980”, porcentaje, faltantes y repetidas; barra de progreso.
+- **Buscador por código**: salta y resalta la figurita (ej. `MEX1`, `FWC1`, `CC3`).
 - **Filtro “Solo faltan”**: muestra únicamente lo que falta.
 - **Acciones por sección**: “Todas” (marcar) / “Limpiar”.
 
 ## Dónde está
 
 - UI: `src/features/stickers/StickersView.tsx`.
-- Estado: `src/store/stickers.ts` (`owned: Record<number, cantidad>`).
-- Datos: `src/data/stickers.ts` (`StickerAlbum` con secciones contiguas).
+- Estado: `src/store/stickers.ts` (`owned: Record<código, cantidad>`).
+- Datos: `src/data/stickers.ts` (`StickerAlbum` con secciones de **códigos**).
 
 ## Modelo
 
-- `owned[n]` = cantidad de la figurita `n` (0 = falta, 1 = la tengo, >1 = repetidas).
-- `total`, `have`, `missing` y `repes` se derivan recorriendo `1..total`.
+- Numeración oficial **por código** (no secuencial): `MEX1`, `FWC1`, `00`, `CC3`…
+- `owned[code]` = cantidad de esa figurita (0 = falta, 1 = la tengo, >1 = repetidas).
+- El progreso se calcula sobre el **set base (980)**; la promo Coca-Cola (`CC1-12`) es una sección
+  aparte que no suma al total base.
 
 ## Estados
 
@@ -32,8 +34,9 @@ cuántas **repetidas** tiene.
 
 ## Notas de datos
 
-La numeración es **de ejemplo**. Para usar la oficial de Panini, ajustá `stickers.ts` (cantidad por
-equipo y secciones), manteniendo cobertura `1..total` sin huecos (lo valida `validate.ts`).
+Numeración **oficial verificada** (ver `docs/numeracion_oficial_mundial_2026_VERIFICADA.md`): set base
+980 = `00` + `FWC1-8` (9) + 48×20 selecciones (960) + `FWC9-19` Museo FIFA (11), más promo `CC1-12`.
+`validate.ts` chequea códigos únicos, 980 base y 48 equipos × 20.
 
 ## Futuro
 

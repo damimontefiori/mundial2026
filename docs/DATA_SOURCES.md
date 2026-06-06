@@ -1,9 +1,8 @@
 # Fuentes de datos y cómo actualizarlas
 
-> ✅ **Equipos, grupos y calendario son oficiales.** Provienen del sorteo final de la FIFA
-> (Washington D.C., 5 de diciembre de 2025) y del calendario oficial confirmado tras el sorteo. La
-> **numeración de figuritas** es lo único que sigue siendo de ejemplo, hasta que se publique el
-> listado oficial de Panini.
+> ✅ **Equipos, grupos, calendario y figuritas son oficiales.** Provienen del sorteo final de la FIFA
+> (Washington D.C., 5 de diciembre de 2025), del calendario oficial confirmado tras el sorteo y del
+> checklist oficial del álbum Panini (ver `numeracion_oficial_mundial_2026_VERIFICADA.md`).
 
 ## Qué es oficial y qué es de ejemplo
 
@@ -14,7 +13,7 @@
 | 48 equipos (`teams.ts`)      | ✅ Oficial (sorteo 5/12/2025) | Clasificación oficial FIFA      |
 | Grupos (`groups.ts`)         | ✅ Oficial (sorteo 5/12/2025) | Sorteo oficial                  |
 | 104 partidos (`matches.ts`)  | ✅ Calendario oficial FIFA    | Calendario oficial FIFA         |
-| Figuritas (`stickers.ts`)    | ⚠️ Numeración de ejemplo      | Listado oficial Panini          |
+| Figuritas (`stickers.ts`)    | ✅ Oficial (set base 980)     | Checklist oficial Panini        |
 
 ## Proceso de actualización
 
@@ -24,8 +23,9 @@
 3. **Partidos** → `src/data/matches.ts`. Para la fase de grupos, ajustá fechas/sedes. Para la
    estructura de la llave, mantené los cupos (`groupWinner`, `thirdFrom`, `winnerOf`, …) salvo que
    cambie el formato.
-4. **Figuritas** → `src/data/stickers.ts`. Ajustá `PER_TEAM` y las secciones a la numeración oficial.
-   Las secciones deben cubrir `1..total` sin huecos.
+4. **Figuritas** → `src/data/stickers.ts`. Numeración oficial **por código** (no secuencial). Cada
+   sección tiene `codes: string[]`; las de equipo van `XXX1`–`XXX20`. Fuente:
+   `numeracion_oficial_mundial_2026_VERIFICADA.md`.
 5. **Validá**:
 
    ```bash
@@ -33,7 +33,8 @@
    ```
 
    `src/data/validate.ts` chequea: 48 equipos únicos, 16 sedes, 12 grupos de 4, 104 partidos
-   numerados 1..104, referencias válidas (sedes/equipos/partidos) y figuritas contiguas.
+   numerados 1..104, referencias válidas (sedes/equipos/partidos) y figuritas (códigos únicos, 980
+   del set base, 48 equipos × 20).
 
 ## Asignación de mejores terceros (Dieciseisavos)
 

@@ -5,9 +5,9 @@ PWA mobile-first para vivir el Mundial 2026: **fixture con horarios de Argentina
 faltan. Funciona **sin conexión** y se **instala** como app. Pensada para correr 100% en planes
 gratuitos.
 
-> ✅ **Datos oficiales.** Equipos, grupos y calendario provienen del sorteo oficial de la FIFA
-> (Washington D.C., 5/12/2025). La numeración de figuritas sigue siendo de ejemplo hasta el listado
-> oficial de Panini. Ver [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md).
+> ✅ **Datos oficiales.** Equipos, grupos y calendario del sorteo oficial de la FIFA
+> (Washington D.C., 5/12/2025) y numeración de figuritas del checklist oficial Panini (set base 980).
+> Ver [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md).
 
 ## Funcionalidades
 

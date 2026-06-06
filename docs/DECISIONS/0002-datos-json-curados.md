@@ -22,11 +22,12 @@ integridad (`validate.ts` + Zod) y tests. Sin llamadas de red en la v1.
 ## Consecuencias
 
 - ➕ Gratis, **offline**, rápido y robusto; sin dependencias externas en runtime.
-- ➕ Integridad garantizada por tests (104 partidos, 12×4 equipos, figuritas contiguas).
+- ➕ Integridad garantizada por tests (104 partidos, 12×4 equipos, 980 figuritas con códigos únicos).
 - ➖ Hay que **actualizar a mano** con la info oficial (proceso en `DATA_SOURCES.md`).
 - ➖ No hay resultados en vivo en la v1 (queda como mejora futura con cache + fallback).
 
 ## Notas
 
-Equipos, grupos y calendario son los **oficiales** del sorteo de la FIFA (5/12/2025). La numeración
-de figuritas sigue siendo de ejemplo hasta el listado oficial de Panini (ver `DATA_SOURCES.md`).
+Equipos, grupos y calendario son los **oficiales** del sorteo de la FIFA (5/12/2025) y la numeración
+de figuritas es la del **checklist oficial Panini** (set base 980; ver `DATA_SOURCES.md` y
+`numeracion_oficial_mundial_2026_VERIFICADA.md`).
