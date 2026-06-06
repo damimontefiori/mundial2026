@@ -1,0 +1,9 @@
+.next
+node_modules
+build
+out
+coverage
+public/sw.js
+pnpm-lock.yaml
+package-lock.json
+*.md

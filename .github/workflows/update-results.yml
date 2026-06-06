@@ -1,0 +1,64 @@
+name: Actualizar resultados
+
+# Trae los resultados reales del Mundial y los commitea como public/results.json.
+# El push dispara un redeploy automático en Vercel. El token vive en Secrets, nunca
+# llega al cliente.
+
+on:
+  schedule:
+    # Cada 30 min (UTC). El paso "ventana" lo limita a las fechas del torneo.
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # permite correrlo a mano desde la pestaña Actions
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-results
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ventana del torneo (10/06–20/07/2026)
+        id: window
+        run: |
+          today=$(date -u +%Y-%m-%d)
+          if [[ "$today" < "2026-06-10" || "$today" > "2026-07-20" ]]; then
+            echo "Fuera de la ventana del torneo ($today). Se omite."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.window.outputs.run == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.window.outputs.run == 'true'
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+        if: steps.window.outputs.run == 'true'
+
+      - name: Traer resultados
+        if: steps.window.outputs.run == 'true'
+        env:
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+        run: npm run update:results
+
+      - name: Commit si hubo cambios
+        if: steps.window.outputs.run == 'true'
+        run: |
+          if [[ -n "$(git status --porcelain public/results.json)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add public/results.json
+            git commit -m "chore: actualizar resultados reales [skip ci]"
+            git push
+          else
+            echo "Sin cambios en results.json."
+          fi

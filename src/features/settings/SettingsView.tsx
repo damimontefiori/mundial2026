@@ -1,0 +1,226 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { teamsById } from '@/data/teams';
+import { stickerAlbum } from '@/data/stickers';
+import { cn } from '@/lib/cn';
+import { usePreferencesStore } from '@/store/preferences';
+import { useSimulationStore } from '@/store/simulation';
+import { useStickersStore } from '@/store/stickers';
+import { useHydrated } from '@/lib/useHydrated';
+import { PageHeader } from '@/components/PageHeader';
+import { Button, Card, SegmentedControl } from '@/components/ui';
+import {
+  ChevronRightIcon,
+  DownloadIcon,
+  MonitorIcon,
+  MoonIcon,
+  StarIcon,
+  SunIcon,
+  UsersIcon,
+} from '@/components/icons';
+import { TeamPickerSheet } from '@/features/shared/TeamPickerSheet';
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
+
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="mb-1.5 px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+      {children}
+    </h2>
+  );
+}
+
+export function SettingsView() {
+  const hydrated = useHydrated();
+  const theme = usePreferencesStore((s) => s.theme);
+  const setTheme = usePreferencesStore((s) => s.setTheme);
+  const favoriteId = usePreferencesStore((s) => s.favoriteTeamId);
+  const setFavorite = usePreferencesStore((s) => s.setFavorite);
+  const resetSimulation = useSimulationStore((s) => s.resetAll);
+  const resetStickers = useStickersStore((s) => s.reset);
+
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent | null>(null);
+
+  const favorite = favoriteId ? teamsById[favoriteId] : null;
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setInstallEvent(e as BeforeInstallPromptEvent);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const install = async () => {
+    if (!installEvent) return;
+    await installEvent.prompt();
+    await installEvent.userChoice;
+    setInstallEvent(null);
+  };
+
+  const confirmReset = (message: string, fn: () => void) => {
+    if (window.confirm(message)) fn();
+  };
+
+  return (
+    <>
+      <PageHeader title="Más" subtitle="Ajustes y preferencias" />
+
+      <div className="space-y-6 px-4 py-4">
+        {/* Equipo favorito */}
+        <section>
+          <SectionTitle>Tu equipo</SectionTitle>
+          <Card>
+            <button
+              onClick={() => setPickerOpen(true)}
+              className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left"
+            >
+              <span className="flex items-center gap-3">
+                {hydrated && favorite ? (
+                  <span className="text-2xl">{favorite.flag}</span>
+                ) : (
+                  <StarIcon className="h-6 w-6 text-muted-foreground" />
+                )}
+                <span>
+                  <span className="block font-semibold">
+                    {hydrated && favorite ? favorite.name : 'Elegí tu equipo'}
+                  </span>
+                  <span className="block text-sm text-muted-foreground">
+                    Se destaca en el fixture y la llave
+                  </span>
+                </span>
+              </span>
+              <ChevronRightIcon className="h-5 w-5 text-muted-foreground" />
+            </button>
+          </Card>
+        </section>
+
+        {/* Tema */}
+        <section>
+          <SectionTitle>Apariencia</SectionTitle>
+          <Card className="p-3">
+            <SegmentedControl
+              options={[
+                {
+                  value: 'light',
+                  label: (
+                    <span className="flex items-center justify-center gap-1.5">
+                      <SunIcon className="h-4 w-4" /> Claro
+                    </span>
+                  ),
+                },
+                {
+                  value: 'dark',
+                  label: (
+                    <span className="flex items-center justify-center gap-1.5">
+                      <MoonIcon className="h-4 w-4" /> Oscuro
+                    </span>
+                  ),
+                },
+                {
+                  value: 'system',
+                  label: (
+                    <span className="flex items-center justify-center gap-1.5">
+                      <MonitorIcon className="h-4 w-4" /> Auto
+                    </span>
+                  ),
+                },
+              ]}
+              value={hydrated ? theme : 'system'}
+              onChange={setTheme}
+            />
+          </Card>
+        </section>
+
+        {/* Prode (futuro) */}
+        <section>
+          <SectionTitle>Prode con amigos</SectionTitle>
+          <Card className="flex items-center gap-3 p-4">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent">
+              <UsersIcon className="h-6 w-6" />
+            </div>
+            <div className="min-w-0">
+              <p className="font-semibold">
+                Próximamente{' '}
+                <span className="rounded-full bg-accent/15 px-2 py-0.5 text-xs font-bold text-accent">
+                  Pronto
+                </span>
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Vas a poder crear ligas, invitar amigos y competir con tus pronósticos.
+              </p>
+            </div>
+          </Card>
+        </section>
+
+        {/* Instalar */}
+        {installEvent ? (
+          <section>
+            <SectionTitle>App</SectionTitle>
+            <Card className="p-3">
+              <Button onClick={install} className="w-full">
+                <DownloadIcon className="h-5 w-5" />
+                Instalar en mi teléfono
+              </Button>
+            </Card>
+          </section>
+        ) : null}
+
+        {/* Datos */}
+        <section>
+          <SectionTitle>Mis datos</SectionTitle>
+          <Card className="divide-y divide-border">
+            <button
+              onClick={() =>
+                confirmReset('¿Borrar toda tu simulación de grupos y llave?', resetSimulation)
+              }
+              className="w-full px-4 py-3.5 text-left font-medium text-destructive"
+            >
+              Reiniciar simulación
+            </button>
+            <button
+              onClick={() => confirmReset('¿Borrar tu progreso de figuritas?', resetStickers)}
+              className="w-full px-4 py-3.5 text-left font-medium text-destructive"
+            >
+              Reiniciar figuritas
+            </button>
+          </Card>
+          <p className="mt-2 px-1 text-xs text-muted-foreground">
+            Todo se guarda solo en este dispositivo. No usamos servidores ni cuentas.
+          </p>
+        </section>
+
+        {/* Acerca de */}
+        <section>
+          <SectionTitle>Acerca de</SectionTitle>
+          <Card className="space-y-2 p-4 text-sm text-muted-foreground">
+            <p>
+              <span className="font-semibold text-foreground">Mundial 2026</span> · versión 0.1.0
+            </p>
+            <p>
+              Horarios en hora de Argentina (UTC−3). El álbum tiene {stickerAlbum.total} figuritas.
+            </p>
+            <p>
+              Equipos, grupos y calendario provienen del{' '}
+              <strong>sorteo oficial de la FIFA</strong> (5 de diciembre de 2025). Los resultados los
+              simulás vos.
+            </p>
+          </Card>
+        </section>
+      </div>
+
+      <TeamPickerSheet
+        open={pickerOpen}
+        onClose={() => setPickerOpen(false)}
+        selectedId={favoriteId}
+        onSelect={setFavorite}
+      />
+    </>
+  );
+}
