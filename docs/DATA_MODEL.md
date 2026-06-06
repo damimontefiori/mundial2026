@@ -71,7 +71,25 @@ Persistido en `localStorage`. Cada store tiene `version` para migraciones.
 { version: number; favoriteTeamId: string | null; theme: 'light' | 'dark' | 'system' }
 ```
 
-## 3) Esquema futuro del Prode (Supabase) — diseño, no implementado
+## 3) Sync en la nube (Firebase Firestore) — implementado
+
+Login con Google (opcional) + persistencia del estado propio del usuario. Un único documento por
+usuario, `userState/{uid}`:
+
+```ts
+{
+  stickers: { owned: Record<StickerCode, number> },
+  simulation: { groupResults, knockoutPicks },
+  preferences: { favoriteTeamId },   // el tema NO se sincroniza (es por dispositivo)
+  updatedAt: number                  // Date.now() del cliente → last-write-wins
+}
+```
+
+Security rules: `request.auth.uid == uid` (cada usuario solo su doc). Conflicto: la nube gana en el
+primer enlace; LWW por `updatedAt` después. Ver
+[DECISIONS/0005-firebase-auth-sync.md](DECISIONS/0005-firebase-auth-sync.md) y `src/lib/cloudSync.ts`.
+
+## 4) Esquema futuro del Prode (ligas) — diseño, no implementado
 
 Pensado para mapear desde el estado local. Detalle en
 [FEATURES/04-prode-futuro.md](FEATURES/04-prode-futuro.md).

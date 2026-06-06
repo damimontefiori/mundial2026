@@ -5,6 +5,7 @@ import { usePreferencesStore } from '@/store/preferences';
 import { useSimulationStore } from '@/store/simulation';
 import { useStickersStore } from '@/store/stickers';
 import { useResultsStore } from '@/store/results';
+import { useCloudSync } from '@/hooks/useCloudSync';
 
 function applyTheme(theme: 'light' | 'dark' | 'system'): void {
   const prefersDark =
@@ -28,6 +29,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
     // Resultados reales (archivo estático). Falla en silencio si no existe.
     void useResultsStore.getState().load();
   }, []);
+
+  // Sincronización en la nube (si hay sesión). Se monta después de rehidratar:
+  // el hook solo actúa tras el login, así que el orden con el efecto de arriba
+  // es seguro (ambos corren en el mount del cliente).
+  useCloudSync();
 
   // Tema: aplica y escucha cambios del sistema cuando está en "system".
   useEffect(() => {

@@ -7,6 +7,7 @@ import { cn } from '@/lib/cn';
 import { usePreferencesStore } from '@/store/preferences';
 import { useSimulationStore } from '@/store/simulation';
 import { useStickersStore } from '@/store/stickers';
+import { useAuthStore } from '@/store/auth';
 import { useHydrated } from '@/lib/useHydrated';
 import { PageHeader } from '@/components/PageHeader';
 import { Button, Card, SegmentedControl } from '@/components/ui';
@@ -42,6 +43,20 @@ export function SettingsView() {
   const setFavorite = usePreferencesStore((s) => s.setFavorite);
   const resetSimulation = useSimulationStore((s) => s.resetAll);
   const resetStickers = useStickersStore((s) => s.reset);
+
+  const authStatus = useAuthStore((s) => s.status);
+  const user = useAuthStore((s) => s.user);
+  const syncState = useAuthStore((s) => s.syncState);
+  const signInWithGoogle = useAuthStore((s) => s.signInWithGoogle);
+  const signOut = useAuthStore((s) => s.signOut);
+
+  const handleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+    } catch {
+      // Popup cancelado o bloqueado: no hacemos nada (el usuario puede reintentar).
+    }
+  };
 
   const [pickerOpen, setPickerOpen] = useState(false);
   const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent | null>(null);
@@ -138,6 +153,49 @@ export function SettingsView() {
           </Card>
         </section>
 
+        {/* Cuenta / sincronización */}
+        {authStatus !== 'disabled' ? (
+          <section>
+            <SectionTitle>Cuenta</SectionTitle>
+            {authStatus === 'signedIn' && user ? (
+              <Card className="space-y-3 p-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted">
+                    <UsersIcon className="h-5 w-5 text-muted-foreground" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-semibold">{user.displayName ?? 'Tu cuenta'}</p>
+                    <p className="truncate text-sm text-muted-foreground">{user.email}</p>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {syncState === 'syncing'
+                    ? 'Sincronizando…'
+                    : syncState === 'error'
+                      ? '⚠ Sin conexión — se reintenta al cambiar algo'
+                      : '● Datos sincronizados en tu cuenta'}
+                </p>
+                <Button variant="outline" className="w-full" onClick={() => void signOut()}>
+                  Cerrar sesión
+                </Button>
+              </Card>
+            ) : (
+              <Card className="space-y-3 p-4">
+                <p className="text-sm text-muted-foreground">
+                  Guardá tus figuritas y tu llave en tu cuenta y accedé desde cualquier dispositivo.
+                </p>
+                <Button
+                  className="w-full"
+                  disabled={authStatus === 'loading'}
+                  onClick={handleSignIn}
+                >
+                  Continuar con Google
+                </Button>
+              </Card>
+            )}
+          </section>
+        ) : null}
+
         {/* Prode (futuro) */}
         <section>
           <SectionTitle>Prode con amigos</SectionTitle>
@@ -192,7 +250,9 @@ export function SettingsView() {
             </button>
           </Card>
           <p className="mt-2 px-1 text-xs text-muted-foreground">
-            Todo se guarda solo en este dispositivo. No usamos servidores ni cuentas.
+            {authStatus === 'signedIn'
+              ? 'Tus datos se guardan en tu cuenta de Google y en este dispositivo.'
+              : 'Todo se guarda en este dispositivo. Iniciá sesión para sincronizarlo en tu cuenta.'}
           </p>
         </section>
 

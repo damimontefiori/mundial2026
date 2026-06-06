@@ -1,6 +1,8 @@
 # ADR 0003 — Supabase para el Prode (futuro)
 
-- **Estado**: Propuesta (no implementada en la v1)
+- **Estado**: ⚠️ **Superado por [0005](0005-firebase-auth-sync.md)** para auth + sync (se eligió
+  Firebase, sobre todo porque el free tier de Supabase pausa el proyecto por inactividad). El diseño
+  relacional de abajo queda como referencia para un eventual Prode con ligas.
 - **Fecha**: 2026-06
 
 ## Contexto

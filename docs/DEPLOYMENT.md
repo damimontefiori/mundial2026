@@ -55,14 +55,34 @@ GitHub Actions corre en cada push/PR: `typecheck`, `lint`, `test` y `build`
 > El token vive solo en Secrets (CI), **nunca** como variable de Vercel ni en el cliente.
 > Para probar localmente: `FOOTBALL_DATA_TOKEN=xxx npm run update:results`.
 
-## Futuro: backend del Prode (Supabase)
+## Login con Google + sync en la nube (Firebase)
 
-Cuando se implemente la Fase 6:
+Opcional: sin las env vars, la app funciona 100% local (sin botón de login). Setup gratis (Firebase
+Spark, no se pausa). Ver [DECISIONS/0005-firebase-auth-sync.md](DECISIONS/0005-firebase-auth-sync.md).
 
-1. Crear proyecto en Supabase (free) y aplicar el esquema de
-   [DATA_MODEL.md](DATA_MODEL.md) / [FEATURES/04-prode-futuro.md](FEATURES/04-prode-futuro.md).
-2. Configurar `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` (ver `.env.example`) en
-   Vercel.
-3. Activar RLS y políticas por usuario/liga.
+1. **Firebase Console** → crear proyecto (plan Spark, sin tarjeta).
+2. **Authentication → Sign-in method** → habilitar **Google**.
+3. **Firestore Database** → crear (modo producción) → pegar las security rules:
 
-> Tener en cuenta los límites del free tier (pausa por inactividad, tamaño de base).
+   ```
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       match /userState/{uid} {
+         allow read, write: if request.auth != null && request.auth.uid == uid;
+       }
+     }
+   }
+   ```
+
+4. **Project settings → Your apps → Web** → copiar el config y cargar en Vercel las 4 vars
+   `NEXT_PUBLIC_FIREBASE_*` (Production + Preview + Development; ver `.env.example`).
+5. **Authentication → Settings → Authorized domains** → agregar el dominio de Vercel
+   (`<tu-app>.vercel.app` y/o el custom). `localhost` ya viene autorizado.
+
+> La config web de Firebase es **pública** por diseño: la seguridad la dan las security rules + los
+> dominios autorizados. No usar credenciales de Admin SDK en el cliente.
+
+> El Prode con ligas (futuro) está diseñado en
+> [FEATURES/04-prode-futuro.md](FEATURES/04-prode-futuro.md); si se construye, reevaluar el backend
+> (ver ADR 0005).
