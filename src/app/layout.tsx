@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { BottomNav } from '@/components/BottomNav';
 import { Providers } from '@/components/Providers';
+import { WelcomeGate } from '@/features/onboarding/WelcomeGate';
 
 export const metadata: Metadata = {
   applicationName: 'Mundial 2026',
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main>{children}</main>
           </div>
           <BottomNav />
+          <WelcomeGate />
         </Providers>
       </body>
     </html>

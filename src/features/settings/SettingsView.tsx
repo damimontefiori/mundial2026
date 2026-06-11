@@ -14,6 +14,8 @@ import { Button, Card, SegmentedControl } from '@/components/ui';
 import {
   ChevronRightIcon,
   DownloadIcon,
+  InfoIcon,
+  LinkedInIcon,
   MonitorIcon,
   MoonIcon,
   StarIcon,
@@ -21,6 +23,7 @@ import {
   UsersIcon,
 } from '@/components/icons';
 import { TeamPickerSheet } from '@/features/shared/TeamPickerSheet';
+import { WelcomeSheet } from '@/features/onboarding/WelcomeSheet';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -59,6 +62,7 @@ export function SettingsView() {
   };
 
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
   const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent | null>(null);
 
   const favorite = favoriteId ? teamsById[favoriteId] : null;
@@ -88,6 +92,30 @@ export function SettingsView() {
       <PageHeader title="Más" subtitle="Ajustes y preferencias" />
 
       <div className="space-y-6 px-4 py-4">
+        {/* Guía / cómo funciona */}
+        <section>
+          <SectionTitle>Guía</SectionTitle>
+          <Card>
+            <button
+              onClick={() => setHelpOpen(true)}
+              className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left"
+            >
+              <span className="flex items-center gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent">
+                  <InfoIcon className="h-5 w-5" />
+                </span>
+                <span>
+                  <span className="block font-semibold">¿Cómo funciona?</span>
+                  <span className="block text-sm text-muted-foreground">
+                    Pronósticos, llave y resultados en vivo
+                  </span>
+                </span>
+              </span>
+              <ChevronRightIcon className="h-5 w-5 shrink-0 text-muted-foreground" />
+            </button>
+          </Card>
+        </section>
+
         {/* Equipo favorito */}
         <section>
           <SectionTitle>Tu equipo</SectionTitle>
@@ -271,6 +299,15 @@ export function SettingsView() {
               <strong>sorteo oficial de la FIFA</strong> (5 de diciembre de 2025). Los resultados los
               simulás vos.
             </p>
+            <a
+              href="https://www.linkedin.com/in/damian-montefiori/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 flex items-center gap-2 border-t border-border pt-3 font-medium text-foreground transition-colors hover:text-primary"
+            >
+              <LinkedInIcon className="h-4 w-4 shrink-0 text-[#0a66c2]" />
+              Desarrollado por Damián Montefiori
+            </a>
           </Card>
         </section>
       </div>
@@ -281,6 +318,7 @@ export function SettingsView() {
         selectedId={favoriteId}
         onSelect={setFavorite}
       />
+      <WelcomeSheet open={helpOpen} onClose={() => setHelpOpen(false)} />
     </>
   );
 }

@@ -168,3 +168,20 @@ export const UsersIcon = (p: IconProps) => (
     <path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8" />
   </Base>
 );
+
+/** Información / ayuda: usado por la guía "¿Cómo funciona?". */
+export const InfoIcon = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 16v-4M12 8h.01" />
+  </Base>
+);
+
+/** Logo de LinkedIn (trazo, para que combine con el resto de iconos). */
+export const LinkedInIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </Base>
+);
