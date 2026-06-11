@@ -3,12 +3,14 @@
 import { useMemo } from 'react';
 import type { Match, OfficialResult } from '@/types';
 import type { BracketView } from '@/lib/bracket';
+import type { RatingTable } from '@/lib/predict';
 import { buildBracketColumns } from '@/lib/bracketLayout';
 import { teamsById } from '@/data/teams';
 import { formatShortDate } from '@/lib/dates';
 import { cn } from '@/lib/cn';
 import { useSimulationStore } from '@/store/simulation';
 import { placeholderForSlot } from '@/features/shared/matchDisplay';
+import { ForecastBar } from './Forecast';
 
 /** Una de las dos filas (equipo) dentro de la tarjeta de un cruce. */
 function TeamRow({
@@ -58,6 +60,7 @@ function MatchCell({
   favoriteId,
   locked,
   official,
+  ratings,
   hasLeft,
   hasRight,
 }: {
@@ -66,6 +69,7 @@ function MatchCell({
   favoriteId: string | null;
   locked: Set<string>;
   official: Record<string, OfficialResult>;
+  ratings: RatingTable;
   hasLeft: boolean;
   hasRight: boolean;
 }) {
@@ -125,6 +129,9 @@ function MatchCell({
           clickable={!isLocked && awayId !== null}
           onPick={() => pick(awayId)}
         />
+        {homeId && awayId && !isLocked ? (
+          <ForecastBar ratings={ratings} homeId={homeId} awayId={awayId} className="mt-1 px-1" />
+        ) : null}
       </div>
     </div>
   );
@@ -135,11 +142,13 @@ export function BracketTree({
   favoriteId,
   locked,
   official,
+  ratings,
 }: {
   view: BracketView;
   favoriteId: string | null;
   locked: Set<string>;
   official: Record<string, OfficialResult>;
+  ratings: RatingTable;
 }) {
   const { columns, thirdPlace } = useMemo(() => buildBracketColumns(), []);
 
@@ -164,6 +173,7 @@ export function BracketTree({
                     favoriteId={favoriteId}
                     locked={locked}
                     official={official}
+                    ratings={ratings}
                     hasLeft={colIdx > 0}
                     hasRight={colIdx < columns.length - 1}
                   />
@@ -186,6 +196,7 @@ export function BracketTree({
               favoriteId={favoriteId}
               locked={locked}
               official={official}
+              ratings={ratings}
               hasLeft={false}
               hasRight={false}
             />

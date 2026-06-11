@@ -7,4 +7,5 @@ export * from './venues';
 export * from './groups';
 export * from './matches';
 export * from './stickers';
+export * from './ratings';
 export { validateData } from './validate';

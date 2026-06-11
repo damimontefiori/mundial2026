@@ -134,6 +134,15 @@ export const SearchIcon = (p: IconProps) => (
   </Base>
 );
 
+/** Tendencia/predicción: usado por "Proyectar resultados". */
+export const ForecastIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M3 3v18h18" />
+    <path d="m7 14 4-4 3 3 5-6" />
+    <path d="M19 7h-3M19 7v3" />
+  </Base>
+);
+
 export const CheckIcon = (p: IconProps) => (
   <Base {...p}>
     <path d="M20 6 9 17l-5-5" />

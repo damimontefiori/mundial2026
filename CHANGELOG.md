@@ -11,8 +11,12 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y e
 - **Fixture** con los 104 partidos, horarios de Argentina, filtros por grupo y por equipo favorito,
   detalle de partido y exportación a calendario (`.ics`).
 - **Llave / Simulador**: carga de resultados de grupos, tablas con desempates de FIFA, ranking de
-  mejores terceros, asignación automática a Dieciseisavos y progresión hasta el campeón. Botón
-  “simular todo”.
+  mejores terceros, asignación automática a Dieciseisavos y progresión hasta el campeón.
+- **Simulador predictivo**: el botón “Proyectar resultados” reemplaza al simulador al azar por un
+  modelo de rendimiento (Ataque/Defensa + Poisson para el marcador más probable, Elo para el avance)
+  que **se auto-actualiza con los resultados reales** y muestra el grado de certeza en pantalla.
+  Motor puro y testeado (`src/lib/predict.ts`, `src/data/ratings.ts`); ver
+  [ADR 0006](docs/DECISIONS/0006-prode-predictivo.md).
 - **Figuritas**: grilla del álbum con marcado de obtenidas/repetidas, progreso, buscador por número
   y acciones por sección.
 - **Ajustes**: equipo favorito, tema claro/oscuro/automático, instalación PWA, reinicio de datos.

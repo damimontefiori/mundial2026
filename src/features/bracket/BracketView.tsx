@@ -3,12 +3,13 @@
 import { useMemo, useState } from 'react';
 import { computeBracket } from '@/lib/bracket';
 import { mergeOfficial, hasOfficialResults } from '@/lib/officialResults';
+import { adjustRatingsFromOfficial } from '@/lib/predict';
 import { useSimulationStore } from '@/store/simulation';
 import { useResultsStore } from '@/store/results';
 import { formatShortDate, formatTime } from '@/lib/dates';
 import { PageHeader } from '@/components/PageHeader';
 import { IconButton, SegmentedControl } from '@/components/ui';
-import { DiceIcon, ResetIcon } from '@/components/icons';
+import { ForecastIcon, ResetIcon } from '@/components/icons';
 import { GroupsPanel } from './GroupsPanel';
 import { KnockoutPanel } from './KnockoutPanel';
 
@@ -29,6 +30,9 @@ export function BracketView() {
   );
   const view = useMemo(() => computeBracket(groupResults, picks), [groupResults, picks]);
 
+  // Ratings recalibrados con los resultados reales: alimentan los pronósticos en pantalla.
+  const ratings = useMemo(() => adjustRatingsFromOfficial(official), [official]);
+
   const showOfficial = hasOfficialResults(official);
 
   const handleReset = () => {
@@ -42,8 +46,12 @@ export function BracketView() {
         subtitle="Simulá tu Mundial"
         actions={
           <>
-            <IconButton label="Simular todo al azar" variant="secondary" onClick={() => simulateRest(official)}>
-              <DiceIcon className="h-5 w-5" />
+            <IconButton
+              label="Proyectar resultados (pronóstico del modelo)"
+              variant="secondary"
+              onClick={() => simulateRest(official)}
+            >
+              <ForecastIcon className="h-5 w-5" />
             </IconButton>
             <IconButton label="Reiniciar simulación" onClick={handleReset}>
               <ResetIcon className="h-5 w-5" />
@@ -77,9 +85,9 @@ export function BracketView() {
 
       <div className="mt-3">
         {tab === 'groups' ? (
-          <GroupsPanel results={groupResults} locked={locked} />
+          <GroupsPanel results={groupResults} locked={locked} ratings={ratings} />
         ) : (
-          <KnockoutPanel view={view} locked={locked} official={official} />
+          <KnockoutPanel view={view} locked={locked} official={official} ratings={ratings} />
         )}
       </div>
     </>

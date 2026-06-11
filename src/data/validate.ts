@@ -5,6 +5,7 @@ import { groups } from './groups';
 import { venues, venuesById } from './venues';
 import { matches, matchesById } from './matches';
 import { stickerAlbum } from './stickers';
+import { teamRatings } from './ratings';
 
 /**
  * Validación de integridad de los datasets. Se ejecuta en los tests
@@ -45,6 +46,27 @@ export function validateData(): string[] {
   if (teams.length !== 48) issues.push(`Se esperaban 48 equipos, hay ${teams.length}.`);
   const teamIdSet = new Set(teams.map((t) => t.id));
   if (teamIdSet.size !== teams.length) issues.push('Hay ids de equipo duplicados.');
+
+  // Ratings del modelo predictivo: una entrada por equipo, con valores en rango.
+  for (const t of teams) {
+    const r = teamRatings[t.id];
+    if (!r) {
+      issues.push(`Ratings: falta la línea base del equipo "${t.id}".`);
+      continue;
+    }
+    for (const [k, v] of [
+      ['ovr', r.ovr],
+      ['attack', r.attack],
+      ['defense', r.defense],
+    ] as const) {
+      if (v < 1 || v > 100) issues.push(`Ratings ${t.id}: ${k} fuera de rango (${v}).`);
+    }
+    if (r.fifaPoints <= 0) issues.push(`Ratings ${t.id}: fifaPoints inválido (${r.fifaPoints}).`);
+    if (r.marketValue < 0) issues.push(`Ratings ${t.id}: marketValue inválido (${r.marketValue}).`);
+  }
+  const extraRatings = Object.keys(teamRatings).filter((id) => !teamIdSet.has(id));
+  if (extraRatings.length > 0)
+    issues.push(`Ratings: ids sin equipo correspondiente: ${extraRatings.join(', ')}.`);
 
   // Sedes
   const venueParse = z.array(venueSchema).safeParse(venues);
@@ -99,8 +121,7 @@ export function validateData(): string[] {
 
   // Figuritas: códigos únicos en todo el álbum y total base = 980.
   const allCodes = stickerAlbum.sections.flatMap((s) => s.codes);
-  if (new Set(allCodes).size !== allCodes.length)
-    issues.push('Figuritas: hay códigos duplicados.');
+  if (new Set(allCodes).size !== allCodes.length) issues.push('Figuritas: hay códigos duplicados.');
   for (const s of stickerAlbum.sections) {
     if (s.codes.length === 0) issues.push(`Figuritas: sección "${s.title}" sin códigos.`);
   }
@@ -108,7 +129,9 @@ export function validateData(): string[] {
     .filter((s) => s.kind !== 'promo')
     .reduce((n, s) => n + s.codes.length, 0);
   if (baseCount !== stickerAlbum.total)
-    issues.push(`Figuritas: el total base (${stickerAlbum.total}) no coincide con las secciones (${baseCount}).`);
+    issues.push(
+      `Figuritas: el total base (${stickerAlbum.total}) no coincide con las secciones (${baseCount}).`,
+    );
   if (stickerAlbum.total !== 980)
     issues.push(`Figuritas: se esperaban 980 del set base, hay ${stickerAlbum.total}.`);
   const teamSections = stickerAlbum.sections.filter((s) => s.kind === 'team');

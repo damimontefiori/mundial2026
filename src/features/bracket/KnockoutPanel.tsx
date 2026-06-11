@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { Stage, OfficialResult } from '@/types';
 import type { BracketView } from '@/lib/bracket';
+import type { RatingTable } from '@/lib/predict';
 import { knockoutStageMatches } from '@/data/matches';
 import { teamsById } from '@/data/teams';
 import { formatShortDate, formatTime } from '@/lib/dates';
@@ -14,6 +15,7 @@ import { TrophyIcon } from '@/components/icons';
 import { placeholderForSlot } from '@/features/shared/matchDisplay';
 import type { Match } from '@/types';
 import { BracketTree } from './BracketTree';
+import { ForecastBar } from './Forecast';
 
 const ROUNDS: { key: string; label: string; stages: Stage[] }[] = [
   { key: 'R32', label: '16avos', stages: ['R32'] },
@@ -66,7 +68,9 @@ function TeamPick({
         {label}
       </span>
       {isFavorite ? <span aria-hidden>⭐</span> : null}
-      {goals !== null ? <span className="tabular text-lg font-bold tabular-nums">{goals}</span> : null}
+      {goals !== null ? (
+        <span className="tabular text-lg font-bold tabular-nums">{goals}</span>
+      ) : null}
       {selected && goals === null ? (
         <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-bold text-primary-foreground">
           Pasa
@@ -82,12 +86,14 @@ function MatchPickCard({
   favoriteId,
   isLocked,
   official,
+  ratings,
 }: {
   match: Match;
   view: BracketView;
   favoriteId: string | null;
   isLocked: boolean;
   official?: OfficialResult;
+  ratings: RatingTable;
 }) {
   const setPick = useSimulationStore((s) => s.setPick);
   const clearPick = useSimulationStore((s) => s.clearPick);
@@ -141,6 +147,9 @@ function MatchPickCard({
           onPick={() => pick(awayId)}
         />
       </div>
+      {homeId && awayId && !isLocked ? (
+        <ForecastBar ratings={ratings} homeId={homeId} awayId={awayId} className="mt-2 px-1" />
+      ) : null}
     </div>
   );
 }
@@ -149,10 +158,12 @@ export function KnockoutPanel({
   view,
   locked,
   official,
+  ratings,
 }: {
   view: BracketView;
   locked: Set<string>;
   official: Record<string, OfficialResult>;
+  ratings: RatingTable;
 }) {
   const favoriteId = usePreferencesStore((s) => s.favoriteTeamId);
   const [mode, setMode] = useState<'tree' | 'list'>('tree');
@@ -199,7 +210,13 @@ export function KnockoutPanel({
 
       {mode === 'tree' ? (
         <div className="mt-3">
-          <BracketTree view={view} favoriteId={favoriteId} locked={locked} official={official} />
+          <BracketTree
+            view={view}
+            favoriteId={favoriteId}
+            locked={locked}
+            official={official}
+            ratings={ratings}
+          />
         </div>
       ) : (
         <div className="px-4">
@@ -229,6 +246,7 @@ export function KnockoutPanel({
                 favoriteId={favoriteId}
                 isLocked={locked.has(m.id)}
                 official={official[m.id]}
+                ratings={ratings}
               />
             ))}
           </div>

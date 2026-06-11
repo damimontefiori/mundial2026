@@ -16,7 +16,12 @@ solas y completar la llave hasta el campeón.
   - **Árbol** (default): llave visual en columnas con scroll horizontal y conectores.
   - **Lista**: selector ronda por ronda (mejor para editar en mobile).
 - **Campeón**: banner cuando se define la final.
-- **Atajos**: “Simular todo” (completa lo que falte al azar) y “Reiniciar”.
+- **Atajos**: “Proyectar resultados” (completa lo que falte con el **modelo predictivo**, no al azar:
+  marcador más probable por Ataque/Defensa + Poisson, y ganador proyectado de cada cruce) y “Reiniciar”.
+- **Pronóstico en pantalla**: cada partido sin cargar muestra el marcador proyectado y la confianza;
+  cada cruce de eliminatorias, una barra con la probabilidad de avance de cada lado. El motor se
+  **recalibra con los resultados reales** que se van jugando. Ver
+  [ADR 0006](../DECISIONS/0006-prode-predictivo.md).
 - **Resultados reales** (opcional): si existe `public/results.json` poblado, los partidos
   ya jugados se **autocompletan y quedan bloqueados** (no editables) y vos simulás el resto.
   Ver [DATA_SOURCES.md](../DATA_SOURCES.md#resultados-reales-auto-completado).
@@ -47,9 +52,18 @@ solas y completar la llave hasta el campeón.
 - Picks reversibles: volver a tocar al elegido **deshace** el pick (y limpia las rondas siguientes
   que dependían de él, al recalcular).
 
+## Proyección predictiva
+
+El botón "Proyectar resultados" usa `src/lib/predict.ts` (motor puro): línea base de Ataque/Defensa/Elo
+por selección (`src/data/ratings.ts`), goles esperados por Poisson, marcador más probable y, como
+retroalimentación, recalibra Elo + atributos con cada resultado real jugado. Diseño completo y fórmulas
+en [ADR 0006](../DECISIONS/0006-prode-predictivo.md) y la base teórica en
+[Prode_Rendimiento_Predictivo.md](../Prode_Rendimiento_Predictivo.md).
+
 ## Tests
 
-`src/lib/standings.test.ts` y `src/lib/bracket.test.ts` (ver [TESTING.md](../TESTING.md)).
+`src/lib/standings.test.ts`, `src/lib/bracket.test.ts` y `src/lib/predict.test.ts`
+(ver [TESTING.md](../TESTING.md)).
 
 ## Notas de datos
 

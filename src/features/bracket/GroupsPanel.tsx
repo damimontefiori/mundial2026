@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { GroupId, GroupResult } from '@/types';
 import { GROUP_IDS } from '@/types';
+import type { RatingTable } from '@/lib/predict';
 import { matchesOfGroup } from '@/data/matches';
 import { teamsById } from '@/data/teams';
 import { computeGroupStandings, groupProgress, isGroupComplete } from '@/lib/standings';
@@ -13,6 +14,7 @@ import { useSimulationStore } from '@/store/simulation';
 import { Card } from '@/components/ui';
 import { CheckIcon, MinusIcon, PlusIcon } from '@/components/icons';
 import { StandingsTable } from './StandingsTable';
+import { GroupForecast } from './Forecast';
 
 function Stepper({
   value,
@@ -51,9 +53,11 @@ function Stepper({
 export function GroupsPanel({
   results,
   locked,
+  ratings,
 }: {
   results: Record<string, GroupResult>;
   locked: Set<string>;
+  ratings: RatingTable;
 }) {
   const setGroupResult = useSimulationStore((s) => s.setGroupResult);
   const favoriteId = usePreferencesStore((s) => s.favoriteTeamId);
@@ -176,6 +180,9 @@ export function GroupsPanel({
                   />
                 </div>
               </div>
+              {!result && !isLocked && homeId && awayId ? (
+                <GroupForecast ratings={ratings} homeId={homeId} awayId={awayId} />
+              ) : null}
             </div>
           );
         })}
