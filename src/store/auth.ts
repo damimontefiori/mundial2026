@@ -20,25 +20,6 @@ const errCode = (e: unknown): string =>
 /** Marca (sessionStorage) de que iniciamos un login por redirect, para diagnosticar el retorno. */
 const REDIRECT_FLAG = 'm26-auth-redirect';
 
-/** Si el popup se cierra antes de esto, no fue el usuario: fue el entorno (COOP, PWA). */
-const POPUP_INSTANT_CLOSE_MS = 1200;
-
-/**
- * En móvil y en una PWA instalada (display standalone) el popup de Google suele
- * abrirse y cerrarse solo sin completar el login. Ahí usamos redirect directo.
- */
-function shouldUseRedirect(): boolean {
-  if (typeof window === 'undefined') return false;
-  const ua = navigator.userAgent;
-  const standalone =
-    window.matchMedia?.('(display-mode: standalone)')?.matches === true ||
-    (window.navigator as Navigator & { standalone?: boolean }).standalone === true;
-  const mobile = /Android|iPhone|iPad|iPod/i.test(ua);
-  // iPadOS 13+ se hace pasar por un Mac de escritorio: lo detectamos por el táctil.
-  const iPadAsMac = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
-  return standalone || mobile || iPadAsMac;
-}
-
 /** Códigos donde el popup directamente no se pudo abrir/usar: conviene caer a redirect. */
 const POPUP_UNUSABLE = new Set([
   'auth/popup-blocked',
@@ -113,30 +94,19 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ authError: null });
     const provider = new GoogleAuthProvider();
 
-    // Móvil / PWA instalada: redirect directo (el popup no funciona de forma confiable).
-    if (shouldUseRedirect()) {
-      try {
-        await startRedirect(provider);
-      } catch (err) {
-        set({ authError: friendlyAuthError(errCode(err)) });
-        throw err;
-      }
-      return;
-    }
-
-    // Desktop: popup. Caemos a redirect SOLO si el popup no es viable o se cerró solo.
-    const startedAt = Date.now();
+    // Popup como método PRINCIPAL en todas las plataformas: corre en contexto
+    // first-party con el authDomain, así que funciona aunque el navegador bloquee
+    // cookies de terceros (Android Chrome, desktop, iOS moderno). El redirect, en
+    // cambio, depende de cookies cross-origin con *.firebaseapp.com y hoy suele fallar
+    // en móvil (getRedirectResult vuelve vacío). Solo caemos a redirect si el popup
+    // directamente NO se pudo abrir (bloqueado / entorno no soportado).
     try {
       await signInWithPopup(auth, provider);
     } catch (err) {
       const code = errCode(err);
       // Doble clic: un intento más nuevo canceló a éste; el nuevo sigue su curso.
       if (code === 'auth/cancelled-popup-request') return;
-      // Se cerró tan rápido que no fue el usuario (COOP / PWA de escritorio) → redirect.
-      // Si el usuario lo cerró a propósito (tardó), mostramos el mensaje sin redirigir.
-      const closedInstantly =
-        code === 'auth/popup-closed-by-user' && Date.now() - startedAt < POPUP_INSTANT_CLOSE_MS;
-      if (POPUP_UNUSABLE.has(code) || closedInstantly) {
+      if (POPUP_UNUSABLE.has(code)) {
         try {
           await startRedirect(provider);
           return;
