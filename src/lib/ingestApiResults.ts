@@ -146,6 +146,16 @@ const goalsOf = (score: ApiScoreLite | undefined): { home: number; away: number 
   away: score?.fullTime?.away ?? 0,
 });
 
+/**
+ * ¿La API ya reportó el marcador final? El free tier de football-data.org a veces
+ * marca un partido como FINISHED *antes* de cargar los goles (`fullTime` en null), lo
+ * que publicaría un 0-0 fantasma y bloquearía el partido. Exigimos goles numéricos
+ * para recién entonces publicarlo: en la corrida siguiente, ya con el marcador real,
+ * se completa solo. (Un 0-0 real llega como `{home: 0, away: 0}`, no como null.)
+ */
+const hasGoals = (score: ApiScoreLite | undefined): boolean =>
+  typeof score?.fullTime?.home === 'number' && typeof score?.fullTime?.away === 'number';
+
 const pairKey = (a: string, b: string): string => [a, b].sort().join('|');
 
 const isGroupApiMatch = (m: ApiMatchLite): boolean =>
@@ -176,6 +186,7 @@ export function apiToOfficial(apiMatches: ApiMatchLite[]): Record<string, Offici
     if (!matchId) continue;
     const status = mapStatus(api.status);
     if (!status || status === 'SCHEDULED' || status === 'TIMED') continue;
+    if (!hasGoals(api.score)) continue; // FINISHED/IN_PLAY sin marcador aún: no publicar.
 
     const ours = matchesById[matchId];
     const ourHome = ours.home.kind === 'team' ? ours.home.teamId : null;
@@ -211,6 +222,7 @@ export function apiToOfficial(apiMatches: ApiMatchLite[]): Record<string, Offici
   const emitKnockout = (matchId: string, api: ApiMatchLite, ourHomeId: string | null) => {
     const status = mapStatus(api.status);
     if (!status || status === 'SCHEDULED' || status === 'TIMED') return;
+    if (!hasGoals(api.score)) return; // FINISHED/IN_PLAY sin marcador aún: no publicar.
     const apiHomeId = resolveTeamId(api.homeTeam);
     const apiAwayId = resolveTeamId(api.awayTeam);
     const g = goalsOf(api.score);

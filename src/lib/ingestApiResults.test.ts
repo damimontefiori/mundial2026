@@ -134,6 +134,35 @@ describe('apiToOfficial', () => {
     }
   });
 
+  it('no publica un partido FINISHED sin marcador todavía (lag del free tier)', () => {
+    // La API a veces marca FINISHED antes de cargar los goles (fullTime en null). Eso
+    // no debe publicar un 0-0 fantasma ni bloquear el partido.
+    const m = matchesOfGroup('A').find((x) => x.home.kind === 'team' && x.away.kind === 'team')!;
+    const homeId = m.home.kind === 'team' ? m.home.teamId : '';
+    const awayId = m.away.kind === 'team' ? m.away.teamId : '';
+    const base: ApiMatchLite = {
+      utcDate: m.kickoffUTC,
+      status: 'FINISHED',
+      stage: 'GROUP_STAGE',
+      group: 'GROUP_A',
+      homeTeam: { tla: homeId },
+      awayTeam: { tla: awayId },
+      score: { winner: null, fullTime: { home: null, away: null } },
+    };
+    expect(apiToOfficial([base])[m.id]).toBeUndefined();
+
+    // En cambio, un 0-0 legítimo (goles numéricos) sí se publica y se bloquea.
+    const withScore: ApiMatchLite = {
+      ...base,
+      score: { winner: 'DRAW', fullTime: { home: 0, away: 0 } },
+    };
+    expect(apiToOfficial([withScore])[m.id]).toEqual({
+      homeGoals: 0,
+      awayGoals: 0,
+      status: 'FINISHED',
+    });
+  });
+
   it('mapea toda la llave y reproduce los ganadores reales en el matchId correcto', () => {
     const results = fullGroupResults();
     const api = buildApiMatches(results);

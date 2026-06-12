@@ -6,7 +6,7 @@
  *
  * El token NUNCA llega al cliente: el fetch ocurre acá (CI), no en el navegador.
  */
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { apiToOfficial, type ApiMatchLite } from '../src/lib/ingestApiResults';
@@ -33,6 +33,27 @@ async function main(): Promise<void> {
   const matches = data.matches ?? [];
   const results = apiToOfficial(matches);
   const finished = Object.values(results).filter((r) => r.status === 'FINISHED').length;
+
+  // Guard anti-regresión: un partido FINISHED no "se desjuega". Si la API tuvo un hipo y
+  // mapeó MENOS partidos jugados que el archivo actual, no lo pisamos (evita publicar un
+  // results.json vacío/incompleto que desbloquearía partidos ya jugados en el cliente).
+  // Igual o más jugados sí escribe, así que las correcciones de marcador se aplican.
+  if (existsSync(OUT)) {
+    try {
+      const prev = JSON.parse(readFileSync(OUT, 'utf8')) as OfficialResultsFile;
+      const prevFinished = Object.values(prev.results ?? {}).filter(
+        (r) => r.status === 'FINISHED',
+      ).length;
+      if (finished < prevFinished) {
+        console.warn(
+          `⚠ La API mapeó ${finished} jugados pero el archivo actual tiene ${prevFinished}. Se omite la escritura para no regresar.`,
+        );
+        return;
+      }
+    } catch {
+      // Archivo previo ausente o ilegible: seguimos y lo (re)generamos.
+    }
+  }
 
   const file: OfficialResultsFile = {
     updatedAt: new Date().toISOString(),

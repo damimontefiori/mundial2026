@@ -2,16 +2,21 @@
    Estrategia:
    - Navegaciones: network-first y cae a la última versión cacheada de la ruta
      (o a /offline.html si nunca se visitó).
+   - Resultados reales (/results.json): network-first, para no quedar pegado a una
+     versión vieja; cae al caché solo si no hay red.
    - Assets estáticos del mismo origen: stale-while-revalidate.
 */
-const CACHE = 'm26-cache-v1';
+const CACHE = 'm26-cache-v2';
 const PRECACHE = ['/', '/offline.html', '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg'];
 
 self.addEventListener('install', (event) => {
+  // allSettled (no addAll, que es atómico): si UNA URL del precache falla, igual
+  // instalamos y activamos v2 — de lo contrario un asset caído abortaría la instalación
+  // y nunca se purgaría la caché vieja (quedaría sirviendo datos viejos).
   event.waitUntil(
     caches
       .open(CACHE)
-      .then((cache) => cache.addAll(PRECACHE))
+      .then((cache) => Promise.allSettled(PRECACHE.map((u) => cache.add(u))))
       .then(() => self.skipWaiting()),
   );
 });
@@ -37,13 +42,33 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(req)
         .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put(req, copy));
+          // Solo cacheamos respuestas OK: si guardáramos un 404/500, una visita offline
+          // posterior serviría esa página de error en vez de /offline.html.
+          if (res && res.status === 200) {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(req, copy));
+          }
           return res;
         })
         .catch(() =>
           caches.match(req).then((cached) => cached || caches.match('/offline.html')),
         ),
+    );
+    return;
+  }
+
+  // Resultados reales: network-first (los datos en vivo no deben servirse viejos).
+  if (url.pathname === '/results.json') {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (res && res.status === 200) {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(req, copy));
+          }
+          return res;
+        })
+        .catch(() => caches.match(req)),
     );
     return;
   }
