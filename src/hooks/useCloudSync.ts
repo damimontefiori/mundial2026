@@ -25,6 +25,9 @@ export function useCloudSync(): void {
     let unsubStores: Array<() => void> = [];
     let timer: ReturnType<typeof setTimeout> | null = null;
 
+    // Finalizar un posible login por redirect (móvil/PWA) y capturar su error.
+    void useAuthStore.getState().completeRedirect();
+
     const teardownStores = () => {
       unsubStores.forEach((u) => u());
       unsubStores = [];

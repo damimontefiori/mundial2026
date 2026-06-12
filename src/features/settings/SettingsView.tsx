@@ -13,6 +13,7 @@ import { PageHeader } from '@/components/PageHeader';
 import { Button, Card, SegmentedControl } from '@/components/ui';
 import {
   ChevronRightIcon,
+  CloseIcon,
   DownloadIcon,
   InfoIcon,
   LinkedInIcon,
@@ -50,14 +51,17 @@ export function SettingsView() {
   const authStatus = useAuthStore((s) => s.status);
   const user = useAuthStore((s) => s.user);
   const syncState = useAuthStore((s) => s.syncState);
+  const authError = useAuthStore((s) => s.authError);
+  const clearAuthError = useAuthStore((s) => s.clearAuthError);
   const signInWithGoogle = useAuthStore((s) => s.signInWithGoogle);
   const signOut = useAuthStore((s) => s.signOut);
 
   const handleSignIn = async () => {
     try {
       await signInWithGoogle();
-    } catch {
-      // Popup cancelado o bloqueado: no hacemos nada (el usuario puede reintentar).
+    } catch (err) {
+      // El mensaje legible ya quedó en authError (store); logueamos para diagnóstico.
+      console.error('[auth] sign-in failed:', err);
     }
   };
 
@@ -219,6 +223,18 @@ export function SettingsView() {
                 >
                   Continuar con Google
                 </Button>
+                {authError ? (
+                  <div className="flex items-start gap-2 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                    <span className="min-w-0 flex-1">{authError}</span>
+                    <button
+                      onClick={clearAuthError}
+                      aria-label="Descartar"
+                      className="-mr-1 -mt-0.5 shrink-0 rounded p-0.5 hover:bg-destructive/10"
+                    >
+                      <CloseIcon className="h-4 w-4" />
+                    </button>
+                  </div>
+                ) : null}
               </Card>
             )}
           </section>
