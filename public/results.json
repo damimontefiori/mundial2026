@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-12T23:59:36.121Z",
+  "updatedAt": "2026-06-13T04:38:44.052Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -14,6 +14,11 @@
     },
     "M3": {
       "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "FINISHED"
+    },
+    "M4": {
+      "homeGoals": 4,
       "awayGoals": 1,
       "status": "FINISHED"
     }
