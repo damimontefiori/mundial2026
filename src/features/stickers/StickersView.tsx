@@ -4,9 +4,16 @@ import { useMemo, useRef, useState } from 'react';
 import { stickerAlbum, baseStickerCodes } from '@/data/stickers';
 import { cn } from '@/lib/cn';
 import { useStickersStore } from '@/store/stickers';
+import { shareViaWhatsApp } from '@/lib/share';
+import {
+  buildMissingMessage,
+  buildRepeatedMessage,
+  hasMissing,
+  hasRepeated,
+} from '@/lib/stickerShare';
 import { PageHeader } from '@/components/PageHeader';
-import { Card, ProgressBar, SegmentedControl } from '@/components/ui';
-import { SearchIcon } from '@/components/icons';
+import { Button, Card, ProgressBar, SegmentedControl } from '@/components/ui';
+import { SearchIcon, WhatsAppIcon } from '@/components/icons';
 
 type Mode = 'have' | 'addRepe' | 'subRepe';
 
@@ -118,6 +125,30 @@ export function StickersView() {
           </div>
           <ProgressBar value={stats.have / stats.total} />
         </Card>
+
+        <div>
+          <p className="mb-1.5 px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Compartir por WhatsApp
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              variant="outline"
+              disabled={!hasRepeated(owned)}
+              onClick={() => shareViaWhatsApp(buildRepeatedMessage(owned))}
+            >
+              <WhatsAppIcon className="h-5 w-5 text-[#25D366]" />
+              Repetidas
+            </Button>
+            <Button
+              variant="outline"
+              disabled={!hasMissing(owned)}
+              onClick={() => shareViaWhatsApp(buildMissingMessage(owned))}
+            >
+              <WhatsAppIcon className="h-5 w-5 text-[#25D366]" />
+              Faltantes
+            </Button>
+          </div>
+        </div>
 
         <div className="relative">
           <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />

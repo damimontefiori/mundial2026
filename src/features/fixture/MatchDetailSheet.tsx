@@ -1,6 +1,6 @@
 'use client';
 
-import type { Match } from '@/types';
+import type { Match, OfficialResult } from '@/types';
 import type { BracketView } from '@/lib/bracket';
 import { Sheet } from '@/components/Sheet';
 import { Button } from '@/components/ui';
@@ -8,23 +8,30 @@ import { CalendarIcon } from '@/components/icons';
 import { TeamBadge } from '@/components/TeamBadge';
 import { teamsById } from '@/data/teams';
 import { getVenue } from '@/data/venues';
-import { formatLongDate, formatTime } from '@/lib/dates';
+import { formatLongDate, formatTime, isPast } from '@/lib/dates';
+import { cn } from '@/lib/cn';
 import { sideInfo } from '@/features/shared/matchDisplay';
 import { buildICS, downloadICS, matchToEvent } from '@/lib/ics';
 
 interface MatchDetailSheetProps {
   match: Match | null;
   view: BracketView;
+  official?: OfficialResult;
   open: boolean;
   onClose: () => void;
 }
 
-export function MatchDetailSheet({ match, view, open, onClose }: MatchDetailSheetProps) {
+export function MatchDetailSheet({ match, view, official, open, onClose }: MatchDetailSheetProps) {
   const home = match ? sideInfo(match, 'home', view) : null;
   const away = match ? sideInfo(match, 'away', view) : null;
   const venue = match ? getVenue(match.venueId) : null;
   const homeTeam = home?.teamId ? teamsById[home.teamId] : null;
   const awayTeam = away?.teamId ? teamsById[away.teamId] : null;
+
+  const finished = official?.status === 'FINISHED';
+  const live = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
+  const played = finished || live;
+  const past = match ? isPast(match.kickoffUTC) : false;
 
   const addToCalendar = () => {
     if (!match || !home || !away) return;
@@ -42,6 +49,21 @@ export function MatchDetailSheet({ match, view, open, onClose }: MatchDetailShee
               <span className="shrink-0 text-sm font-semibold text-muted-foreground">vs</span>
               <TeamBadge team={awayTeam} placeholder={away.label} size="lg" reverse />
             </div>
+            {played && official ? (
+              <p className="mt-3 flex items-center justify-center gap-2 text-center">
+                <span className="tabular text-2xl font-bold tabular-nums">
+                  {official.homeGoals} – {official.awayGoals}
+                </span>
+                <span
+                  className={cn(
+                    'text-xs font-semibold',
+                    finished ? 'text-success' : 'text-destructive',
+                  )}
+                >
+                  {finished ? '● Final' : '● EN VIVO'}
+                </span>
+              </p>
+            ) : null}
           </div>
 
           <dl className="space-y-2 text-sm">
@@ -54,10 +76,15 @@ export function MatchDetailSheet({ match, view, open, onClose }: MatchDetailShee
             {venue ? <Row label="Estadio" value={`${venue.stadium}, ${venue.city}`} /> : null}
           </dl>
 
-          <Button onClick={addToCalendar} className="w-full">
+          <Button onClick={addToCalendar} className="w-full" disabled={past}>
             <CalendarIcon className="h-5 w-5" />
             Agregar al calendario
           </Button>
+          {past ? (
+            <p className="text-center text-xs text-muted-foreground">
+              El partido ya comenzó — no se puede agregar al calendario.
+            </p>
+          ) : null}
         </div>
       ) : null}
     </Sheet>

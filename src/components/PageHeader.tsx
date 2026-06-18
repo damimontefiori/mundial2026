@@ -16,7 +16,7 @@ export function PageHeader({ title, subtitle, actions, className }: PageHeaderPr
         className,
       )}
     >
-      <div className="mx-auto flex max-w-app items-center justify-between gap-3 px-4 py-3">
+      <div className="mx-auto flex h-[var(--header-h)] max-w-app items-center justify-between gap-3 px-4">
         <div className="min-w-0">
           <h1 className="truncate text-xl font-bold tracking-tight">{title}</h1>
           {subtitle ? <p className="truncate text-sm text-muted-foreground">{subtitle}</p> : null}

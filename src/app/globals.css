@@ -7,6 +7,10 @@
     --font-sans:
       ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
+    /* Altura del PageHeader (sticky top-0). La usan los headers de día (Partidos)
+       como offset de su `top` y el scroll-margin de las secciones. */
+    --header-h: 4.5rem;
+
     --background: 210 40% 98%;
     --foreground: 222 32% 12%;
     --card: 0 0% 100%;

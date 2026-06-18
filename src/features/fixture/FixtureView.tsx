@@ -1,15 +1,16 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { GroupId, Match } from '@/types';
 import { GROUP_IDS } from '@/types';
 import { matches } from '@/data/matches';
 import { teamsById } from '@/data/teams';
 import { computeBracket } from '@/lib/bracket';
-import { capitalizeDate, dayKey, formatLongDate } from '@/lib/dates';
+import { mergeOfficial } from '@/lib/officialResults';
+import { capitalizeDate, dayKey, formatLongDate, isPast } from '@/lib/dates';
 import { buildICS, downloadICS, matchToEvent } from '@/lib/ics';
 import { usePreferencesStore } from '@/store/preferences';
-import { useSimulationStore } from '@/store/simulation';
+import { useResultsStore } from '@/store/results';
 import { PageHeader } from '@/components/PageHeader';
 import { Chip, EmptyState, IconButton } from '@/components/ui';
 import { CalendarIcon, DownloadIcon, StarIcon } from '@/components/icons';
@@ -21,15 +22,14 @@ import { MatchDetailSheet } from './MatchDetailSheet';
 type Filter = 'all' | 'finals' | GroupId;
 
 export function FixtureView() {
-  const groupResults = useSimulationStore((s) => s.groupResults);
-  const knockoutPicks = useSimulationStore((s) => s.knockoutPicks);
+  const official = useResultsStore((s) => s.official);
   const favoriteId = usePreferencesStore((s) => s.favoriteTeamId);
   const setFavorite = usePreferencesStore((s) => s.setFavorite);
 
-  const view = useMemo(
-    () => computeBracket(groupResults, knockoutPicks),
-    [groupResults, knockoutPicks],
-  );
+  // El fixture refleja los resultados REALES: la llave (clasificados/cruces) se
+  // resuelve solo con `official`. Lo que falta jugar muestra los cupos (1.º A, etc.).
+  const { groupResults, picks } = useMemo(() => mergeOfficial({}, {}, official), [official]);
+  const view = useMemo(() => computeBracket(groupResults, picks), [groupResults, picks]);
 
   const [filter, setFilter] = useState<Filter>('all');
   const [onlyFavorite, setOnlyFavorite] = useState(false);
@@ -62,8 +62,26 @@ export function FixtureView() {
     return [...map.entries()];
   }, [list]);
 
+  // Al abrir el tab, saltar (instantáneo) al día de hoy o, si no hay, al próximo con
+  // partidos. `days` viene ascendente, así que el primero con key >= hoy es el objetivo.
+  const didScrollRef = useRef(false);
+  useEffect(() => {
+    if (didScrollRef.current || days.length === 0) return;
+    didScrollRef.current = true;
+    const todayKey = dayKey(new Date().toISOString());
+    const target = days.find(([k]) => k >= todayKey)?.[0] ?? days[days.length - 1][0];
+    requestAnimationFrame(() => {
+      document
+        .getElementById(`day-${target}`)
+        ?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    });
+  }, [days]);
+
+  // Solo se exportan/agregan al calendario los partidos que todavía no empezaron.
+  const upcoming = useMemo(() => list.filter((m) => !isPast(m.kickoffUTC)), [list]);
+
   const exportIcs = () => {
-    const events = list.map((m) => {
+    const events = upcoming.map((m) => {
       const home = sideInfo(m, 'home', view);
       const away = sideInfo(m, 'away', view);
       return matchToEvent(m, home.label, away.label);
@@ -89,7 +107,11 @@ export function FixtureView() {
                 <StarIcon className="h-5 w-5" />
               )}
             </IconButton>
-            <IconButton label="Exportar al calendario" onClick={exportIcs}>
+            <IconButton
+              label="Exportar próximos al calendario"
+              onClick={exportIcs}
+              disabled={upcoming.length === 0}
+            >
               <DownloadIcon className="h-5 w-5" />
             </IconButton>
           </>
@@ -129,8 +151,8 @@ export function FixtureView() {
           />
         ) : (
           days.map(([key, dayMatches]) => (
-            <section key={key}>
-              <h2 className="sticky top-[3.75rem] z-10 -mx-4 bg-background/85 px-4 py-1.5 text-sm font-semibold capitalize text-muted-foreground backdrop-blur">
+            <section key={key} id={`day-${key}`} className="scroll-mt-[var(--header-h)]">
+              <h2 className="sticky top-[var(--header-h)] z-10 -mx-4 bg-background/85 px-4 py-1.5 text-sm font-semibold capitalize text-muted-foreground backdrop-blur">
                 {capitalizeDate(formatLongDate(dayMatches[0].kickoffUTC))}
               </h2>
               <div className="mt-2 space-y-2.5">
@@ -140,7 +162,7 @@ export function FixtureView() {
                     match={m}
                     view={view}
                     favoriteId={favoriteId}
-                    result={m.stage === 'group' ? groupResults[m.id] : undefined}
+                    official={official[m.id]}
                     onClick={() => setDetail(m)}
                   />
                 ))}
@@ -159,6 +181,7 @@ export function FixtureView() {
       <MatchDetailSheet
         match={detail}
         view={view}
+        official={detail ? official[detail.id] : undefined}
         open={detail !== null}
         onClose={() => setDetail(null)}
       />

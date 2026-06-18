@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Match, OfficialResult } from '@/types';
 import type { BracketView } from '@/lib/bracket';
 import type { RatingTable } from '@/lib/predict';
@@ -151,17 +151,49 @@ export function BracketTree({
   ratings: RatingTable;
 }) {
   const { columns, thirdPlace } = useMemo(() => buildBracketColumns(), []);
+  const paneRef = useRef<HTMLDivElement>(null);
+  const [paneH, setPaneH] = useState<number | null>(null);
+
+  // El árbol vive en un panel de scroll 2D acotado: así los títulos de columna
+  // (sticky top-0) quedan fijos al desplazarse. La altura se calcula para llenar
+  // desde el panel hasta arriba de la barra inferior, sin que scrollee la página.
+  // Un ResizeObserver sobre el body recalcula ante CUALQUIER cambio de layout de lo
+  // que está arriba (banner de resultados/campeón, nota de grupos, etc.), no solo
+  // cuando cambian los resultados reales.
+  useEffect(() => {
+    const recompute = () => {
+      const el = paneRef.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top;
+      const reserveBottom = 88; // barra de navegación inferior + respiro
+      setPaneH(Math.max(260, window.innerHeight - top - reserveBottom));
+    };
+    recompute();
+    const raf = requestAnimationFrame(recompute);
+    window.addEventListener('resize', recompute);
+    const ro = new ResizeObserver(recompute);
+    ro.observe(document.body);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', recompute);
+      ro.disconnect();
+    };
+  }, []);
 
   return (
     <div className="px-4 pb-6">
       <p className="mb-2 text-xs text-muted-foreground">
         Tocá el equipo que pasa en cada cruce. Deslizá → para ver toda la llave.
       </p>
-      <div className="no-scrollbar -mx-4 overflow-x-auto px-4">
+      <div
+        ref={paneRef}
+        style={paneH ? { height: `${paneH}px` } : undefined}
+        className="no-scrollbar -mx-4 overflow-auto overscroll-contain px-4"
+      >
         <div className="flex min-w-max items-stretch gap-2">
           {columns.map((col, colIdx) => (
             <div key={col.key} className="flex flex-col">
-              <div className="sticky top-0 z-10 mb-1 bg-background/80 pb-1 text-center text-xs font-semibold text-muted-foreground backdrop-blur">
+              <div className="sticky top-0 z-10 mb-1 bg-background pb-1 pt-1 text-center text-xs font-semibold text-muted-foreground">
                 {col.label}
               </div>
               <div className="flex flex-1 flex-col justify-around gap-2">

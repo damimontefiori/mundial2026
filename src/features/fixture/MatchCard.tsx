@@ -1,6 +1,6 @@
 'use client';
 
-import type { Match } from '@/types';
+import type { Match, OfficialResult } from '@/types';
 import type { BracketView } from '@/lib/bracket';
 import { teamsById } from '@/data/teams';
 import { getVenue } from '@/data/venues';
@@ -12,7 +12,8 @@ interface MatchCardProps {
   match: Match;
   view: BracketView;
   favoriteId: string | null;
-  result?: { homeGoals: number; awayGoals: number };
+  /** Resultado REAL del partido (si ya se jugó o está en juego). */
+  official?: OfficialResult;
   onClick?: () => void;
 }
 
@@ -61,7 +62,7 @@ function Side({
   );
 }
 
-export function MatchCard({ match, view, favoriteId, result, onClick }: MatchCardProps) {
+export function MatchCard({ match, view, favoriteId, official, onClick }: MatchCardProps) {
   const home = sideInfo(match, 'home', view);
   const away = sideInfo(match, 'away', view);
   const venue = getVenue(match.venueId);
@@ -69,15 +70,29 @@ export function MatchCard({ match, view, favoriteId, result, onClick }: MatchCar
   const winnerId = resolved?.winnerTeamId ?? null;
   const stageLabel = match.stage === 'group' ? `Grupo ${match.group}` : match.label;
 
+  const finished = official?.status === 'FINISHED';
+  const live = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
+  const played = finished || live;
+
   return (
     <button
       onClick={onClick}
       className="w-full rounded-2xl border border-border bg-card p-3 text-left shadow-sm transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <div className="mb-2 flex items-center justify-between">
-        <span className="tabular rounded-md bg-muted px-2 py-0.5 text-sm font-semibold">
-          {formatTime(match.kickoffUTC)}
-        </span>
+        {finished ? (
+          <span className="rounded-md bg-success/15 px-2 py-0.5 text-sm font-semibold text-success">
+            ● Final
+          </span>
+        ) : live ? (
+          <span className="rounded-md bg-destructive/15 px-2 py-0.5 text-sm font-semibold text-destructive">
+            ● EN VIVO
+          </span>
+        ) : (
+          <span className="tabular rounded-md bg-muted px-2 py-0.5 text-sm font-semibold">
+            {formatTime(match.kickoffUTC)}
+          </span>
+        )}
         <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
           {stageLabel}
         </span>
@@ -87,14 +102,14 @@ export function MatchCard({ match, view, favoriteId, result, onClick }: MatchCar
         <Side
           teamId={home.teamId}
           label={home.label}
-          score={result?.homeGoals}
+          score={played ? official!.homeGoals : undefined}
           favorite={home.teamId === favoriteId && favoriteId !== null}
           winner={winnerId !== null && home.teamId === winnerId}
         />
         <Side
           teamId={away.teamId}
           label={away.label}
-          score={result?.awayGoals}
+          score={played ? official!.awayGoals : undefined}
           favorite={away.teamId === favoriteId && favoriteId !== null}
           winner={winnerId !== null && away.teamId === winnerId}
         />
