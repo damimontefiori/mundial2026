@@ -8,7 +8,7 @@ import { CalendarIcon } from '@/components/icons';
 import { TeamBadge } from '@/components/TeamBadge';
 import { teamsById } from '@/data/teams';
 import { getVenue } from '@/data/venues';
-import { formatLongDate, formatTime, isPast } from '@/lib/dates';
+import { formatLongDate, formatTime, isPast, pastLiveWindow } from '@/lib/dates';
 import { cn } from '@/lib/cn';
 import { sideInfo } from '@/features/shared/matchDisplay';
 import { buildICS, downloadICS, matchToEvent } from '@/lib/ics';
@@ -28,8 +28,11 @@ export function MatchDetailSheet({ match, view, official, open, onClose }: Match
   const homeTeam = home?.teamId ? teamsById[home.teamId] : null;
   const awayTeam = away?.teamId ? teamsById[away.teamId] : null;
 
-  const finished = official?.status === 'FINISHED';
-  const live = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
+  const rawLive = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
+  // Un partido "en juego" 3+ h después del inicio ya terminó: se trata como final.
+  const overdue = rawLive && match != null && pastLiveWindow(match.kickoffUTC);
+  const finished = official?.status === 'FINISHED' || overdue;
+  const live = rawLive && !overdue;
   const played = finished || live;
   const past = match ? isPast(match.kickoffUTC) : false;
 
@@ -60,7 +63,7 @@ export function MatchDetailSheet({ match, view, official, open, onClose }: Match
                     finished ? 'text-success' : 'text-destructive',
                   )}
                 >
-                  {finished ? '● Final' : '● EN VIVO'}
+                  {finished ? '● Finalizado' : '● EN VIVO'}
                 </span>
               </p>
             ) : null}

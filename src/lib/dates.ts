@@ -37,6 +37,15 @@ export function isPast(iso: string, now: Date = new Date()): boolean {
   return new Date(iso).getTime() < now.getTime();
 }
 
+/**
+ * true si un partido "en juego" lleva tanto desde el inicio que seguro ya terminó
+ * (un partido con alargue + penales dura < 2 h 45 m). Sirve para no mostrar "EN VIVO"
+ * eternamente cuando el feed tarda en marcar FINISHED o se pierde una actualización.
+ */
+export function pastLiveWindow(kickoffISO: string, now: Date = new Date()): boolean {
+  return now.getTime() - new Date(kickoffISO).getTime() > 3 * 60 * 60 * 1000;
+}
+
 /** Pone en mayúscula la primera letra (útil para nombres de día/mes en es). */
 export function capitalizeDate(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);

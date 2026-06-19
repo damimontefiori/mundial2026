@@ -3,12 +3,18 @@ name: Actualizar resultados
 # Trae los resultados reales del Mundial y los commitea como public/results.json.
 # El push dispara un redeploy automático en Vercel. El token vive en Secrets, nunca
 # llega al cliente.
+#
+# La cadencia real (cada ~30 min) la maneja un cron EXTERNO que dispara este workflow
+# vía `workflow_dispatch` por API: los `schedule` de GitHub se postergan/saltean horas
+# y no son confiables. El `schedule` de abajo queda solo como red de seguridad esparcida.
+# Ver docs/OPERACION_RESULTADOS.md.
 
 on:
   schedule:
-    # Cada 30 min (UTC). El paso "ventana" lo limita a las fechas del torneo.
-    - cron: '*/30 * * * *'
-  workflow_dispatch: # permite correrlo a mano desde la pestaña Actions
+    # Fallback esparcido (cada 6 h, minuto 17 para evitar la congestión del top-of-hour).
+    # El disparo de 30 min lo hace el pinger externo (workflow_dispatch).
+    - cron: '17 */6 * * *'
+  workflow_dispatch: # disparo manual y del pinger externo (cron-job.org)
 
 permissions:
   contents: write

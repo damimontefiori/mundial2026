@@ -4,7 +4,7 @@ import type { Match, OfficialResult } from '@/types';
 import type { BracketView } from '@/lib/bracket';
 import { teamsById } from '@/data/teams';
 import { getVenue } from '@/data/venues';
-import { formatTime } from '@/lib/dates';
+import { formatTime, pastLiveWindow } from '@/lib/dates';
 import { cn } from '@/lib/cn';
 import { sideInfo } from '@/features/shared/matchDisplay';
 
@@ -70,8 +70,12 @@ export function MatchCard({ match, view, favoriteId, official, onClick }: MatchC
   const winnerId = resolved?.winnerTeamId ?? null;
   const stageLabel = match.stage === 'group' ? `Grupo ${match.group}` : match.label;
 
-  const finished = official?.status === 'FINISHED';
-  const live = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
+  const rawLive = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
+  // Un partido "en juego" 3+ h después del inicio ya terminó: lo tratamos como final
+  // (deja de verse "EN VIVO" aunque el feed tarde en marcar FINISHED).
+  const overdue = rawLive && pastLiveWindow(match.kickoffUTC);
+  const finished = official?.status === 'FINISHED' || overdue;
+  const live = rawLive && !overdue;
   const played = finished || live;
 
   return (
@@ -82,7 +86,7 @@ export function MatchCard({ match, view, favoriteId, official, onClick }: MatchC
       <div className="mb-2 flex items-center justify-between">
         {finished ? (
           <span className="rounded-md bg-success/15 px-2 py-0.5 text-sm font-semibold text-success">
-            ● Final
+            ● Finalizado
           </span>
         ) : live ? (
           <span className="rounded-md bg-destructive/15 px-2 py-0.5 text-sm font-semibold text-destructive">
