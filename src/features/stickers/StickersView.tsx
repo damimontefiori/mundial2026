@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useRef, useState } from 'react';
+import type { StickerSection } from '@/types';
 import { stickerAlbum, baseStickerCodes } from '@/data/stickers';
 import { cn } from '@/lib/cn';
 import { useStickersStore } from '@/store/stickers';
@@ -88,6 +89,15 @@ export function StickersView() {
     else decrement(code);
   };
 
+  // "Todas" / "Limpiar" piden confirmación: un toque accidental podría borrar el
+  // progreso de toda una sección.
+  const confirmMark = (section: StickerSection, owned: boolean) => {
+    const msg = owned
+      ? `¿Marcar como completas las ${section.codes.length} figuritas de ${section.title}?`
+      : `¿Borrar tus figuritas de ${section.title}? Vas a perder las marcadas y las repes de esta sección.`;
+    if (window.confirm(msg)) markCodes(section.codes, owned);
+  };
+
   const onSearch = (value: string) => {
     setSearch(value);
     if (searchTimer.current) clearTimeout(searchTimer.current);
@@ -161,32 +171,37 @@ export function StickersView() {
           />
         </div>
 
-        <div className="flex items-center gap-2">
-          <SegmentedControl
-            className="flex-1"
-            options={[
-              { value: 'have', label: 'Tengo' },
-              { value: 'addRepe', label: '+ Repe' },
-              { value: 'subRepe', label: '− Repe' },
-            ]}
-            value={mode}
-            onChange={setMode}
-          />
-          <button
-            onClick={() => setOnlyMissing((v) => !v)}
-            className={cn(
-              'shrink-0 rounded-xl border px-3 py-2 text-sm font-medium transition-colors',
-              onlyMissing
-                ? 'border-primary bg-primary text-primary-foreground'
-                : 'border-border bg-card text-muted-foreground',
-            )}
-          >
-            Solo faltan
-          </button>
-        </div>
       </div>
 
       <div className="space-y-5 px-4 pb-6">
+        {/* Controles de modo fijos: quedan pegados bajo el header al hacer scroll
+            (sticky dentro de este contenedor, que abarca toda la lista). */}
+        <div className="sticky top-[var(--header-h)] z-20 -mx-4 border-b border-border bg-background/95 px-4 py-2 backdrop-blur">
+          <div className="flex items-center gap-2">
+            <SegmentedControl
+              className="flex-1"
+              options={[
+                { value: 'have', label: 'Tengo' },
+                { value: 'addRepe', label: '+ Repe' },
+                { value: 'subRepe', label: '− Repe' },
+              ]}
+              value={mode}
+              onChange={setMode}
+            />
+            <button
+              onClick={() => setOnlyMissing((v) => !v)}
+              className={cn(
+                'shrink-0 rounded-xl border px-3 py-2 text-sm font-medium transition-colors',
+                onlyMissing
+                  ? 'border-primary bg-primary text-primary-foreground'
+                  : 'border-border bg-card text-muted-foreground',
+              )}
+            >
+              Solo faltan
+            </button>
+          </div>
+        </div>
+
         {stickerAlbum.sections.map((section) => {
           const visible = section.codes.filter(
             (code) => !onlyMissing || (owned[code] ?? 0) === 0,
@@ -207,13 +222,13 @@ export function StickersView() {
                 </div>
                 <div className="flex shrink-0 gap-1.5">
                   <button
-                    onClick={() => markCodes(section.codes, true)}
+                    onClick={() => confirmMark(section, true)}
                     className="rounded-lg border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground hover:bg-muted"
                   >
                     Todas
                   </button>
                   <button
-                    onClick={() => markCodes(section.codes, false)}
+                    onClick={() => confirmMark(section, false)}
                     className="rounded-lg border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground hover:bg-muted"
                   >
                     Limpiar
