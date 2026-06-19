@@ -9,6 +9,7 @@ import {
   CheckIcon,
   ChevronRightIcon,
   ForecastIcon,
+  GridIcon,
   LinkedInIcon,
 } from '@/components/icons';
 
@@ -90,6 +91,15 @@ export function WelcomeSheet({
           >
             A medida que se juegan los partidos, los resultados reales se cargan solos, quedan fijos
             y recalibran los pronósticos de lo que viene.
+          </Feature>
+
+          <Feature
+            icon={<GridIcon className="h-5 w-5 text-warning" />}
+            tint="bg-warning/15"
+            title="Álbum de figuritas"
+          >
+            Llevá la cuenta de las que tenés, las repes y las que te faltan, y compartí por WhatsApp
+            tus repetidas y faltantes para arreglar los cambios.
           </Feature>
         </div>
 
