@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-20T17:06:45.387Z",
+  "updatedAt": "2026-06-20T17:11:07.141Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -292,7 +292,7 @@
       "liveStartedAt": "2026-06-20T04:41:11.205Z"
     },
     "M35": {
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
       "status": "IN_PLAY",
       "liveStartedAt": "2026-06-20T17:06:45.387Z"
