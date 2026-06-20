@@ -1,166 +1,295 @@
 {
-  "updatedAt": "2026-06-20T04:38:56.768Z",
+  "updatedAt": "2026-06-20T04:41:11.205Z",
   "source": "football-data.org",
   "results": {
     "M1": {
       "homeGoals": 2,
       "awayGoals": 0,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 1,
+        "awayGoals": 0
+      }
     },
     "M2": {
       "homeGoals": 2,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 0
+      }
     },
     "M3": {
       "homeGoals": 1,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 1
+      }
     },
     "M4": {
       "homeGoals": 4,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 3,
+        "awayGoals": 0
+      }
     },
     "M8": {
       "homeGoals": 1,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 1
+      }
     },
     "M7": {
       "homeGoals": 1,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 1,
+        "awayGoals": 1
+      }
     },
     "M5": {
       "homeGoals": 0,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 1
+      }
     },
     "M6": {
       "homeGoals": 2,
       "awayGoals": 0,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 1,
+        "awayGoals": 0
+      }
     },
     "M10": {
       "homeGoals": 7,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 3,
+        "awayGoals": 1
+      }
     },
     "M11": {
       "homeGoals": 2,
       "awayGoals": 2,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 0
+      }
     },
     "M9": {
       "homeGoals": 1,
       "awayGoals": 0,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 0
+      }
     },
     "M12": {
       "homeGoals": 5,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 2,
+        "awayGoals": 1
+      }
     },
     "M14": {
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 0
+      }
     },
     "M16": {
       "homeGoals": 1,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 1
+      }
     },
     "M13": {
       "homeGoals": 1,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 1,
+        "awayGoals": 0
+      }
     },
     "M15": {
       "homeGoals": 2,
       "awayGoals": 2,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 1,
+        "awayGoals": 1
+      }
     },
     "M17": {
       "homeGoals": 3,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 0
+      }
     },
     "M18": {
       "homeGoals": 1,
       "awayGoals": 4,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 1,
+        "awayGoals": 2
+      }
     },
     "M19": {
       "homeGoals": 3,
       "awayGoals": 0,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 1,
+        "awayGoals": 0
+      }
     },
     "M20": {
       "homeGoals": 3,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 1,
+        "awayGoals": 0
+      }
     },
     "M23": {
       "homeGoals": 1,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 1,
+        "awayGoals": 1
+      }
     },
     "M22": {
       "homeGoals": 4,
       "awayGoals": 2,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 2,
+        "awayGoals": 2
+      }
     },
     "M21": {
       "homeGoals": 1,
       "awayGoals": 0,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 0
+      }
     },
     "M24": {
       "homeGoals": 1,
       "awayGoals": 3,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 1
+      }
     },
     "M25": {
       "homeGoals": 1,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 1,
+        "awayGoals": 0
+      }
     },
     "M26": {
       "homeGoals": 4,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 0
+      }
     },
     "M27": {
       "homeGoals": 6,
       "awayGoals": 0,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 3,
+        "awayGoals": 0
+      }
     },
     "M28": {
       "homeGoals": 1,
       "awayGoals": 0,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 0
+      }
     },
     "M32": {
       "homeGoals": 2,
       "awayGoals": 0,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 2,
+        "awayGoals": 0
+      }
     },
     "M30": {
       "homeGoals": 0,
       "awayGoals": 1,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 1
+      }
     },
     "M29": {
       "homeGoals": 3,
       "awayGoals": 0,
-      "status": "FINISHED"
+      "status": "FINISHED",
+      "halfTime": {
+        "homeGoals": 3,
+        "awayGoals": 0
+      }
     },
     "M31": {
       "homeGoals": 0,
       "awayGoals": 1,
-      "status": "IN_PLAY"
+      "status": "IN_PLAY",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 1
+      },
+      "liveStartedAt": "2026-06-20T04:41:11.205Z"
     }
   }
 }
