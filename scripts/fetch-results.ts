@@ -34,29 +34,55 @@ async function main(): Promise<void> {
   const results = apiToOfficial(matches);
   const finished = Object.values(results).filter((r) => r.status === 'FINISHED').length;
 
-  // Guard anti-regresión: un partido FINISHED no "se desjuega". Si la API tuvo un hipo y
-  // mapeó MENOS partidos jugados que el archivo actual, no lo pisamos (evita publicar un
-  // results.json vacío/incompleto que desbloquearía partidos ya jugados en el cliente).
-  // Igual o más jugados sí escribe, así que las correcciones de marcador se aplican.
+  // Archivo previo: lo usamos para el guard anti-regresión y para arrastrar las anclas
+  // del reloj en vivo.
+  let prev: OfficialResultsFile | null = null;
   if (existsSync(OUT)) {
     try {
-      const prev = JSON.parse(readFileSync(OUT, 'utf8')) as OfficialResultsFile;
-      const prevFinished = Object.values(prev.results ?? {}).filter(
-        (r) => r.status === 'FINISHED',
-      ).length;
-      if (finished < prevFinished) {
-        console.warn(
-          `⚠ La API mapeó ${finished} jugados pero el archivo actual tiene ${prevFinished}. Se omite la escritura para no regresar.`,
-        );
-        return;
-      }
+      prev = JSON.parse(readFileSync(OUT, 'utf8')) as OfficialResultsFile;
     } catch {
-      // Archivo previo ausente o ilegible: seguimos y lo (re)generamos.
+      prev = null; // archivo ausente o ilegible: se regenera.
     }
   }
 
+  // Guard anti-regresión: un partido FINISHED no "se desjuega". Si la API tuvo un hipo y
+  // mapeó MENOS partidos jugados que el archivo actual, no lo pisamos (evita publicar un
+  // results.json vacío/incompleto que desbloquearía partidos ya jugados en el cliente).
+  if (prev) {
+    const prevFinished = Object.values(prev.results ?? {}).filter(
+      (r) => r.status === 'FINISHED',
+    ).length;
+    if (finished < prevFinished) {
+      console.warn(
+        `⚠ La API mapeó ${finished} jugados pero el archivo actual tiene ${prevFinished}. Se omite la escritura para no regresar.`,
+      );
+      return;
+    }
+  }
+
+  // Anclas del reloj en vivo: timestamps que se setean UNA sola vez (no cambian cada
+  // minuto), derivados de las transiciones de estado. El cliente estima el minuto a partir
+  // de ellas, sin que el minuto se persista (no habría un commit/deploy por minuto).
+  const now = new Date().toISOString();
+  for (const [id, r] of Object.entries(results)) {
+    const p = prev?.results?.[id];
+    if (p?.liveStartedAt) r.liveStartedAt = p.liveStartedAt;
+    else if (r.status === 'IN_PLAY') r.liveStartedAt = now; // arrancó el partido
+    if (p?.secondHalfStartedAt) r.secondHalfStartedAt = p.secondHalfStartedAt;
+    else if (r.status === 'IN_PLAY' && p?.status === 'PAUSED') r.secondHalfStartedAt = now; // 2do tiempo
+  }
+
+  // Solo reescribir si los RESULTADOS cambiaron (ignorando el timestamp): el pinger de
+  // 1 min no debe generar un commit/deploy por corrida cuando no pasó nada en la cancha.
+  // El minuto en vivo no se persiste (lo estima el cliente), así que un partido en juego
+  // sin novedades no produce cambios acá.
+  if (prev && JSON.stringify(prev.results ?? {}) === JSON.stringify(results)) {
+    console.log('✔ Sin cambios en los resultados; no se reescribe.');
+    return;
+  }
+
   const file: OfficialResultsFile = {
-    updatedAt: new Date().toISOString(),
+    updatedAt: now,
     source: 'football-data.org',
     results,
   };

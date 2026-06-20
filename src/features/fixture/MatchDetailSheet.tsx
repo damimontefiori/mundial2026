@@ -9,7 +9,8 @@ import { TeamBadge } from '@/components/TeamBadge';
 import { teamsById } from '@/data/teams';
 import { getVenue } from '@/data/venues';
 import { formatLongDate, formatTime, isPast, pastLiveWindow } from '@/lib/dates';
-import { cn } from '@/lib/cn';
+import { liveClock } from '@/lib/liveClock';
+import { useNow } from '@/lib/useNow';
 import { sideInfo } from '@/features/shared/matchDisplay';
 import { buildICS, downloadICS, matchToEvent } from '@/lib/ics';
 
@@ -29,11 +30,12 @@ export function MatchDetailSheet({ match, view, official, open, onClose }: Match
   const awayTeam = away?.teamId ? teamsById[away.teamId] : null;
 
   const rawLive = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
-  // Un partido "en juego" 3+ h después del inicio ya terminó: se trata como final.
-  const overdue = rawLive && match != null && pastLiveWindow(match.kickoffUTC);
+  const now = useNow(rawLive);
+  const overdue = rawLive && match != null && pastLiveWindow(match.kickoffUTC, now);
   const finished = official?.status === 'FINISHED' || overdue;
   const live = rawLive && !overdue;
   const played = finished || live;
+  const clock = live && match ? liveClock(official, match.kickoffUTC, now) : null;
   const past = match ? isPast(match.kickoffUTC) : false;
 
   const addToCalendar = () => {
@@ -57,14 +59,16 @@ export function MatchDetailSheet({ match, view, official, open, onClose }: Match
                 <span className="tabular text-2xl font-bold tabular-nums">
                   {official.homeGoals} – {official.awayGoals}
                 </span>
-                <span
-                  className={cn(
-                    'text-xs font-semibold',
-                    finished ? 'text-success' : 'text-destructive',
-                  )}
-                >
-                  {finished ? '● Finalizado' : '● EN VIVO'}
-                </span>
+                {finished ? (
+                  <span className="text-xs font-semibold text-success">● Finalizado</span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold tabular-nums text-destructive">
+                    <span className="animate-pulse" aria-hidden>
+                      ●
+                    </span>
+                    {clock?.label ?? 'EN VIVO'}
+                  </span>
+                )}
               </p>
             ) : null}
           </div>
@@ -74,6 +78,12 @@ export function MatchDetailSheet({ match, view, official, open, onClose }: Match
               label="Etapa"
               value={match.stage === 'group' ? `Grupo ${match.group}` : (match.label ?? '')}
             />
+            {official?.halfTime ? (
+              <Row
+                label="Entretiempo"
+                value={`${official.halfTime.homeGoals} – ${official.halfTime.awayGoals}`}
+              />
+            ) : null}
             <Row label="Fecha" value={capitalize(formatLongDate(match.kickoffUTC))} />
             <Row label="Hora (Argentina)" value={`${formatTime(match.kickoffUTC)} h`} />
             {venue ? <Row label="Estadio" value={`${venue.stadium}, ${venue.city}`} /> : null}

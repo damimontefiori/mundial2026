@@ -25,7 +25,9 @@ export interface ApiTeamLite {
 
 export interface ApiScoreLite {
   winner?: string | null;
+  duration?: string;
   fullTime?: { home?: number | null; away?: number | null } & Record<string, number | null>;
+  halfTime?: { home?: number | null; away?: number | null } & Record<string, number | null>;
 }
 
 export interface ApiMatchLite {
@@ -156,6 +158,36 @@ const goalsOf = (score: ApiScoreLite | undefined): { home: number; away: number 
 const hasGoals = (score: ApiScoreLite | undefined): boolean =>
   typeof score?.fullTime?.home === 'number' && typeof score?.fullTime?.away === 'number';
 
+function mapDuration(d: string | undefined): OfficialResult['duration'] {
+  // Solo interesan las fases especiales para el rótulo en vivo; REGULAR es ruido.
+  return d === 'EXTRA_TIME' || d === 'PENALTY_SHOOTOUT' ? d : undefined;
+}
+
+/** Arma el OfficialResult orientado a NUESTRO home/away (goles, entretiempo, duración). */
+function buildOfficial(
+  api: ApiMatchLite,
+  status: MatchStatus,
+  sameOrientation: boolean,
+  winnerCode?: string,
+): OfficialResult {
+  const g = goalsOf(api.score);
+  const ht = api.score?.halfTime;
+  const htHome = sameOrientation ? ht?.home : ht?.away;
+  const htAway = sameOrientation ? ht?.away : ht?.home;
+  const halfTime =
+    typeof htHome === 'number' && typeof htAway === 'number'
+      ? { homeGoals: htHome, awayGoals: htAway }
+      : undefined;
+  return {
+    homeGoals: sameOrientation ? g.home : g.away,
+    awayGoals: sameOrientation ? g.away : g.home,
+    status,
+    winnerCode,
+    duration: mapDuration(api.score?.duration),
+    halfTime,
+  };
+}
+
 const pairKey = (a: string, b: string): string => [a, b].sort().join('|');
 
 const isGroupApiMatch = (m: ApiMatchLite): boolean =>
@@ -186,17 +218,16 @@ export function apiToOfficial(apiMatches: ApiMatchLite[]): Record<string, Offici
     if (!matchId) continue;
     const status = mapStatus(api.status);
     if (!status || status === 'SCHEDULED' || status === 'TIMED') continue;
-    if (!hasGoals(api.score)) continue; // FINISHED/IN_PLAY sin marcador aún: no publicar.
+    // Solo un FINISHED sin marcador es un fantasma (lo bloquearía). Un IN_PLAY/PAUSED
+    // 0-0 sí se publica, para poder mostrar el partido en vivo.
+    if (status === 'FINISHED' && !hasGoals(api.score)) continue;
 
     const ours = matchesById[matchId];
     const ourHome = ours.home.kind === 'team' ? ours.home.teamId : null;
-    const g = goalsOf(api.score);
-    const sameOrientation = homeId === ourHome;
-    const homeGoals = sameOrientation ? g.home : g.away;
-    const awayGoals = sameOrientation ? g.away : g.home;
-
-    official[matchId] = { homeGoals, awayGoals, status };
-    if (status === 'FINISHED') groupResults[matchId] = { homeGoals, awayGoals };
+    const r = buildOfficial(api, status, homeId === ourHome);
+    official[matchId] = r;
+    if (status === 'FINISHED')
+      groupResults[matchId] = { homeGoals: r.homeGoals, awayGoals: r.awayGoals };
   }
 
   // 2) Eliminatorias: resolver R32 (lado sembrado) y propagar con ganadores reales.
@@ -222,19 +253,15 @@ export function apiToOfficial(apiMatches: ApiMatchLite[]): Record<string, Offici
   const emitKnockout = (matchId: string, api: ApiMatchLite, ourHomeId: string | null) => {
     const status = mapStatus(api.status);
     if (!status || status === 'SCHEDULED' || status === 'TIMED') return;
-    if (!hasGoals(api.score)) return; // FINISHED/IN_PLAY sin marcador aún: no publicar.
+    if (status === 'FINISHED' && !hasGoals(api.score)) return; // FINISHED fantasma: no publicar.
     const apiHomeId = resolveTeamId(api.homeTeam);
     const apiAwayId = resolveTeamId(api.awayTeam);
-    const g = goalsOf(api.score);
-    const sameOrientation = apiHomeId === ourHomeId;
-    const homeGoals = sameOrientation ? g.home : g.away;
-    const awayGoals = sameOrientation ? g.away : g.home;
 
     let winnerCode: string | undefined;
     if (api.score?.winner === 'HOME_TEAM') winnerCode = apiHomeId ?? undefined;
     else if (api.score?.winner === 'AWAY_TEAM') winnerCode = apiAwayId ?? undefined;
 
-    official[matchId] = { homeGoals, awayGoals, status, winnerCode };
+    official[matchId] = buildOfficial(api, status, apiHomeId === ourHomeId, winnerCode);
 
     if (status === 'FINISHED' && winnerCode && apiHomeId && apiAwayId) {
       actualWinner.set(matchId, winnerCode);

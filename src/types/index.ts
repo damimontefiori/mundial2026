@@ -126,6 +126,14 @@ export interface OfficialResult {
   status: MatchStatus;
   /** Código del equipo que avanza (cubre prórroga/penales). Solo en eliminatorias. */
   winnerCode?: string;
+  /** Etapa de duración alcanzada (para la fase en vivo: alargue/penales). */
+  duration?: 'REGULAR' | 'EXTRA_TIME' | 'PENALTY_SHOOTOUT';
+  /** Marcador del entretiempo, orientado a nuestro home/away. */
+  halfTime?: GroupResult;
+  /** ISO en que se vio por primera vez IN_PLAY (ancla del reloj de 1er tiempo). */
+  liveStartedAt?: string;
+  /** ISO del primer IN_PLAY tras un PAUSED (ancla del reloj de 2do tiempo). */
+  secondHalfStartedAt?: string;
 }
 
 /** Archivo estático `public/results.json` con los resultados reales por id de partido. */

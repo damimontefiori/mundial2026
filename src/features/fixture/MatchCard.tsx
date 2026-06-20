@@ -5,6 +5,8 @@ import type { BracketView } from '@/lib/bracket';
 import { teamsById } from '@/data/teams';
 import { getVenue } from '@/data/venues';
 import { formatTime, pastLiveWindow } from '@/lib/dates';
+import { liveClock } from '@/lib/liveClock';
+import { useNow } from '@/lib/useNow';
 import { cn } from '@/lib/cn';
 import { sideInfo } from '@/features/shared/matchDisplay';
 
@@ -71,17 +73,22 @@ export function MatchCard({ match, view, favoriteId, official, onClick }: MatchC
   const stageLabel = match.stage === 'group' ? `Grupo ${match.group}` : match.label;
 
   const rawLive = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
-  // Un partido "en juego" 3+ h después del inicio ya terminó: lo tratamos como final
-  // (deja de verse "EN VIVO" aunque el feed tarde en marcar FINISHED).
-  const overdue = rawLive && pastLiveWindow(match.kickoffUTC);
+  // El reloj tickea cada segundo solo mientras el partido está en juego.
+  const now = useNow(rawLive);
+  // Un partido "en juego" 3+ h después del inicio ya terminó: lo tratamos como final.
+  const overdue = rawLive && pastLiveWindow(match.kickoffUTC, now);
   const finished = official?.status === 'FINISHED' || overdue;
   const live = rawLive && !overdue;
   const played = finished || live;
+  const clock = live ? liveClock(official, match.kickoffUTC, now) : null;
 
   return (
     <button
       onClick={onClick}
-      className="w-full rounded-2xl border border-border bg-card p-3 text-left shadow-sm transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className={cn(
+        'w-full rounded-2xl border bg-card p-3 text-left shadow-sm transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        live ? 'border-destructive/60 ring-1 ring-destructive/20' : 'border-border',
+      )}
     >
       <div className="mb-2 flex items-center justify-between">
         {finished ? (
@@ -89,8 +96,11 @@ export function MatchCard({ match, view, favoriteId, official, onClick }: MatchC
             ● Finalizado
           </span>
         ) : live ? (
-          <span className="rounded-md bg-destructive/15 px-2 py-0.5 text-sm font-semibold text-destructive">
-            ● EN VIVO
+          <span className="tabular inline-flex items-center gap-1 rounded-md bg-destructive/15 px-2 py-0.5 text-sm font-semibold tabular-nums text-destructive">
+            <span className="animate-pulse" aria-hidden>
+              ●
+            </span>
+            {clock?.label ?? 'EN VIVO'}
           </span>
         ) : (
           <span className="tabular rounded-md bg-muted px-2 py-0.5 text-sm font-semibold">
