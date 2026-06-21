@@ -130,8 +130,6 @@ export interface OfficialResult {
   duration?: 'REGULAR' | 'EXTRA_TIME' | 'PENALTY_SHOOTOUT';
   /** Marcador del entretiempo, orientado a nuestro home/away. */
   halfTime?: GroupResult;
-  /** ISO en que se vio por primera vez IN_PLAY (ancla del reloj de 1er tiempo). */
-  liveStartedAt?: string;
   /** ISO del primer IN_PLAY tras un PAUSED (ancla del reloj de 2do tiempo). */
   secondHalfStartedAt?: string;
 }

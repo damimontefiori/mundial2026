@@ -66,10 +66,9 @@ async function main(): Promise<void> {
   const now = new Date().toISOString();
   for (const [id, r] of Object.entries(results)) {
     const p = prev?.results?.[id];
-    if (p?.liveStartedAt) r.liveStartedAt = p.liveStartedAt;
-    else if (r.status === 'IN_PLAY') r.liveStartedAt = now; // arrancó el partido
+    // Ancla del 2º tiempo: primer IN_PLAY tras un PAUSED (se setea una sola vez).
     if (p?.secondHalfStartedAt) r.secondHalfStartedAt = p.secondHalfStartedAt;
-    else if (r.status === 'IN_PLAY' && p?.status === 'PAUSED') r.secondHalfStartedAt = now; // 2do tiempo
+    else if (r.status === 'IN_PLAY' && p?.status === 'PAUSED') r.secondHalfStartedAt = now;
   }
 
   // Solo reescribir si los RESULTADOS cambiaron (ignorando el timestamp): el pinger de

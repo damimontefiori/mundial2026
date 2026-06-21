@@ -8,7 +8,7 @@ import { CalendarIcon } from '@/components/icons';
 import { TeamBadge } from '@/components/TeamBadge';
 import { teamsById } from '@/data/teams';
 import { getVenue } from '@/data/venues';
-import { formatLongDate, formatTime, isPast, pastLiveWindow } from '@/lib/dates';
+import { formatLongDate, formatTime, isPast, liveWindowMs, pastLiveWindow } from '@/lib/dates';
 import { liveClock } from '@/lib/liveClock';
 import { useNow } from '@/lib/useNow';
 import { sideInfo } from '@/features/shared/matchDisplay';
@@ -31,11 +31,12 @@ export function MatchDetailSheet({ match, view, official, open, onClose }: Match
 
   const rawLive = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
   const now = useNow(rawLive);
-  const overdue = rawLive && match != null && pastLiveWindow(match.kickoffUTC, now);
+  const maxLive = match ? liveWindowMs(match.stage) : undefined;
+  const overdue = rawLive && match != null && pastLiveWindow(match.kickoffUTC, now, maxLive);
   const finished = official?.status === 'FINISHED' || overdue;
   const live = rawLive && !overdue;
   const played = finished || live;
-  const clock = live && match ? liveClock(official, match.kickoffUTC, now) : null;
+  const clock = live && match ? liveClock(official, match.kickoffUTC, now, maxLive) : null;
   const past = match ? isPast(match.kickoffUTC) : false;
 
   const addToCalendar = () => {

@@ -4,7 +4,7 @@ import type { Match, OfficialResult } from '@/types';
 import type { BracketView } from '@/lib/bracket';
 import { teamsById } from '@/data/teams';
 import { getVenue } from '@/data/venues';
-import { formatTime, pastLiveWindow } from '@/lib/dates';
+import { formatTime, liveWindowMs, pastLiveWindow } from '@/lib/dates';
 import { liveClock } from '@/lib/liveClock';
 import { useNow } from '@/lib/useNow';
 import { cn } from '@/lib/cn';
@@ -75,12 +75,13 @@ export function MatchCard({ match, view, favoriteId, official, onClick }: MatchC
   const rawLive = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
   // El reloj tickea cada segundo solo mientras el partido está en juego.
   const now = useNow(rawLive);
-  // Un partido "en juego" 3+ h después del inicio ya terminó: lo tratamos como final.
-  const overdue = rawLive && pastLiveWindow(match.kickoffUTC, now);
+  // Margen máximo "en vivo" según la etapa: pasado eso ya terminó (lag del feed).
+  const maxLive = liveWindowMs(match.stage);
+  const overdue = rawLive && pastLiveWindow(match.kickoffUTC, now, maxLive);
   const finished = official?.status === 'FINISHED' || overdue;
   const live = rawLive && !overdue;
   const played = finished || live;
-  const clock = live ? liveClock(official, match.kickoffUTC, now) : null;
+  const clock = live ? liveClock(official, match.kickoffUTC, now, maxLive) : null;
 
   return (
     <button
