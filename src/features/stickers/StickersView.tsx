@@ -69,6 +69,7 @@ export function StickersView() {
   const [search, setSearch] = useState('');
   const [highlight, setHighlight] = useState<string | null>(null);
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastMatch = useRef<string | null>(null);
 
   // Progreso sobre el set base (980), sin contar la promo Coca-Cola.
   const stats = useMemo(() => {
@@ -102,14 +103,29 @@ export function StickersView() {
     setSearch(value);
     if (searchTimer.current) clearTimeout(searchTimer.current);
     const q = value.trim().toUpperCase();
-    if (!q) return;
+    if (!q) {
+      lastMatch.current = null;
+      return;
+    }
     searchTimer.current = setTimeout(() => {
       const match = allCodes.find((c) => c === q) ?? allCodes.find((c) => c.startsWith(q));
       if (!match) return;
+      lastMatch.current = match;
       setHighlight(match);
       document.getElementById(`fig-${match}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       setTimeout(() => setHighlight(null), 1800);
     }, 250);
+  };
+
+  // Al salir del buscador (en móvil, al cerrar el teclado), algunos navegadores resetean
+  // el scroll al tope: lo re-posicionamos en la última figurita encontrada, tras el
+  // reacomodo del viewport, para no perder el lugar.
+  const onSearchBlur = () => {
+    const code = lastMatch.current;
+    if (!code) return;
+    setTimeout(() => {
+      document.getElementById(`fig-${code}`)?.scrollIntoView({ block: 'center' });
+    }, 300);
   };
 
   return (
@@ -166,6 +182,7 @@ export function StickersView() {
             type="search"
             value={search}
             onChange={(e) => onSearch(e.target.value)}
+            onBlur={onSearchBlur}
             placeholder="Buscar por código (ej. MEX1, FWC1, CC3)…"
             className="h-11 w-full rounded-xl border border-border bg-card pl-10 pr-3 text-base uppercase outline-none placeholder:normal-case focus-visible:ring-2 focus-visible:ring-ring"
           />

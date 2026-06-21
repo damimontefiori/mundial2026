@@ -8,7 +8,7 @@ import { useSimulationStore } from '@/store/simulation';
 import { useResultsStore } from '@/store/results';
 import { formatShortDate, formatTime } from '@/lib/dates';
 import { PageHeader } from '@/components/PageHeader';
-import { IconButton, SegmentedControl } from '@/components/ui';
+import { Button, IconButton, SegmentedControl } from '@/components/ui';
 import { ForecastIcon, ResetIcon } from '@/components/icons';
 import { GroupsPanel } from './GroupsPanel';
 import { KnockoutPanel } from './KnockoutPanel';
@@ -46,13 +46,15 @@ export function BracketView() {
         subtitle="Simulá tu Mundial"
         actions={
           <>
-            <IconButton
-              label="Proyectar resultados (pronóstico del modelo)"
+            <Button
+              size="sm"
               variant="secondary"
               onClick={() => simulateRest(official)}
+              title="Proyectar resultados con el modelo predictivo"
             >
-              <ForecastIcon className="h-5 w-5" />
-            </IconButton>
+              <ForecastIcon className="h-4 w-4" />
+              Pronóstico
+            </Button>
             <IconButton label="Reiniciar simulación" onClick={handleReset}>
               <ResetIcon className="h-5 w-5" />
             </IconButton>
