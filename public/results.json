@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-21T18:02:46.869Z",
+  "updatedAt": "2026-06-21T18:08:48.444Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -333,7 +333,7 @@
     "M38": {
       "homeGoals": 5,
       "awayGoals": 0,
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "halfTime": {
         "homeGoals": 3,
         "awayGoals": 0
