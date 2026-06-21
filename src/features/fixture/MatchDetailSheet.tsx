@@ -9,7 +9,7 @@ import { TeamBadge } from '@/components/TeamBadge';
 import { teamsById } from '@/data/teams';
 import { getVenue } from '@/data/venues';
 import { formatLongDate, formatTime, isPast, liveWindowMs, pastLiveWindow } from '@/lib/dates';
-import { liveClock } from '@/lib/liveClock';
+import { liveStatus } from '@/lib/liveClock';
 import { useNow } from '@/lib/useNow';
 import { sideInfo } from '@/features/shared/matchDisplay';
 import { buildICS, downloadICS, matchToEvent } from '@/lib/ics';
@@ -30,13 +30,13 @@ export function MatchDetailSheet({ match, view, official, open, onClose }: Match
   const awayTeam = away?.teamId ? teamsById[away.teamId] : null;
 
   const rawLive = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
-  const now = useNow(rawLive);
+  const now = useNow(rawLive, 30000);
   const maxLive = match ? liveWindowMs(match.stage) : undefined;
   const overdue = rawLive && match != null && pastLiveWindow(match.kickoffUTC, now, maxLive);
   const finished = official?.status === 'FINISHED' || overdue;
   const live = rawLive && !overdue;
   const played = finished || live;
-  const clock = live && match ? liveClock(official, match.kickoffUTC, now, maxLive) : null;
+  const liveInfo = live && match ? liveStatus(official, match.kickoffUTC, now, maxLive) : null;
   const past = match ? isPast(match.kickoffUTC) : false;
 
   const addToCalendar = () => {
@@ -63,11 +63,12 @@ export function MatchDetailSheet({ match, view, official, open, onClose }: Match
                 {finished ? (
                   <span className="text-xs font-semibold text-success">● Finalizado</span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold tabular-nums text-destructive">
-                    <span className="animate-pulse" aria-hidden>
-                      ●
-                    </span>
-                    {clock?.label ?? 'EN VIVO'}
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-destructive">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-destructive" aria-hidden />
+                    EN VIVO
+                    {liveInfo ? (
+                      <span className="font-medium text-destructive/70">· {liveInfo.label}</span>
+                    ) : null}
                   </span>
                 )}
               </p>

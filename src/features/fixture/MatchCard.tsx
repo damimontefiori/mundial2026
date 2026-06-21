@@ -5,7 +5,7 @@ import type { BracketView } from '@/lib/bracket';
 import { teamsById } from '@/data/teams';
 import { getVenue } from '@/data/venues';
 import { formatTime, liveWindowMs, pastLiveWindow } from '@/lib/dates';
-import { liveClock } from '@/lib/liveClock';
+import { liveStatus } from '@/lib/liveClock';
 import { useNow } from '@/lib/useNow';
 import { cn } from '@/lib/cn';
 import { sideInfo } from '@/features/shared/matchDisplay';
@@ -73,15 +73,15 @@ export function MatchCard({ match, view, favoriteId, official, onClick }: MatchC
   const stageLabel = match.stage === 'group' ? `Grupo ${match.group}` : match.label;
 
   const rawLive = official?.status === 'IN_PLAY' || official?.status === 'PAUSED';
-  // El reloj tickea cada segundo solo mientras el partido está en juego.
-  const now = useNow(rawLive);
+  // Refresco lento (30s): solo para recalcular el cap por etapa mientras está en vivo.
+  const now = useNow(rawLive, 30000);
   // Margen máximo "en vivo" según la etapa: pasado eso ya terminó (lag del feed).
   const maxLive = liveWindowMs(match.stage);
   const overdue = rawLive && pastLiveWindow(match.kickoffUTC, now, maxLive);
   const finished = official?.status === 'FINISHED' || overdue;
   const live = rawLive && !overdue;
   const played = finished || live;
-  const clock = live ? liveClock(official, match.kickoffUTC, now, maxLive) : null;
+  const liveInfo = live ? liveStatus(official, match.kickoffUTC, now, maxLive) : null;
 
   return (
     <button
@@ -97,11 +97,12 @@ export function MatchCard({ match, view, favoriteId, official, onClick }: MatchC
             ● Finalizado
           </span>
         ) : live ? (
-          <span className="tabular inline-flex items-center gap-1 rounded-md bg-destructive/15 px-2 py-0.5 text-sm font-semibold tabular-nums text-destructive">
-            <span className="animate-pulse" aria-hidden>
-              ●
-            </span>
-            {clock?.label ?? 'EN VIVO'}
+          <span className="inline-flex items-center gap-1.5 rounded-md bg-destructive/15 px-2 py-0.5 text-sm font-semibold text-destructive">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-destructive" aria-hidden />
+            EN VIVO
+            {liveInfo ? (
+              <span className="font-medium text-destructive/70">· {liveInfo.label}</span>
+            ) : null}
           </span>
         ) : (
           <span className="tabular rounded-md bg-muted px-2 py-0.5 text-sm font-semibold">
