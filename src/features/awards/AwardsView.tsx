@@ -14,14 +14,15 @@ import {
   type GkRow,
 } from '@/lib/awards';
 import { getTeam } from '@/data/teams';
+import { goalkeeperOf } from '@/data/goalkeepers';
 import { formatShortDate, formatTime } from '@/lib/dates';
 import { PageHeader } from '@/components/PageHeader';
 import { TeamBadge } from '@/components/TeamBadge';
 import { Card, EmptyState } from '@/components/ui';
-import { TrophyIcon, StarIcon, UsersIcon, InfoIcon } from '@/components/icons';
+import { TrophyIcon, StarIcon, UsersIcon } from '@/components/icons';
 
-const SCORERS_SHOWN = 15;
-const YOUNG_SHOWN = 5;
+const SCORERS_SHOWN = 10;
+const YOUNG_SHOWN = 3;
 const GK_SHOWN = 8;
 
 export function AwardsView() {
@@ -50,7 +51,7 @@ export function AwardsView() {
           </p>
         ) : null}
 
-        {/* ── Botín de Oro ── */}
+        {/* 1) Botín de Oro */}
         <AwardSection icon={<TrophyIcon className="h-5 w-5" />} title="Botín de Oro" hint="Máximos goleadores">
           {scorers.length === 0 ? (
             <EmptyState title="Todavía no hay goleadores" description="Aparecen cuando empiecen los goles." />
@@ -63,7 +64,24 @@ export function AwardsView() {
           )}
         </AwardSection>
 
-        {/* ── Mejor Jugador Joven (estimación) ── */}
+        {/* 2) Guante de Oro */}
+        <AwardSection
+          icon={<UsersIcon className="h-5 w-5" />}
+          title="Guante de Oro"
+          hint="Valla menos vencida · arquero titular"
+        >
+          {goalkeeping.length === 0 ? (
+            <EmptyState title="Aún no hay partidos jugados" description="Se calcula con los goles recibidos." />
+          ) : (
+            <ol className="divide-y divide-border/60">
+              {goalkeeping.slice(0, GK_SHOWN).map((row, i) => (
+                <GkRowItem key={row.teamId} rank={i + 1} row={row} />
+              ))}
+            </ol>
+          )}
+        </AwardSection>
+
+        {/* 3) Mejor Jugador Joven (estimación) */}
         <AwardSection
           icon={<StarIcon className="h-5 w-5" />}
           title="Mejor Jugador Joven"
@@ -84,24 +102,7 @@ export function AwardsView() {
           </p>
         </AwardSection>
 
-        {/* ── Guante de Oro ── */}
-        <AwardSection
-          icon={<UsersIcon className="h-5 w-5" />}
-          title="Guante de Oro"
-          hint="Valla menos vencida (por equipo)"
-        >
-          {goalkeeping.length === 0 ? (
-            <EmptyState title="Aún no hay partidos jugados" description="Se calcula con los goles recibidos." />
-          ) : (
-            <ol className="divide-y divide-border/60">
-              {goalkeeping.slice(0, GK_SHOWN).map((row, i) => (
-                <GkRowItem key={row.teamId} rank={i + 1} row={row} />
-              ))}
-            </ol>
-          )}
-        </AwardSection>
-
-        {/* ── Dinero por fase ── */}
+        {/* 4) Dinero por fase */}
         <AwardSection
           icon={<TrophyIcon className="h-5 w-5" />}
           title="Dinero por fase"
@@ -137,15 +138,7 @@ export function AwardsView() {
           )}
         </AwardSection>
 
-        {/* ── Fair Play (no disponible) ── */}
-        <AwardSection icon={<InfoIcon className="h-5 w-5" />} title="Fair Play" status="No disponible">
-          <p className="text-sm text-muted-foreground">
-            El premio se basa en las tarjetas (amarilla −1, roja −4), pero la fuente de datos
-            gratuita no las informa, así que por ahora no se puede calcular.
-          </p>
-        </AwardSection>
-
-        {/* ── Balón de Oro (institucional) ── */}
+        {/* 5) Balón de Oro (institucional) */}
         <AwardSection icon={<StarIcon className="h-5 w-5" />} title="Balón de Oro" status="Se define en la final">
           <p className="text-sm text-muted-foreground">
             Al mejor jugador del torneo. Lo elige el Grupo de Estudio Técnico de la FIFA y se
@@ -218,18 +211,26 @@ function ScorerRow({ rank, scorer }: { rank: number; scorer: ScorerEntry }) {
 }
 
 function GkRowItem({ rank, row }: { rank: number; row: GkRow }) {
+  const team = getTeam(row.teamId);
+  const keeper = goalkeeperOf(row.teamId);
   return (
     <li className="flex items-center gap-3 py-2">
       <span className="w-5 shrink-0 text-center text-sm font-bold tabular-nums text-muted-foreground">
         {rank}
       </span>
+      <span className="text-xl leading-none" aria-hidden>
+        {team?.flag ?? '🏳️'}
+      </span>
       <span className="min-w-0 flex-1">
-        <TeamBadge team={getTeam(row.teamId)} size="sm" />
+        <span className="block truncate font-semibold">{team?.name ?? row.teamId}</span>
+        {keeper ? (
+          <span className="block truncate text-xs text-muted-foreground">🧤 {keeper}</span>
+        ) : null}
       </span>
       <span className="shrink-0 text-right">
         <span className="text-base font-bold tabular-nums">{row.cleanSheets}</span>
         <span className="block text-[0.7rem] text-muted-foreground">
-          vallas inv. · {row.goalsAgainst} GC ({row.played} PJ)
+          vallas inv. · {row.goalsAgainst} GC · {row.played} PJ
         </span>
       </span>
     </li>
