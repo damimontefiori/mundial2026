@@ -1,7 +1,17 @@
 {
-  "updatedAt": "2026-06-22T17:06:49.098Z",
+  "updatedAt": "2026-06-22T17:44:56.233Z",
   "source": "football-data.org",
   "scorers": [
+    {
+      "playerName": "Lionel Messi",
+      "teamId": "ARG",
+      "teamName": "Argentina",
+      "nationality": "Argentina",
+      "dateOfBirth": "1987-06-24",
+      "goals": 4,
+      "assists": null,
+      "playedMatches": 2
+    },
     {
       "playerName": "Deniz Undav",
       "teamId": "GER",
@@ -18,16 +28,6 @@
       "teamName": "Canada",
       "nationality": "Canada",
       "dateOfBirth": "2000-01-14",
-      "goals": 3,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Lionel Messi",
-      "teamId": "ARG",
-      "teamName": "Argentina",
-      "nationality": "Argentina",
-      "dateOfBirth": "1987-06-24",
       "goals": 3,
       "assists": null,
       "playedMatches": 2
