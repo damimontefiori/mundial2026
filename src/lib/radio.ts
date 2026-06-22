@@ -25,6 +25,14 @@ export const RADIO_NAME = 'AM 910';
 /** La transmisión se habilita esta antelación antes del inicio (30 min). */
 export const RADIO_LEAD_MS = 30 * 60 * 1000;
 
+/**
+ * Si tras este tiempo el stream no empezó a reproducir (códec no soportado o red
+ * trabada), se corta y se muestra "No se pudo conectar" en vez de quedar colgado en
+ * "Conectando…". Algunos navegadores no disparan `error` ante un stall (ej. Firefox
+ * con HE-AAC), por eso hace falta este backstop por tiempo.
+ */
+export const RADIO_CONNECT_TIMEOUT_MS = 30 * 1000;
+
 /** ¿El partido ya terminó? (FINISHED del feed, o backstop por el margen de la etapa). */
 function isMatchOver(m: Match, official: OfficialResult | undefined, now: Date): boolean {
   if (official?.status === 'FINISHED') return true;

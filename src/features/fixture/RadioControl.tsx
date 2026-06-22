@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/cn';
 import { useNow } from '@/lib/useNow';
-import { RADIO_LEAD_MS, RADIO_NAME, RADIO_STREAM_URL } from '@/lib/radio';
+import { RADIO_CONNECT_TIMEOUT_MS, RADIO_LEAD_MS, RADIO_NAME, RADIO_STREAM_URL } from '@/lib/radio';
 import { PlayIcon, StopIcon, RadioIcon } from '@/components/icons';
 
 type Status = 'idle' | 'connecting' | 'playing' | 'error';
@@ -16,6 +16,7 @@ type Status = 'idle' | 'connecting' | 'playing' | 'error';
 export function RadioControl({ kickoffUTC }: { kickoffUTC: string }) {
   const now = useNow(true, 30_000);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [status, setStatus] = useState<Status>('idle');
 
   const playing = status === 'connecting' || status === 'playing';
@@ -25,12 +26,25 @@ export function RadioControl({ kickoffUTC }: { kickoffUTC: string }) {
   useEffect(() => {
     const audio = new Audio();
     audio.preload = 'none';
-    const onPlaying = () => setStatus('playing');
-    const onError = () => setStatus('error');
+    const clearTimer = () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+    const onPlaying = () => {
+      clearTimer();
+      setStatus('playing');
+    };
+    const onError = () => {
+      clearTimer();
+      setStatus('error');
+    };
     audio.addEventListener('playing', onPlaying);
     audio.addEventListener('error', onError);
     audioRef.current = audio;
     return () => {
+      clearTimer();
       audio.removeEventListener('playing', onPlaying);
       audio.removeEventListener('error', onError);
       audio.pause();
@@ -40,24 +54,39 @@ export function RadioControl({ kickoffUTC }: { kickoffUTC: string }) {
     };
   }, []);
 
+  // Stop "real": pausar + limpiar src libera el recurso del stream. `next` = estado final.
+  const stop = (next: Status) => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      audio.src = '';
+      audio.load();
+    }
+    setStatus(next);
+  };
+
   const toggle = async () => {
     const audio = audioRef.current;
     if (!audio) return;
     if (playing) {
-      // Stop "real": pausar + limpiar src libera el recurso del stream.
-      audio.pause();
-      audio.src = '';
-      audio.load();
-      setStatus('idle');
+      stop('idle');
       return;
     }
     try {
       setStatus('connecting');
       audio.src = RADIO_STREAM_URL;
       audio.load();
+      // Backstop: si no empezó a reproducir en 30 s, cortar y marcar error (algunos
+      // navegadores no disparan `error` ante un stall, ej. Firefox con HE-AAC).
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => stop('error'), RADIO_CONNECT_TIMEOUT_MS);
       await audio.play();
     } catch {
-      setStatus('error');
+      stop('error');
     }
   };
 
