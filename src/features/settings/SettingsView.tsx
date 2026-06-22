@@ -111,7 +111,7 @@ export function SettingsView() {
                 <span>
                   <span className="block font-semibold">¿Cómo funciona?</span>
                   <span className="block text-sm text-muted-foreground">
-                    Pronósticos, llave y resultados en vivo
+                    Pronósticos, premios, radio y resultados en vivo
                   </span>
                 </span>
               </span>
@@ -239,27 +239,6 @@ export function SettingsView() {
             )}
           </section>
         ) : null}
-
-        {/* Prode (futuro) */}
-        <section>
-          <SectionTitle>Prode con amigos</SectionTitle>
-          <Card className="flex items-center gap-3 p-4">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent">
-              <UsersIcon className="h-6 w-6" />
-            </div>
-            <div className="min-w-0">
-              <p className="font-semibold">
-                Próximamente{' '}
-                <span className="rounded-full bg-accent/15 px-2 py-0.5 text-xs font-bold text-accent">
-                  Pronto
-                </span>
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Vas a poder crear ligas, invitar amigos y competir con tus pronósticos.
-              </p>
-            </div>
-          </Card>
-        </section>
 
         {/* Instalar */}
         {installEvent ? (

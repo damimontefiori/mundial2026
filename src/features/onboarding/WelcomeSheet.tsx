@@ -11,6 +11,8 @@ import {
   ForecastIcon,
   GridIcon,
   LinkedInIcon,
+  RadioIcon,
+  TrophyIcon,
 } from '@/components/icons';
 
 /** Una funcionalidad explicada: ícono coloreado + título + descripción. */
@@ -91,6 +93,24 @@ export function WelcomeSheet({
           >
             A medida que se juegan los partidos, los resultados reales se cargan solos, quedan fijos
             y recalibran los pronósticos de lo que viene.
+          </Feature>
+
+          <Feature
+            icon={<TrophyIcon className="h-5 w-5 text-warning" />}
+            tint="bg-warning/15"
+            title="Premios en vivo"
+          >
+            En el tab Premios seguí a los candidatos —Botín de Oro (goleadores), Guante de Oro,
+            Mejor Jugador Joven y más— que se actualizan con cada resultado.
+          </Feature>
+
+          <Feature
+            icon={<RadioIcon className="h-5 w-5 text-destructive" />}
+            tint="bg-destructive/10"
+            title="Escuchá el partido"
+          >
+            Transmisión en vivo por AM 910 desde la tarjeta del próximo partido, en Partidos: el
+            botón para escuchar se activa 30 minutos antes del inicio.
           </Feature>
 
           <Feature

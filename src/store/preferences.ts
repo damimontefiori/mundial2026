@@ -22,7 +22,7 @@ export const usePreferencesStore = create<PreferencesState>()(
   persist(
     (set, get) => ({
       version: 1,
-      favoriteTeamId: null,
+      favoriteTeamId: 'ARG', // por defecto, Argentina (el usuario puede cambiarlo)
       theme: 'system',
       onboardingSeenAt: null,
       setFavorite: (favoriteTeamId) => set({ favoriteTeamId }),
@@ -34,9 +34,15 @@ export const usePreferencesStore = create<PreferencesState>()(
     }),
     {
       name: 'm26-preferences',
-      version: 1,
+      version: 2,
       skipHydration: true,
       storage: createJSONStorage(() => localStorage),
+      // v2: el favorito por defecto pasa a ser Argentina. A quien nunca eligió uno
+      // (favoriteTeamId null) se lo seteamos a 'ARG'; respeta a quien ya eligió otro.
+      migrate: (persisted) => {
+        const s = (persisted ?? {}) as Partial<PreferencesState>;
+        return { ...s, favoriteTeamId: s.favoriteTeamId ?? 'ARG' } as PreferencesState;
+      },
       partialize: (s) => ({
         version: s.version,
         favoriteTeamId: s.favoriteTeamId,

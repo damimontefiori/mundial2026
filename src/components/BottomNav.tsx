@@ -14,16 +14,16 @@ const items = [
     isActive: (p: string) => p.startsWith('/llave'),
   },
   {
-    href: '/figuritas',
-    label: 'Figus',
-    Icon: GridIcon,
-    isActive: (p: string) => p.startsWith('/figuritas'),
-  },
-  {
     href: '/premios',
     label: 'Premios',
     Icon: TrophyIcon,
     isActive: (p: string) => p.startsWith('/premios'),
+  },
+  {
+    href: '/figuritas',
+    label: 'Figus',
+    Icon: GridIcon,
+    isActive: (p: string) => p.startsWith('/figuritas'),
   },
   { href: '/mas', label: 'Más', Icon: MoreIcon, isActive: (p: string) => p.startsWith('/mas') },
 ];
