@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-22T21:06:58.015Z",
+  "updatedAt": "2026-06-22T21:22:50.987Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -28,6 +28,16 @@
       "teamName": "Canada",
       "nationality": "Canada",
       "dateOfBirth": "2000-01-14",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Kylian Mbappé",
+      "teamId": "FRA",
+      "teamName": "France",
+      "nationality": "France",
+      "dateOfBirth": "1998-12-20",
       "goals": 3,
       "assists": null,
       "playedMatches": 2
@@ -178,16 +188,6 @@
       "teamName": "Germany",
       "nationality": "Germany",
       "dateOfBirth": "1999-06-11",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Kylian Mbappé",
-      "teamId": "FRA",
-      "teamName": "France",
-      "nationality": "France",
-      "dateOfBirth": "1998-12-20",
       "goals": 2,
       "assists": null,
       "playedMatches": 2
