@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-22T19:08:53.934Z",
+  "updatedAt": "2026-06-22T21:06:58.015Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -103,16 +103,6 @@
       "playedMatches": 1
     },
     {
-      "playerName": "Kylian Mbappé",
-      "teamId": "FRA",
-      "teamName": "France",
-      "nationality": "France",
-      "dateOfBirth": "1998-12-20",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 1
-    },
-    {
       "playerName": "Brian Brobbey",
       "teamId": "NED",
       "teamName": "Netherlands",
@@ -188,6 +178,16 @@
       "teamName": "Germany",
       "nationality": "Germany",
       "dateOfBirth": "1999-06-11",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Kylian Mbappé",
+      "teamId": "FRA",
+      "teamName": "France",
+      "nationality": "France",
+      "dateOfBirth": "1998-12-20",
       "goals": 2,
       "assists": null,
       "playedMatches": 2
