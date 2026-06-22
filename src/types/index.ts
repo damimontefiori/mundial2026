@@ -144,6 +144,45 @@ export interface OfficialResultsFile {
   results: Record<string, OfficialResult>;
 }
 
+// ── Premios ──────────────────────────────────────────────────────────────
+
+/**
+ * Un goleador del torneo, traído de `/competitions/WC/scorers` y orientado a
+ * nuestros equipos. Alimenta el Botín de Oro y (filtrando por `dateOfBirth`) la
+ * estimación del Mejor Jugador Joven.
+ */
+export interface ScorerEntry {
+  /** Nombre del jugador (tal cual lo da la API). */
+  playerName: string;
+  /** Nuestro id de equipo (código FIFA) o null si no se reconoció. */
+  teamId: string | null;
+  /** Nombre del equipo según la API (fallback si no hay `teamId`). */
+  teamName: string;
+  /** Nacionalidad del jugador según la API, o null. */
+  nationality: string | null;
+  /** Fecha de nacimiento ISO `yyyy-mm-dd`, o null (para el filtro de "joven"). */
+  dateOfBirth: string | null;
+  goals: number;
+  /** Asistencias, o null si la API no las informa. */
+  assists: number | null;
+  playedMatches: number;
+}
+
+/**
+ * Archivo estático `public/awards.json`. Solo trae lo que la API aporta de nuevo
+ * (los goleadores); el Guante de Oro y el Dinero por fase se derivan en el cliente
+ * a partir de `results.json`. Lo escribe `scripts/fetch-results.ts` cuando los
+ * resultados cambian.
+ */
+export interface AwardsFile {
+  /** ISO de la última actualización, o null si todavía no se pobló. */
+  updatedAt: string | null;
+  /** De dónde salieron los datos (ej. "football-data.org"). */
+  source: string;
+  /** Goleadores ordenados (mejor primero). */
+  scorers: ScorerEntry[];
+}
+
 /** Fila de la tabla de un grupo (derivada de los resultados). */
 export interface StandingRow {
   teamId: string;

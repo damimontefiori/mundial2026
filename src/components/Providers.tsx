@@ -5,6 +5,7 @@ import { usePreferencesStore } from '@/store/preferences';
 import { useSimulationStore } from '@/store/simulation';
 import { useStickersStore } from '@/store/stickers';
 import { useResultsStore } from '@/store/results';
+import { useAwardsStore } from '@/store/awards';
 import { useCloudSync } from '@/hooks/useCloudSync';
 
 function applyTheme(theme: 'light' | 'dark' | 'system'): void {
@@ -28,6 +29,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
     usePreferencesStore.persist.rehydrate();
     // Resultados reales (archivo estático). Falla en silencio si no existe.
     void useResultsStore.getState().load();
+    // Premios (goleadores). Mismo patrón; falla en silencio si no existe.
+    void useAwardsStore.getState().load();
   }, []);
 
   // Resultados en vivo: re-traer results.json al volver a la app (foco/visibilidad)
@@ -35,7 +38,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   // sin recargar a mano. El SW sirve /results.json network-first ⇒ trae lo más fresco.
   useEffect(() => {
     const refresh = () => {
-      if (document.visibilityState === 'visible') void useResultsStore.getState().refresh();
+      if (document.visibilityState !== 'visible') return;
+      void useResultsStore.getState().refresh();
+      void useAwardsStore.getState().refresh();
     };
     document.addEventListener('visibilitychange', refresh);
     window.addEventListener('focus', refresh);
@@ -71,7 +76,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
     // Cuando un SW nuevo toma control (al actualizar de v1 a v2), re-traer resultados:
     // el SW nuevo sirve /results.json network-first, así cerramos de inmediato la ventana
     // en la que el SW viejo todavía serviría una versión cacheada vieja.
-    const onControllerChange = () => void useResultsStore.getState().refresh();
+    const onControllerChange = () => {
+      void useResultsStore.getState().refresh();
+      void useAwardsStore.getState().refresh();
+    };
     navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
     return () => {
       window.removeEventListener('load', onLoad);

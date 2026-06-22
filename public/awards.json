@@ -1,0 +1,306 @@
+{
+  "updatedAt": "2026-06-22T13:29:02.906Z",
+  "source": "football-data.org",
+  "scorers": [
+    {
+      "playerName": "Deniz Undav",
+      "teamId": "GER",
+      "teamName": "Germany",
+      "nationality": "Germany",
+      "dateOfBirth": "1996-07-19",
+      "goals": 3,
+      "assists": 2,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Lionel Messi",
+      "teamId": "ARG",
+      "teamName": "Argentina",
+      "nationality": "Argentina",
+      "dateOfBirth": "1987-06-24",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 1
+    },
+    {
+      "playerName": "Jonathan David",
+      "teamId": "CAN",
+      "teamName": "Canada",
+      "nationality": "Canada",
+      "dateOfBirth": "2000-01-14",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Cody Gakpo",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "nationality": "Netherlands",
+      "dateOfBirth": "1999-05-07",
+      "goals": 2,
+      "assists": 2,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Vinicius Junior",
+      "teamId": "BRA",
+      "teamName": "Brazil",
+      "nationality": "Brazil",
+      "dateOfBirth": "2000-07-12",
+      "goals": 2,
+      "assists": 2,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Ayase Ueda",
+      "teamId": "JPN",
+      "teamName": "Japan",
+      "nationality": "Japan",
+      "dateOfBirth": "1998-08-28",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Maximiliano Araújo",
+      "teamId": "URU",
+      "teamName": "Uruguay",
+      "nationality": "Uruguay",
+      "dateOfBirth": "2000-02-15",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Mikel Oyarzabal",
+      "teamId": "ESP",
+      "teamName": "Spain",
+      "nationality": "Spain",
+      "dateOfBirth": "1997-04-21",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Erling Haaland",
+      "teamId": "NOR",
+      "teamName": "Norway",
+      "nationality": "Norway",
+      "dateOfBirth": "2000-07-21",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 1
+    },
+    {
+      "playerName": "Harry Kane",
+      "teamId": "ENG",
+      "teamName": "England",
+      "nationality": "England",
+      "dateOfBirth": "1993-07-28",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 1
+    },
+    {
+      "playerName": "Kylian Mbappé",
+      "teamId": "FRA",
+      "teamName": "France",
+      "nationality": "France",
+      "dateOfBirth": "1998-12-20",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 1
+    },
+    {
+      "playerName": "Brian Brobbey",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "nationality": "Netherlands",
+      "dateOfBirth": "2002-02-01",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Cyle Larin",
+      "teamId": "CAN",
+      "teamName": "Canada",
+      "nationality": "Canada",
+      "dateOfBirth": "1995-04-17",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Daichi Kamada",
+      "teamId": "JPN",
+      "teamName": "Japan",
+      "nationality": "Japan",
+      "dateOfBirth": "1996-08-05",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Elijah Just",
+      "teamId": "NZL",
+      "teamName": "New Zealand",
+      "nationality": "New Zealand",
+      "dateOfBirth": "2000-05-01",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Folarin Balogun",
+      "teamId": "USA",
+      "teamName": "United States",
+      "nationality": "USA",
+      "dateOfBirth": "2001-07-03",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Ismael Saibari",
+      "teamId": "MAR",
+      "teamName": "Morocco",
+      "nationality": "Morocco",
+      "dateOfBirth": "2001-01-28",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Johan Manzambi",
+      "teamId": "SUI",
+      "teamName": "Switzerland",
+      "nationality": "Switzerland",
+      "dateOfBirth": "2005-10-14",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Kai Havertz",
+      "teamId": "GER",
+      "teamName": "Germany",
+      "nationality": "Germany",
+      "dateOfBirth": "1999-06-11",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Matheus Cunha",
+      "teamId": "BRA",
+      "teamName": "Brazil",
+      "nationality": "Brazil",
+      "dateOfBirth": "1999-05-27",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Yasin Ayari",
+      "teamId": "SWE",
+      "teamName": "Sweden",
+      "nationality": "Sweden",
+      "dateOfBirth": "2003-10-06",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Breel Embolo",
+      "teamId": "SUI",
+      "teamName": "Switzerland",
+      "nationality": "Switzerland",
+      "dateOfBirth": "1997-02-14",
+      "goals": 1,
+      "assists": 1,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "In-beom Hwang",
+      "teamId": "KOR",
+      "teamName": "South Korea",
+      "nationality": "South Korea",
+      "dateOfBirth": "1996-09-20",
+      "goals": 1,
+      "assists": 1,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Gio Reyna",
+      "teamId": "USA",
+      "teamName": "United States",
+      "nationality": "USA",
+      "dateOfBirth": "2002-11-13",
+      "goals": 1,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Hyun-Gyu Oh",
+      "teamId": "KOR",
+      "teamName": "South Korea",
+      "nationality": "South Korea",
+      "dateOfBirth": "2001-04-12",
+      "goals": 1,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Jovo Lukić",
+      "teamId": "BIH",
+      "teamName": "Bosnia-Herzegovina",
+      "nationality": "Bosnia-Herzegovina",
+      "dateOfBirth": "1998-11-28",
+      "goals": 1,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Julián Quiñones",
+      "teamId": "MEX",
+      "teamName": "Mexico",
+      "nationality": "Colombia",
+      "dateOfBirth": "1997-03-24",
+      "goals": 1,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Ladislav Krejčí",
+      "teamId": "CZE",
+      "teamName": "Czechia",
+      "nationality": "Czech Republic",
+      "dateOfBirth": "1999-04-20",
+      "goals": 1,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Mauricio",
+      "teamId": "PAR",
+      "teamName": "Paraguay",
+      "nationality": "Paraguay",
+      "dateOfBirth": "2001-06-22",
+      "goals": 1,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Raúl Jiménez",
+      "teamId": "MEX",
+      "teamName": "Mexico",
+      "nationality": "Mexico",
+      "dateOfBirth": "1991-05-05",
+      "goals": 1,
+      "assists": null,
+      "playedMatches": 2
+    }
+  ]
+}

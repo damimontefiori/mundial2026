@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/cn';
-import { BracketIcon, CalendarIcon, GridIcon, MoreIcon } from './icons';
+import { BracketIcon, CalendarIcon, GridIcon, MoreIcon, TrophyIcon } from './icons';
 
 const items = [
   { href: '/', label: 'Partidos', Icon: CalendarIcon, isActive: (p: string) => p === '/' },
@@ -18,6 +18,12 @@ const items = [
     label: 'Figus',
     Icon: GridIcon,
     isActive: (p: string) => p.startsWith('/figuritas'),
+  },
+  {
+    href: '/premios',
+    label: 'Premios',
+    Icon: TrophyIcon,
+    isActive: (p: string) => p.startsWith('/premios'),
   },
   { href: '/mas', label: 'Más', Icon: MoreIcon, isActive: (p: string) => p.startsWith('/mas') },
 ];
