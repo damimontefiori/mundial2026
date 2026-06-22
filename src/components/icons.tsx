@@ -59,6 +59,25 @@ export const StarIcon = (p: IconProps) => (
   </Base>
 );
 
+export const PlayIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M7 4v16l13-8z" fill="currentColor" />
+  </Base>
+);
+
+export const StopIcon = (p: IconProps) => (
+  <Base {...p}>
+    <rect x="6" y="6" width="12" height="12" rx="1.5" fill="currentColor" />
+  </Base>
+);
+
+export const RadioIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M4.9 19.1A10 10 0 0 1 4.9 4.9M19.1 4.9a10 10 0 0 1 0 14.2M7.8 16.2a6 6 0 0 1 0-8.4M16.2 7.8a6 6 0 0 1 0 8.4" />
+    <circle cx="12" cy="12" r="2" fill="currentColor" />
+  </Base>
+);
+
 export const SunIcon = (p: IconProps) => (
   <Base {...p}>
     <circle cx="12" cy="12" r="4" />

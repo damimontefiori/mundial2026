@@ -9,6 +9,7 @@ import { liveStatus } from '@/lib/liveClock';
 import { useNow } from '@/lib/useNow';
 import { cn } from '@/lib/cn';
 import { sideInfo } from '@/features/shared/matchDisplay';
+import { RadioControl } from './RadioControl';
 
 interface MatchCardProps {
   match: Match;
@@ -16,6 +17,8 @@ interface MatchCardProps {
   favoriteId: string | null;
   /** Resultado REAL del partido (si ya se jugó o está en juego). */
   official?: OfficialResult;
+  /** Mostrar el control de radio (solo en el próximo partido a disputarse). */
+  showRadio?: boolean;
   onClick?: () => void;
 }
 
@@ -64,7 +67,7 @@ function Side({
   );
 }
 
-export function MatchCard({ match, view, favoriteId, official, onClick }: MatchCardProps) {
+export function MatchCard({ match, view, favoriteId, official, showRadio, onClick }: MatchCardProps) {
   const home = sideInfo(match, 'home', view);
   const away = sideInfo(match, 'away', view);
   const venue = getVenue(match.venueId);
@@ -84,14 +87,17 @@ export function MatchCard({ match, view, favoriteId, official, onClick }: MatchC
   const liveInfo = live ? liveStatus(official, match.kickoffUTC, now, maxLive) : null;
 
   return (
-    <button
-      onClick={onClick}
+    <div
       className={cn(
-        'w-full rounded-2xl border bg-card p-3 text-left shadow-sm transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        'overflow-hidden rounded-2xl border bg-card shadow-sm',
         live ? 'border-destructive/60 ring-1 ring-destructive/20' : 'border-border',
       )}
     >
-      <div className="mb-2 flex items-center justify-between">
+      <button
+        onClick={onClick}
+        className="block w-full p-3 text-left transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+      >
+        <div className="mb-2 flex items-center justify-between">
         {finished ? (
           <span className="rounded-md bg-success/15 px-2 py-0.5 text-sm font-semibold text-success">
             ● Finalizado
@@ -131,11 +137,13 @@ export function MatchCard({ match, view, favoriteId, official, onClick }: MatchC
         />
       </div>
 
-      {venue ? (
-        <p className="mt-2 truncate text-xs text-muted-foreground">
-          {venue.stadium} · {venue.city}
-        </p>
-      ) : null}
-    </button>
+        {venue ? (
+          <p className="mt-2 truncate text-xs text-muted-foreground">
+            {venue.stadium} · {venue.city}
+          </p>
+        ) : null}
+      </button>
+      {showRadio ? <RadioControl kickoffUTC={match.kickoffUTC} /> : null}
+    </div>
   );
 }

@@ -9,6 +9,8 @@ import { computeBracket } from '@/lib/bracket';
 import { mergeOfficial } from '@/lib/officialResults';
 import { capitalizeDate, dayKey, formatLongDate, isPast } from '@/lib/dates';
 import { buildICS, downloadICS, matchToEvent } from '@/lib/ics';
+import { useNow } from '@/lib/useNow';
+import { RADIO_ENABLED, activeRadioMatchId } from '@/lib/radio';
 import { usePreferencesStore } from '@/store/preferences';
 import { useResultsStore } from '@/store/results';
 import { PageHeader } from '@/components/PageHeader';
@@ -30,6 +32,22 @@ export function FixtureView() {
   // resuelve solo con `official`. Lo que falta jugar muestra los cupos (1.º A, etc.).
   const { groupResults, picks } = useMemo(() => mergeOfficial({}, {}, official), [official]);
   const view = useMemo(() => computeBracket(groupResults, picks), [groupResults, picks]);
+
+  // Control de radio: se muestra SOLO en el próximo partido a disputarse (global, sin
+  // importar el filtro). Tick lento (60 s) para avanzar al siguiente al terminar uno.
+  const radioNow = useNow(RADIO_ENABLED, 60_000);
+  const sortedAll = useMemo(
+    () =>
+      [...matches].sort(
+        (a, b) =>
+          new Date(a.kickoffUTC).getTime() - new Date(b.kickoffUTC).getTime() || a.number - b.number,
+      ),
+    [],
+  );
+  const radioMatchId = useMemo(
+    () => (RADIO_ENABLED ? activeRadioMatchId(sortedAll, official, radioNow) : null),
+    [sortedAll, official, radioNow],
+  );
 
   const [filter, setFilter] = useState<Filter>('all');
   const [onlyFavorite, setOnlyFavorite] = useState(false);
@@ -163,6 +181,7 @@ export function FixtureView() {
                     view={view}
                     favoriteId={favoriteId}
                     official={official[m.id]}
+                    showRadio={m.id === radioMatchId}
                     onClick={() => setDetail(m)}
                   />
                 ))}
