@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-23T17:56:48.051Z",
+  "updatedAt": "2026-06-23T18:17:10.822Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -53,16 +53,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Vinicius Junior",
-      "teamId": "BRA",
-      "teamName": "Brazil",
-      "nationality": "Brazil",
-      "dateOfBirth": "2000-07-12",
-      "goals": 2,
-      "assists": 2,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Ayase Ueda",
       "teamId": "JPN",
       "teamName": "Japan",
@@ -108,6 +98,16 @@
       "teamName": "Spain",
       "nationality": "Spain",
       "dateOfBirth": "1997-04-21",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Vinicius Junior",
+      "teamId": "BRA",
+      "teamName": "Brazil",
+      "nationality": "Brazil",
+      "dateOfBirth": "2000-07-12",
       "goals": 2,
       "assists": 1,
       "playedMatches": 2
