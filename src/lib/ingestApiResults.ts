@@ -131,6 +131,7 @@ function mapStatus(status: string | undefined): MatchStatus | null {
     case 'AWARDED':
       return 'FINISHED';
     case 'IN_PLAY':
+    case 'LIVE': // football-data.org usa "LIVE" para el partido en curso
       return 'IN_PLAY';
     case 'PAUSED':
       return 'PAUSED';

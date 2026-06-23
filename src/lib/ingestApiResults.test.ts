@@ -163,6 +163,28 @@ describe('apiToOfficial', () => {
     });
   });
 
+  it('mapea un partido "LIVE" (estado de football-data en curso) a IN_PLAY, incluso 0-0', () => {
+    // football-data.org reporta el partido en curso como "LIVE" (no "IN_PLAY"); hay que
+    // publicarlo igual para mostrar "EN VIVO" (un 0-0 en juego es válido).
+    const m = matchesOfGroup('A').find((x) => x.home.kind === 'team' && x.away.kind === 'team')!;
+    const homeId = m.home.kind === 'team' ? m.home.teamId : '';
+    const awayId = m.away.kind === 'team' ? m.away.teamId : '';
+    const api: ApiMatchLite = {
+      utcDate: m.kickoffUTC,
+      status: 'LIVE',
+      stage: 'GROUP_STAGE',
+      group: 'GROUP_A',
+      homeTeam: { tla: homeId },
+      awayTeam: { tla: awayId },
+      score: { winner: null, fullTime: { home: 0, away: 0 } },
+    };
+    expect(apiToOfficial([api])[m.id]).toEqual({
+      homeGoals: 0,
+      awayGoals: 0,
+      status: 'IN_PLAY',
+    });
+  });
+
   it('mapea toda la llave y reproduce los ganadores reales en el matchId correcto', () => {
     const results = fullGroupResults();
     const api = buildApiMatches(results);
