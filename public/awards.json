@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-23T00:56:48.770Z",
+  "updatedAt": "2026-06-23T01:11:07.556Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -30,6 +30,16 @@
       "dateOfBirth": "1996-07-19",
       "goals": 3,
       "assists": 2,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Erling Haaland",
+      "teamId": "NOR",
+      "teamName": "Norway",
+      "nationality": "Norway",
+      "dateOfBirth": "2000-07-21",
+      "goals": 3,
+      "assists": null,
       "playedMatches": 2
     },
     {
@@ -138,16 +148,6 @@
       "teamName": "New Zealand",
       "nationality": "New Zealand",
       "dateOfBirth": "2000-05-01",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Erling Haaland",
-      "teamId": "NOR",
-      "teamName": "Norway",
-      "nationality": "Norway",
-      "dateOfBirth": "2000-07-21",
       "goals": 2,
       "assists": null,
       "playedMatches": 2
