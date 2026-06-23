@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-22T21:56:44.909Z",
+  "updatedAt": "2026-06-23T00:06:49.509Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -93,16 +93,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Erling Haaland",
-      "teamId": "NOR",
-      "teamName": "Norway",
-      "nationality": "Norway",
-      "dateOfBirth": "2000-07-21",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 1
-    },
-    {
       "playerName": "Harry Kane",
       "teamId": "ENG",
       "teamName": "England",
@@ -148,6 +138,16 @@
       "teamName": "New Zealand",
       "nationality": "New Zealand",
       "dateOfBirth": "2000-05-01",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Erling Haaland",
+      "teamId": "NOR",
+      "teamName": "Norway",
+      "nationality": "Norway",
+      "dateOfBirth": "2000-07-21",
       "goals": 2,
       "assists": null,
       "playedMatches": 2
