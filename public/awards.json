@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-23T19:04:54.574Z",
+  "updatedAt": "2026-06-23T20:56:46.410Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -113,16 +113,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Harry Kane",
-      "teamId": "ENG",
-      "teamName": "England",
-      "nationality": "England",
-      "dateOfBirth": "1993-07-28",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 1
-    },
-    {
       "playerName": "Brian Brobbey",
       "teamId": "NED",
       "teamName": "Netherlands",
@@ -178,6 +168,16 @@
       "teamName": "United States",
       "nationality": "USA",
       "dateOfBirth": "2001-07-03",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Harry Kane",
+      "teamId": "ENG",
+      "teamName": "England",
+      "nationality": "England",
+      "dateOfBirth": "1993-07-28",
       "goals": 2,
       "assists": null,
       "playedMatches": 2
