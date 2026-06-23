@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-23T17:36:57.651Z",
+  "updatedAt": "2026-06-23T17:44:57.412Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -128,6 +128,16 @@
       "teamName": "Netherlands",
       "nationality": "Netherlands",
       "dateOfBirth": "2002-02-01",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Cristiano Ronaldo",
+      "teamId": "POR",
+      "teamName": "Portugal",
+      "nationality": "Portugal",
+      "dateOfBirth": "1985-02-05",
       "goals": 2,
       "assists": null,
       "playedMatches": 2
@@ -278,16 +288,6 @@
       "teamName": "Czechia",
       "nationality": "Czech Republic",
       "dateOfBirth": "1999-04-20",
-      "goals": 1,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Mauricio",
-      "teamId": "PAR",
-      "teamName": "Paraguay",
-      "nationality": "Paraguay",
-      "dateOfBirth": "2001-06-22",
       "goals": 1,
       "assists": null,
       "playedMatches": 2
