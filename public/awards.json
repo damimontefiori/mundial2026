@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-23T01:14:49.460Z",
+  "updatedAt": "2026-06-23T01:18:51.897Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -9,6 +9,16 @@
       "nationality": "Argentina",
       "dateOfBirth": "1987-06-24",
       "goals": 5,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
+      "playerName": "Erling Haaland",
+      "teamId": "NOR",
+      "teamName": "Norway",
+      "nationality": "Norway",
+      "dateOfBirth": "2000-07-21",
+      "goals": 4,
       "assists": null,
       "playedMatches": 2
     },
@@ -30,16 +40,6 @@
       "dateOfBirth": "1996-07-19",
       "goals": 3,
       "assists": 2,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Erling Haaland",
-      "teamId": "NOR",
-      "teamName": "Norway",
-      "nationality": "Norway",
-      "dateOfBirth": "2000-07-21",
-      "goals": 3,
-      "assists": null,
       "playedMatches": 2
     },
     {
