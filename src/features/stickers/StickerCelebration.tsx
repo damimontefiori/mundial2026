@@ -5,7 +5,8 @@ import type { StarSticker } from '@/data/starStickers';
 import { getTeam } from '@/data/teams';
 
 const COLORS = ['#2563eb', '#f59e0b', '#10b981', '#ef4444', '#a855f7', '#ec4899', '#22d3ee', '#facc15'];
-const AUTO_CLOSE_MS = 3800;
+// El usuario cierra tocando; si no, se cierra sola tras este tiempo (fallback).
+const AUTO_CLOSE_MS = 10000;
 
 /** Animaciones autocontenidas (no tocamos CSS global). Se desactivan con reduce-motion. */
 const CSS = `
