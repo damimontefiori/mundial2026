@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T20:48:44.055Z",
+  "updatedAt": "2026-06-24T21:01:39.996Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -203,16 +203,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Ismael Saibari",
-      "teamId": "MAR",
-      "teamName": "Morocco",
-      "nationality": "Morocco",
-      "dateOfBirth": "2001-01-28",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Ismaïla Sarr",
       "teamId": "SEN",
       "teamName": "Senegal",
@@ -268,6 +258,16 @@
       "teamName": "Bosnia-Herzegovina",
       "nationality": "Bosnia and Herzegovina",
       "dateOfBirth": "2005-03-14",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Ismael Saibari",
+      "teamId": "MAR",
+      "teamName": "Morocco",
+      "nationality": "Morocco",
+      "dateOfBirth": "2001-01-28",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
