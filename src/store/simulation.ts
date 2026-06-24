@@ -17,6 +17,8 @@ interface SimulationState {
   version: number;
   groupResults: Record<string, GroupResult>;
   knockoutPicks: Record<string, string>;
+  /** true si el usuario aplicó el pronóstico del modelo (para avisarlo en pantalla). */
+  forecastApplied: boolean;
   setGroupResult: (matchId: string, result: GroupResult) => void;
   clearGroupResult: (matchId: string) => void;
   setPick: (matchId: string, teamId: string) => void;
@@ -39,6 +41,7 @@ export const useSimulationStore = create<SimulationState>()(
       version: 1,
       groupResults: {},
       knockoutPicks: {},
+      forecastApplied: false,
 
       setGroupResult: (matchId, result) =>
         set((s) => ({ groupResults: { ...s.groupResults, [matchId]: result } })),
@@ -60,9 +63,9 @@ export const useSimulationStore = create<SimulationState>()(
           return { knockoutPicks: next };
         }),
 
-      resetGroups: () => set({ groupResults: {}, knockoutPicks: {} }),
+      resetGroups: () => set({ groupResults: {}, knockoutPicks: {}, forecastApplied: false }),
       resetKnockout: () => set({ knockoutPicks: {} }),
-      resetAll: () => set({ groupResults: {}, knockoutPicks: {} }),
+      resetAll: () => set({ groupResults: {}, knockoutPicks: {}, forecastApplied: false }),
 
       simulateRest: (official = {}) => {
         const { groupResults, knockoutPicks } = projectSimulation(
@@ -70,7 +73,7 @@ export const useSimulationStore = create<SimulationState>()(
           get().knockoutPicks,
           official,
         );
-        set({ groupResults, knockoutPicks });
+        set({ groupResults, knockoutPicks, forecastApplied: true });
       },
     }),
     {
@@ -82,6 +85,7 @@ export const useSimulationStore = create<SimulationState>()(
         version: s.version,
         groupResults: s.groupResults,
         knockoutPicks: s.knockoutPicks,
+        forecastApplied: s.forecastApplied,
       }),
     },
   ),

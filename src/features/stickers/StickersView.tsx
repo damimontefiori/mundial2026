@@ -176,24 +176,23 @@ export function StickersView() {
           </div>
         </div>
 
-        <div className="relative">
-          <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-          <input
-            type="search"
-            value={search}
-            onChange={(e) => onSearch(e.target.value)}
-            onBlur={onSearchBlur}
-            placeholder="Buscar por código (ej. MEX1, FWC1, CC3)…"
-            className="h-11 w-full rounded-xl border border-border bg-card pl-10 pr-3 text-base uppercase outline-none placeholder:normal-case focus-visible:ring-2 focus-visible:ring-ring"
-          />
-        </div>
-
       </div>
 
       <div className="space-y-5 px-4 pb-6">
-        {/* Controles de modo fijos: quedan pegados bajo el header al hacer scroll
-            (sticky dentro de este contenedor, que abarca toda la lista). */}
-        <div className="sticky top-[var(--header-h)] z-20 -mx-4 border-b border-border bg-background/95 px-4 py-2 backdrop-blur">
+        {/* Buscador + controles de modo, fijos: quedan pegados bajo el header al hacer
+            scroll (sticky dentro de este contenedor, que abarca toda la lista). */}
+        <div className="sticky top-[var(--header-h)] z-20 -mx-4 space-y-2 border-b border-border bg-background/95 px-4 py-2 backdrop-blur">
+          <div className="relative">
+            <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => onSearch(e.target.value)}
+              onBlur={onSearchBlur}
+              placeholder="Buscar por código (ej. MEX1, FWC1, CC3)…"
+              className="h-10 w-full rounded-xl border border-border bg-card pl-10 pr-3 text-base uppercase outline-none placeholder:normal-case focus-visible:ring-2 focus-visible:ring-ring"
+            />
+          </div>
           <div className="flex items-center gap-2">
             <SegmentedControl
               className="flex-1"

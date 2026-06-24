@@ -14,7 +14,7 @@ import { RADIO_ENABLED, activeRadioMatchId } from '@/lib/radio';
 import { usePreferencesStore } from '@/store/preferences';
 import { useResultsStore } from '@/store/results';
 import { PageHeader } from '@/components/PageHeader';
-import { Chip, EmptyState, IconButton } from '@/components/ui';
+import { Button, Chip, EmptyState, IconButton } from '@/components/ui';
 import { CalendarIcon, DownloadIcon, StarIcon } from '@/components/icons';
 import { TeamPickerSheet } from '@/features/shared/TeamPickerSheet';
 import { involvesFavorite, sideInfo } from '@/features/shared/matchDisplay';
@@ -125,13 +125,16 @@ export function FixtureView() {
                 <StarIcon className="h-5 w-5" />
               )}
             </IconButton>
-            <IconButton
-              label="Exportar próximos al calendario"
+            <Button
+              size="sm"
+              variant="secondary"
               onClick={exportIcs}
               disabled={upcoming.length === 0}
+              title="Exportar los próximos partidos al calendario"
             >
-              <DownloadIcon className="h-5 w-5" />
-            </IconButton>
+              <DownloadIcon className="h-4 w-4" />
+              Calendario
+            </Button>
           </>
         }
       />
