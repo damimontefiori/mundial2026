@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T22:44:43.912Z",
+  "updatedAt": "2026-06-24T22:48:48.547Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -60,6 +60,16 @@
       "dateOfBirth": "2000-07-12",
       "goals": 3,
       "assists": 1,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Ismael Saibari",
+      "teamId": "MAR",
+      "teamName": "Morocco",
+      "nationality": "Morocco",
+      "dateOfBirth": "2001-01-28",
+      "goals": 3,
+      "assists": null,
       "playedMatches": 3
     },
     {
@@ -248,16 +258,6 @@
       "teamName": "Bosnia-Herzegovina",
       "nationality": "Bosnia and Herzegovina",
       "dateOfBirth": "2005-03-14",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
-      "playerName": "Ismael Saibari",
-      "teamId": "MAR",
-      "teamName": "Morocco",
-      "nationality": "Morocco",
-      "dateOfBirth": "2001-01-28",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
