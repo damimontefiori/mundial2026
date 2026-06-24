@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T22:06:44.426Z",
+  "updatedAt": "2026-06-24T22:14:45.111Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -48,6 +48,16 @@
       "teamName": "Switzerland",
       "nationality": "Switzerland",
       "dateOfBirth": "2005-10-14",
+      "goals": 3,
+      "assists": 1,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Vinicius Junior",
+      "teamId": "BRA",
+      "teamName": "Brazil",
+      "nationality": "Brazil",
+      "dateOfBirth": "2000-07-12",
       "goals": 3,
       "assists": 1,
       "playedMatches": 3
@@ -118,16 +128,6 @@
       "teamName": "Switzerland",
       "nationality": "Switzerland",
       "dateOfBirth": "1998-08-05",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 3
-    },
-    {
-      "playerName": "Vinicius Junior",
-      "teamId": "BRA",
-      "teamName": "Brazil",
-      "nationality": "Brazil",
-      "dateOfBirth": "2000-07-12",
       "goals": 2,
       "assists": 1,
       "playedMatches": 3
