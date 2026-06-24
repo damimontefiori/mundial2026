@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T23:16:46.712Z",
+  "updatedAt": "2026-06-24T23:31:22.718Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -78,6 +78,16 @@
       "teamName": "Canada",
       "nationality": "Canada",
       "dateOfBirth": "2000-01-14",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Matheus Cunha",
+      "teamId": "BRA",
+      "teamName": "Brazil",
+      "nationality": "Brazil",
+      "dateOfBirth": "1999-05-27",
       "goals": 3,
       "assists": null,
       "playedMatches": 3
@@ -258,16 +268,6 @@
       "teamName": "Bosnia-Herzegovina",
       "nationality": "Bosnia and Herzegovina",
       "dateOfBirth": "2005-03-14",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
-      "playerName": "Matheus Cunha",
-      "teamId": "BRA",
-      "teamName": "Brazil",
-      "nationality": "Brazil",
-      "dateOfBirth": "1999-05-27",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
