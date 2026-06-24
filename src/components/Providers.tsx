@@ -6,7 +6,9 @@ import { useSimulationStore } from '@/store/simulation';
 import { useStickersStore } from '@/store/stickers';
 import { useResultsStore } from '@/store/results';
 import { useAwardsStore } from '@/store/awards';
+import { usePwaStore, type InstallPromptEvent } from '@/store/pwa';
 import { useCloudSync } from '@/hooks/useCloudSync';
+import { NudgeManager } from '@/features/nudges/NudgeManager';
 
 function applyTheme(theme: 'light' | 'dark' | 'system'): void {
   const prefersDark =
@@ -27,10 +29,28 @@ export function Providers({ children }: { children: React.ReactNode }) {
     useSimulationStore.persist.rehydrate();
     useStickersStore.persist.rehydrate();
     usePreferencesStore.persist.rehydrate();
+    // Registrar la apertura DESPUÉS de hidratar (si no, se perdería al sobrescribir).
+    usePreferencesStore.getState().registerLaunch();
     // Resultados reales (archivo estático). Falla en silencio si no existe.
     void useResultsStore.getState().load();
     // Premios (goleadores). Mismo patrón; falla en silencio si no existe.
     void useAwardsStore.getState().load();
+  }, []);
+
+  // PWA: capturar el evento de instalación (para ofrecerla con un toque) y limpiarlo
+  // al instalarse. Centralizado acá; lo usan "Más" y la sugerencia ocasional.
+  useEffect(() => {
+    const onPrompt = (e: Event) => {
+      e.preventDefault();
+      usePwaStore.getState().setPrompt(e as InstallPromptEvent);
+    };
+    const onInstalled = () => usePwaStore.getState().setPrompt(null);
+    window.addEventListener('beforeinstallprompt', onPrompt);
+    window.addEventListener('appinstalled', onInstalled);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', onPrompt);
+      window.removeEventListener('appinstalled', onInstalled);
+    };
   }, []);
 
   // Resultados en vivo: re-traer results.json al volver a la app (foco/visibilidad)
@@ -87,5 +107,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <NudgeManager />
+    </>
+  );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { teamsById } from '@/data/teams';
 import { stickerAlbum } from '@/data/stickers';
 import { cn } from '@/lib/cn';
@@ -8,6 +8,7 @@ import { usePreferencesStore } from '@/store/preferences';
 import { useSimulationStore } from '@/store/simulation';
 import { useStickersStore } from '@/store/stickers';
 import { useAuthStore } from '@/store/auth';
+import { usePwaStore } from '@/store/pwa';
 import { useHydrated } from '@/lib/useHydrated';
 import { PageHeader } from '@/components/PageHeader';
 import { Button, Card, SegmentedControl } from '@/components/ui';
@@ -25,11 +26,6 @@ import {
 } from '@/components/icons';
 import { TeamPickerSheet } from '@/features/shared/TeamPickerSheet';
 import { WelcomeSheet } from '@/features/onboarding/WelcomeSheet';
-
-interface BeforeInstallPromptEvent extends Event {
-  prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
-}
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -67,25 +63,10 @@ export function SettingsView() {
 
   const [pickerOpen, setPickerOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
-  const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent | null>(null);
+  const canInstall = usePwaStore((s) => s.canInstall);
+  const promptInstall = usePwaStore((s) => s.promptInstall);
 
   const favorite = favoriteId ? teamsById[favoriteId] : null;
-
-  useEffect(() => {
-    const handler = (e: Event) => {
-      e.preventDefault();
-      setInstallEvent(e as BeforeInstallPromptEvent);
-    };
-    window.addEventListener('beforeinstallprompt', handler);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
-
-  const install = async () => {
-    if (!installEvent) return;
-    await installEvent.prompt();
-    await installEvent.userChoice;
-    setInstallEvent(null);
-  };
 
   const confirmReset = (message: string, fn: () => void) => {
     if (window.confirm(message)) fn();
@@ -241,11 +222,11 @@ export function SettingsView() {
         ) : null}
 
         {/* Instalar */}
-        {installEvent ? (
+        {canInstall ? (
           <section>
             <SectionTitle>App</SectionTitle>
             <Card className="p-3">
-              <Button onClick={install} className="w-full">
+              <Button onClick={() => void promptInstall()} className="w-full">
                 <DownloadIcon className="h-5 w-5" />
                 Instalar en mi teléfono
               </Button>
@@ -284,7 +265,7 @@ export function SettingsView() {
           <SectionTitle>Acerca de</SectionTitle>
           <Card className="space-y-2 p-4 text-sm text-muted-foreground">
             <p>
-              <span className="font-semibold text-foreground">Mundial 2026</span> · versión 0.1.0
+              <span className="font-semibold text-foreground">Mundial 2026</span> · versión 2.0
             </p>
             <p>
               Horarios en hora de Argentina (UTC−3). El álbum tiene {stickerAlbum.total} figuritas.
