@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T20:41:13.958Z",
+  "updatedAt": "2026-06-24T20:48:44.055Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -263,14 +263,14 @@
       "playedMatches": 3
     },
     {
-      "playerName": "In-beom Hwang",
-      "teamId": "KOR",
-      "teamName": "South Korea",
-      "nationality": "South Korea",
-      "dateOfBirth": "1996-09-20",
-      "goals": 1,
-      "assists": 1,
-      "playedMatches": 2
+      "playerName": "Ermin Mahmic",
+      "teamId": "BIH",
+      "teamName": "Bosnia-Herzegovina",
+      "nationality": "Bosnia and Herzegovina",
+      "dateOfBirth": "2005-03-14",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
     },
     {
       "playerName": "Julián Quiñones",
