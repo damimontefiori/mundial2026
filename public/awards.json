@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T04:02:47.405Z",
+  "updatedAt": "2026-06-24T19:06:51.216Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -50,7 +50,7 @@
       "dateOfBirth": "2000-01-14",
       "goals": 3,
       "assists": null,
-      "playedMatches": 2
+      "playedMatches": 3
     },
     {
       "playerName": "Ayase Ueda",
@@ -143,16 +143,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Cyle Larin",
-      "teamId": "CAN",
-      "teamName": "Canada",
-      "nationality": "Canada",
-      "dateOfBirth": "1995-04-17",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Daichi Kamada",
       "teamId": "JPN",
       "teamName": "Japan",
@@ -213,16 +203,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Johan Manzambi",
-      "teamId": "SUI",
-      "teamName": "Switzerland",
-      "nationality": "Switzerland",
-      "dateOfBirth": "2005-10-14",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Kai Havertz",
       "teamId": "GER",
       "teamName": "Germany",
@@ -251,6 +231,26 @@
       "goals": 2,
       "assists": null,
       "playedMatches": 2
+    },
+    {
+      "playerName": "Cyle Larin",
+      "teamId": "CAN",
+      "teamName": "Canada",
+      "nationality": "Canada",
+      "dateOfBirth": "1995-04-17",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Johan Manzambi",
+      "teamId": "SUI",
+      "teamName": "Switzerland",
+      "nationality": "Switzerland",
+      "dateOfBirth": "2005-10-14",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
     },
     {
       "playerName": "In-beom Hwang",
