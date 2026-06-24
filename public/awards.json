@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T19:58:50.160Z",
+  "updatedAt": "2026-06-24T20:11:08.089Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -111,6 +111,26 @@
       "goals": 2,
       "assists": 1,
       "playedMatches": 2
+    },
+    {
+      "playerName": "Johan Manzambi",
+      "teamId": "SUI",
+      "teamName": "Switzerland",
+      "nationality": "Switzerland",
+      "dateOfBirth": "2005-10-14",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Ruben Vargas",
+      "teamId": "SUI",
+      "teamName": "Switzerland",
+      "nationality": "Switzerland",
+      "dateOfBirth": "1998-08-05",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 3
     },
     {
       "playerName": "Daniel Muñoz",
@@ -243,16 +263,6 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Johan Manzambi",
-      "teamId": "SUI",
-      "teamName": "Switzerland",
-      "nationality": "Switzerland",
-      "dateOfBirth": "2005-10-14",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
       "playerName": "In-beom Hwang",
       "teamId": "KOR",
       "teamName": "South Korea",
@@ -260,16 +270,6 @@
       "dateOfBirth": "1996-09-20",
       "goals": 1,
       "assists": 1,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Hyun-Gyu Oh",
-      "teamId": "KOR",
-      "teamName": "South Korea",
-      "nationality": "South Korea",
-      "dateOfBirth": "2001-04-12",
-      "goals": 1,
-      "assists": null,
       "playedMatches": 2
     },
     {
