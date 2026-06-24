@@ -5,8 +5,6 @@ import type { StarSticker } from '@/data/starStickers';
 import { getTeam } from '@/data/teams';
 
 const COLORS = ['#2563eb', '#f59e0b', '#10b981', '#ef4444', '#a855f7', '#ec4899', '#22d3ee', '#facc15'];
-// El usuario cierra tocando; si no, se cierra sola tras este tiempo (fallback).
-const AUTO_CLOSE_MS = 10000;
 
 /** Animaciones autocontenidas (no tocamos CSS global). Se desactivan con reduce-motion. */
 const CSS = `
@@ -28,16 +26,32 @@ const CSS = `
 `;
 
 /**
- * Festejo a pantalla completa al conseguir una figurita estrella: confeti, la imagen
- * del jugador entrando con pop + flotar suave, y la leyenda. Se cierra solo (~3.8 s) o
- * al tocar. Render condicional: solo cuando `star` no es null.
+ * Festejo a pantalla completa: confeti, la imagen del jugador entrando con pop + flotar
+ * suave, y una leyenda. Se cierra al tocar o solo tras `autoCloseMs`. Render condicional:
+ * solo cuando `star` no es null. Reutilizable: el texto se puede sobreescribir (Figus usa
+ * el default "¡Figurita estrella!"; Premios pasa un mensaje propio).
  */
 export function StickerCelebration({
   star,
   onClose,
+  kicker = '⭐ ¡Figurita estrella!',
+  title = '¡Felicitaciones!',
+  subtitle,
+  caption,
+  autoCloseMs = 10000,
 }: {
   star: StarSticker | null;
   onClose: () => void;
+  /** Línea superior chica (default: figurita estrella). */
+  kicker?: string;
+  /** Título grande (default: ¡Felicitaciones!). */
+  title?: string;
+  /** Línea principal tras la bandera (default: "Conseguiste a {player}"). */
+  subtitle?: string;
+  /** Línea chica inferior (default: el rol del jugador). */
+  caption?: string;
+  /** Cierre automático en ms (default 10 s). */
+  autoCloseMs?: number;
 }) {
   // Generadas una vez por montaje. El padre remonta (key por estrella) → confeti nuevo.
   const pieces = useMemo(
@@ -55,9 +69,9 @@ export function StickerCelebration({
 
   useEffect(() => {
     if (!star) return;
-    const id = window.setTimeout(onClose, AUTO_CLOSE_MS);
+    const id = window.setTimeout(onClose, autoCloseMs);
     return () => window.clearTimeout(id);
-  }, [star, onClose]);
+  }, [star, onClose, autoCloseMs]);
 
   if (!star) return null;
   const team = getTeam(star.teamId);
@@ -108,14 +122,13 @@ export function StickerCelebration({
         className="m26-anim relative z-10 mt-4 max-w-sm"
         style={{ animation: 'm26-pop .5s ease-out .1s both' }}
       >
-        <p className="text-sm font-semibold uppercase tracking-wide text-accent">
-          ⭐ ¡Figurita estrella!
-        </p>
-        <h2 className="mt-1 text-2xl font-extrabold leading-tight">¡Felicitaciones!</h2>
+        <p className="text-sm font-semibold uppercase tracking-wide text-accent">{kicker}</p>
+        <h2 className="mt-1 text-2xl font-extrabold leading-tight">{title}</h2>
         <p className="mt-1 text-lg font-bold">
-          {team ? `${team.flag} ` : ''}Conseguiste a {star.player}
+          {team ? `${team.flag} ` : ''}
+          {subtitle ?? `Conseguiste a ${star.player}`}
         </p>
-        <p className="text-sm text-muted-foreground">{star.role}</p>
+        <p className="text-sm text-muted-foreground">{caption ?? star.role}</p>
         <p className="mt-3 text-xs text-muted-foreground">(tocá para cerrar)</p>
       </div>
     </div>

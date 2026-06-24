@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { ScorerEntry } from '@/types';
 import { useAwardsStore } from '@/store/awards';
 import { useResultsStore } from '@/store/results';
@@ -15,6 +15,8 @@ import {
 } from '@/lib/awards';
 import { getTeam } from '@/data/teams';
 import { goalkeeperOf } from '@/data/goalkeepers';
+import { STAR_STICKERS, type StarSticker } from '@/data/starStickers';
+import { StickerCelebration } from '@/features/stickers/StickerCelebration';
 import { formatShortDate, formatTime } from '@/lib/dates';
 import { PageHeader } from '@/components/PageHeader';
 import { TeamBadge } from '@/components/TeamBadge';
@@ -24,6 +26,31 @@ import { TrophyIcon, StarIcon, UsersIcon } from '@/components/icons';
 const SCORERS_SHOWN = 10;
 const YOUNG_SHOWN = 3;
 const GK_SHOWN = 8;
+
+/** Personajes con festejo al tocarlos en las listas (reusan las imágenes de las estrellas). */
+interface Spotlight {
+  star: StarSticker;
+  kicker: string;
+  title: string;
+  subtitle: string;
+  caption: string;
+}
+const MESSI_SPOTLIGHT: Spotlight = {
+  star: STAR_STICKERS.ARG17,
+  kicker: '⭐ La Pulga',
+  title: '¡Lionel Messi!',
+  subtitle: 'El capitán de Argentina',
+  caption: 'El mejor de la historia 🐐🏆',
+};
+const DIBU_SPOTLIGHT: Spotlight = {
+  star: STAR_STICKERS.ARG2,
+  kicker: '🧤 El arquero campeón',
+  title: '¡Dibu Martínez!',
+  subtitle: 'La figura de Argentina',
+  caption: 'Atajó todo en el Mundial 🇦🇷',
+};
+
+const isMessi = (s: ScorerEntry): boolean => s.teamId === 'ARG' && /messi/i.test(s.playerName);
 
 export function AwardsView() {
   const scorers = useAwardsStore((s) => s.scorers);
@@ -39,6 +66,16 @@ export function AwardsView() {
   const goalkeeping = useMemo(() => computeGoalkeeping(official, view), [official, view]);
   const prize = useMemo(() => computePrizeMoney(view), [view]);
   const young = useMemo(() => scorers.filter(isYoungPlayer).slice(0, YOUNG_SHOWN), [scorers]);
+
+  const [spotlight, setSpotlight] = useState<Spotlight | null>(null);
+
+  // Precarga las imágenes de Messi y Dibu para que el festejo sea instantáneo.
+  useEffect(() => {
+    [STAR_STICKERS.ARG17.image, STAR_STICKERS.ARG2.image].forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
 
   return (
     <>
@@ -58,7 +95,12 @@ export function AwardsView() {
           ) : (
             <ol className="divide-y divide-border/60">
               {scorers.slice(0, SCORERS_SHOWN).map((s, i) => (
-                <ScorerRow key={`${s.playerName}-${s.teamId}-${i}`} rank={i + 1} scorer={s} />
+                <ScorerRow
+                  key={`${s.playerName}-${s.teamId}-${i}`}
+                  rank={i + 1}
+                  scorer={s}
+                  onTap={isMessi(s) ? () => setSpotlight(MESSI_SPOTLIGHT) : undefined}
+                />
               ))}
             </ol>
           )}
@@ -75,7 +117,12 @@ export function AwardsView() {
           ) : (
             <ol className="divide-y divide-border/60">
               {goalkeeping.slice(0, GK_SHOWN).map((row, i) => (
-                <GkRowItem key={row.teamId} rank={i + 1} row={row} />
+                <GkRowItem
+                  key={row.teamId}
+                  rank={i + 1}
+                  row={row}
+                  onTap={row.teamId === 'ARG' ? () => setSpotlight(DIBU_SPOTLIGHT) : undefined}
+                />
               ))}
             </ol>
           )}
@@ -146,6 +193,17 @@ export function AwardsView() {
           </p>
         </AwardSection>
       </div>
+
+      <StickerCelebration
+        key={spotlight?.star.code}
+        star={spotlight?.star ?? null}
+        kicker={spotlight?.kicker}
+        title={spotlight?.title}
+        subtitle={spotlight?.subtitle}
+        caption={spotlight?.caption}
+        autoCloseMs={5000}
+        onClose={() => setSpotlight(null)}
+      />
     </>
   );
 }
@@ -184,10 +242,18 @@ function AwardSection({
   );
 }
 
-function ScorerRow({ rank, scorer }: { rank: number; scorer: ScorerEntry }) {
+function ScorerRow({
+  rank,
+  scorer,
+  onTap,
+}: {
+  rank: number;
+  scorer: ScorerEntry;
+  onTap?: () => void;
+}) {
   const team = scorer.teamId ? getTeam(scorer.teamId) : null;
-  return (
-    <li className="flex items-center gap-3 py-2">
+  const inner = (
+    <>
       <span className="w-5 shrink-0 text-center text-sm font-bold tabular-nums text-muted-foreground">
         {rank}
       </span>
@@ -195,7 +261,14 @@ function ScorerRow({ rank, scorer }: { rank: number; scorer: ScorerEntry }) {
         {team?.flag ?? '🏳️'}
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block truncate font-semibold">{scorer.playerName}</span>
+        <span className="block truncate font-semibold">
+          {scorer.playerName}
+          {onTap ? (
+            <span className="ml-1 text-accent" aria-hidden>
+              ✨
+            </span>
+          ) : null}
+        </span>
         <span className="block truncate text-xs text-muted-foreground">
           {team?.name ?? scorer.teamName}
         </span>
@@ -206,15 +279,38 @@ function ScorerRow({ rank, scorer }: { rank: number; scorer: ScorerEntry }) {
           {scorer.assists != null ? `${scorer.assists} asist.` : '— asist.'} · {scorer.playedMatches} PJ
         </span>
       </span>
+    </>
+  );
+  return (
+    <li>
+      {onTap ? (
+        <button
+          onClick={onTap}
+          aria-label={`Ver a ${scorer.playerName}`}
+          className="flex w-full items-center gap-3 py-2 text-left transition-colors hover:bg-accent/5"
+        >
+          {inner}
+        </button>
+      ) : (
+        <div className="flex items-center gap-3 py-2">{inner}</div>
+      )}
     </li>
   );
 }
 
-function GkRowItem({ rank, row }: { rank: number; row: GkRow }) {
+function GkRowItem({
+  rank,
+  row,
+  onTap,
+}: {
+  rank: number;
+  row: GkRow;
+  onTap?: () => void;
+}) {
   const team = getTeam(row.teamId);
   const keeper = goalkeeperOf(row.teamId);
-  return (
-    <li className="flex items-center gap-3 py-2">
+  const inner = (
+    <>
       <span className="w-5 shrink-0 text-center text-sm font-bold tabular-nums text-muted-foreground">
         {rank}
       </span>
@@ -224,7 +320,14 @@ function GkRowItem({ rank, row }: { rank: number; row: GkRow }) {
       <span className="min-w-0 flex-1">
         <span className="block truncate font-semibold">{team?.name ?? row.teamId}</span>
         {keeper ? (
-          <span className="block truncate text-xs text-muted-foreground">🧤 {keeper}</span>
+          <span className="block truncate text-xs text-muted-foreground">
+            🧤 {keeper}
+            {onTap ? (
+              <span className="ml-1 text-accent" aria-hidden>
+                ✨
+              </span>
+            ) : null}
+          </span>
         ) : null}
       </span>
       <span className="shrink-0 text-right">
@@ -233,6 +336,21 @@ function GkRowItem({ rank, row }: { rank: number; row: GkRow }) {
           vallas inv. · {row.goalsAgainst} GC · {row.played} PJ
         </span>
       </span>
+    </>
+  );
+  return (
+    <li>
+      {onTap ? (
+        <button
+          onClick={onTap}
+          aria-label={keeper ? `Ver a ${keeper}` : (team?.name ?? row.teamId)}
+          className="flex w-full items-center gap-3 py-2 text-left transition-colors hover:bg-accent/5"
+        >
+          {inner}
+        </button>
+      ) : (
+        <div className="flex items-center gap-3 py-2">{inner}</div>
+      )}
     </li>
   );
 }
