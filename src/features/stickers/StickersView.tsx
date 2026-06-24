@@ -1,8 +1,9 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { StickerSection } from '@/types';
 import { stickerAlbum, baseStickerCodes } from '@/data/stickers';
+import { STAR_STICKERS, STAR_IMAGES, type StarSticker } from '@/data/starStickers';
 import { cn } from '@/lib/cn';
 import { useStickersStore } from '@/store/stickers';
 import { shareViaWhatsApp } from '@/lib/share';
@@ -15,6 +16,7 @@ import {
 import { PageHeader } from '@/components/PageHeader';
 import { Button, Card, ProgressBar, SegmentedControl } from '@/components/ui';
 import { SearchIcon, WhatsAppIcon } from '@/components/icons';
+import { StickerCelebration } from './StickerCelebration';
 
 type Mode = 'have' | 'addRepe' | 'subRepe';
 
@@ -68,8 +70,17 @@ export function StickersView() {
   const [onlyMissing, setOnlyMissing] = useState(false);
   const [search, setSearch] = useState('');
   const [highlight, setHighlight] = useState<string | null>(null);
+  const [celebrate, setCelebrate] = useState<StarSticker | null>(null);
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastMatch = useRef<string | null>(null);
+
+  // Precarga (una vez) las imágenes de las estrellas para que el festejo sea instantáneo.
+  useEffect(() => {
+    STAR_IMAGES.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
 
   // Progreso sobre el set base (980), sin contar la promo Coca-Cola.
   const stats = useMemo(() => {
@@ -85,9 +96,14 @@ export function StickersView() {
   }, [owned]);
 
   const act = (code: string) => {
+    const wasOwned = (owned[code] ?? 0) > 0;
     if (mode === 'have') toggle(code);
     else if (mode === 'addRepe') increment(code);
     else decrement(code);
+    // Festejo al CONSEGUIR (de "no la tengo" → "la tengo") una figurita estrella.
+    if (mode !== 'subRepe' && !wasOwned && STAR_STICKERS[code]) {
+      setCelebrate(STAR_STICKERS[code]);
+    }
   };
 
   // "Todas" / "Limpiar" piden confirmación: un toque accidental podría borrar el
@@ -273,6 +289,12 @@ export function StickersView() {
           );
         })}
       </div>
+
+      <StickerCelebration
+        key={celebrate?.code}
+        star={celebrate}
+        onClose={() => setCelebrate(null)}
+      />
     </>
   );
 }
