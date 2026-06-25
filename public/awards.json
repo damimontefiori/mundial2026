@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-25T22:04:51.053Z",
+  "updatedAt": "2026-06-25T23:08:45.340Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -93,26 +93,6 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Cody Gakpo",
-      "teamId": "NED",
-      "teamName": "Netherlands",
-      "nationality": "Netherlands",
-      "dateOfBirth": "1999-05-07",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Crysencio Summerville",
-      "teamId": "NED",
-      "teamName": "Netherlands",
-      "nationality": "Netherlands",
-      "dateOfBirth": "2001-10-30",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Maximiliano Araújo",
       "teamId": "URU",
       "teamName": "Uruguay",
@@ -143,6 +123,26 @@
       "playedMatches": 3
     },
     {
+      "playerName": "Cody Gakpo",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "nationality": "Netherlands",
+      "dateOfBirth": "1999-05-07",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Crysencio Summerville",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "nationality": "Netherlands",
+      "dateOfBirth": "2001-10-30",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 3
+    },
+    {
       "playerName": "Ruben Vargas",
       "teamId": "SUI",
       "teamName": "Switzerland",
@@ -161,16 +161,6 @@
       "goals": 2,
       "assists": null,
       "playedMatches": 1
-    },
-    {
-      "playerName": "Brian Brobbey",
-      "teamId": "NED",
-      "teamName": "Netherlands",
-      "nationality": "Netherlands",
-      "dateOfBirth": "2002-02-01",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
     },
     {
       "playerName": "Cristiano Ronaldo",
@@ -231,6 +221,16 @@
       "goals": 2,
       "assists": null,
       "playedMatches": 2
+    },
+    {
+      "playerName": "Brian Brobbey",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "nationality": "Netherlands",
+      "dateOfBirth": "2002-02-01",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
     },
     {
       "playerName": "Cyle Larin",
