@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-25T00:06:51.015Z",
+  "updatedAt": "2026-06-25T00:08:41.814Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -273,6 +273,16 @@
       "playedMatches": 3
     },
     {
+      "playerName": "Raúl Jiménez",
+      "teamId": "MEX",
+      "teamName": "Mexico",
+      "nationality": "Mexico",
+      "dateOfBirth": "1991-05-05",
+      "goals": 1,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
       "playerName": "Julián Quiñones",
       "teamId": "MEX",
       "teamName": "Mexico",
@@ -280,7 +290,7 @@
       "dateOfBirth": "1997-03-24",
       "goals": 1,
       "assists": null,
-      "playedMatches": 2
+      "playedMatches": 3
     },
     {
       "playerName": "Ladislav Krejčí",
@@ -290,17 +300,7 @@
       "dateOfBirth": "1999-04-20",
       "goals": 1,
       "assists": null,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Raúl Jiménez",
-      "teamId": "MEX",
-      "teamName": "Mexico",
-      "nationality": "Mexico",
-      "dateOfBirth": "1991-05-05",
-      "goals": 1,
-      "assists": null,
-      "playedMatches": 2
+      "playedMatches": 3
     }
   ]
 }
