@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-25T03:04:52.090Z",
+  "updatedAt": "2026-06-25T20:06:45.492Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -50,7 +50,7 @@
       "dateOfBirth": "1996-07-19",
       "goals": 3,
       "assists": 2,
-      "playedMatches": 2
+      "playedMatches": 3
     },
     {
       "playerName": "Johan Manzambi",
@@ -233,16 +233,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Kai Havertz",
-      "teamId": "GER",
-      "teamName": "Germany",
-      "nationality": "Germany",
-      "dateOfBirth": "1999-06-11",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Yasin Ayari",
       "teamId": "SWE",
       "teamName": "Sweden",
@@ -278,6 +268,16 @@
       "teamName": "Mexico",
       "nationality": "Colombia",
       "dateOfBirth": "1997-03-24",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Kai Havertz",
+      "teamId": "GER",
+      "teamName": "Germany",
+      "nationality": "Germany",
+      "dateOfBirth": "1999-06-11",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
