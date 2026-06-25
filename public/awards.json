@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-25T22:02:46.286Z",
+  "updatedAt": "2026-06-25T22:04:51.053Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -93,16 +93,6 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Ayase Ueda",
-      "teamId": "JPN",
-      "teamName": "Japan",
-      "nationality": "Japan",
-      "dateOfBirth": "1998-08-28",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Cody Gakpo",
       "teamId": "NED",
       "teamName": "Netherlands",
@@ -143,6 +133,16 @@
       "playedMatches": 2
     },
     {
+      "playerName": "Ayase Ueda",
+      "teamId": "JPN",
+      "teamName": "Japan",
+      "nationality": "Japan",
+      "dateOfBirth": "1998-08-28",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 3
+    },
+    {
       "playerName": "Ruben Vargas",
       "teamId": "SUI",
       "teamName": "Switzerland",
@@ -178,16 +178,6 @@
       "teamName": "Portugal",
       "nationality": "Portugal",
       "dateOfBirth": "1985-02-05",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Daichi Kamada",
-      "teamId": "JPN",
-      "teamName": "Japan",
-      "nationality": "Japan",
-      "dateOfBirth": "1996-08-05",
       "goals": 2,
       "assists": null,
       "playedMatches": 2
@@ -243,21 +233,21 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Yasin Ayari",
-      "teamId": "SWE",
-      "teamName": "Sweden",
-      "nationality": "Sweden",
-      "dateOfBirth": "2003-10-06",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Cyle Larin",
       "teamId": "CAN",
       "teamName": "Canada",
       "nationality": "Canada",
       "dateOfBirth": "1995-04-17",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Daichi Kamada",
+      "teamId": "JPN",
+      "teamName": "Japan",
+      "nationality": "Japan",
+      "dateOfBirth": "1996-08-05",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
@@ -288,6 +278,16 @@
       "teamName": "Germany",
       "nationality": "Germany",
       "dateOfBirth": "1999-06-11",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Yasin Ayari",
+      "teamId": "SWE",
+      "teamName": "Sweden",
+      "nationality": "Sweden",
+      "dateOfBirth": "2003-10-06",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
