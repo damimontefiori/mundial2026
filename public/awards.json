@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-25T21:21:07.611Z",
+  "updatedAt": "2026-06-25T21:26:44.697Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -233,6 +233,16 @@
       "playedMatches": 2
     },
     {
+      "playerName": "Nicolas Pépé",
+      "teamId": "CIV",
+      "teamName": "Ivory Coast",
+      "nationality": "Ivory Coast",
+      "dateOfBirth": "1995-05-29",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 2
+    },
+    {
       "playerName": "Yasin Ayari",
       "teamId": "SWE",
       "teamName": "Sweden",
@@ -279,16 +289,6 @@
       "nationality": "Germany",
       "dateOfBirth": "1999-06-11",
       "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
-      "playerName": "Ladislav Krejčí",
-      "teamId": "CZE",
-      "teamName": "Czechia",
-      "nationality": "Czech Republic",
-      "dateOfBirth": "1999-04-20",
-      "goals": 1,
       "assists": null,
       "playedMatches": 3
     },
