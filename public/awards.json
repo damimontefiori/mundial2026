@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-26T04:08:44.200Z",
+  "updatedAt": "2026-06-26T19:06:45.206Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -30,7 +30,7 @@
       "dateOfBirth": "2000-07-21",
       "goals": 4,
       "assists": null,
-      "playedMatches": 2
+      "playedMatches": 3
     },
     {
       "playerName": "Kylian Mbappé",
@@ -40,7 +40,7 @@
       "dateOfBirth": "1998-12-20",
       "goals": 4,
       "assists": null,
-      "playedMatches": 2
+      "playedMatches": 3
     },
     {
       "playerName": "Deniz Undav",
@@ -203,16 +203,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Ismaïla Sarr",
-      "teamId": "SEN",
-      "teamName": "Senegal",
-      "nationality": "Senegal",
-      "dateOfBirth": "1998-02-25",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Nicolas Pépé",
       "teamId": "CIV",
       "teamName": "Ivory Coast",
@@ -268,6 +258,16 @@
       "teamName": "United States",
       "nationality": "USA",
       "dateOfBirth": "2001-07-03",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Ismaïla Sarr",
+      "teamId": "SEN",
+      "teamName": "Senegal",
+      "nationality": "Senegal",
+      "dateOfBirth": "1998-02-25",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
