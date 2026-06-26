@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-26T19:06:45.206Z",
+  "updatedAt": "2026-06-26T19:11:07.483Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -153,6 +153,16 @@
       "playedMatches": 3
     },
     {
+      "playerName": "Ousmane Dembélé",
+      "teamId": "FRA",
+      "teamName": "France",
+      "nationality": "France",
+      "dateOfBirth": "1997-05-15",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 3
+    },
+    {
       "playerName": "Ruben Vargas",
       "teamId": "SUI",
       "teamName": "Switzerland",
@@ -198,16 +208,6 @@
       "teamName": "England",
       "nationality": "England",
       "dateOfBirth": "1993-07-28",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Nicolas Pépé",
-      "teamId": "CIV",
-      "teamName": "Ivory Coast",
-      "nationality": "Ivory Coast",
-      "dateOfBirth": "1995-05-29",
       "goals": 2,
       "assists": null,
       "playedMatches": 2
