@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-26T00:22:43.960Z",
+  "updatedAt": "2026-06-26T00:28:45.488Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -233,6 +233,16 @@
       "playedMatches": 2
     },
     {
+      "playerName": "Anthony Elanga",
+      "teamId": "SWE",
+      "teamName": "Sweden",
+      "nationality": "Sweden",
+      "dateOfBirth": "2002-04-27",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
       "playerName": "Cyle Larin",
       "teamId": "CAN",
       "teamName": "Canada",
@@ -289,16 +299,6 @@
       "nationality": "Sweden",
       "dateOfBirth": "2003-10-06",
       "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
-      "playerName": "Raúl Jiménez",
-      "teamId": "MEX",
-      "teamName": "Mexico",
-      "nationality": "Mexico",
-      "dateOfBirth": "1991-05-05",
-      "goals": 1,
       "assists": null,
       "playedMatches": 3
     }
