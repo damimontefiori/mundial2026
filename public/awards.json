@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-26T01:04:48.491Z",
+  "updatedAt": "2026-06-26T02:06:45.520Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -193,16 +193,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Folarin Balogun",
-      "teamId": "USA",
-      "teamName": "United States",
-      "nationality": "USA",
-      "dateOfBirth": "2001-07-03",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Harry Kane",
       "teamId": "ENG",
       "teamName": "England",
@@ -268,6 +258,16 @@
       "teamName": "Bosnia-Herzegovina",
       "nationality": "Bosnia and Herzegovina",
       "dateOfBirth": "2005-03-14",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Folarin Balogun",
+      "teamId": "USA",
+      "teamName": "United States",
+      "nationality": "USA",
+      "dateOfBirth": "2001-07-03",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
