@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-26T20:18:45.065Z",
+  "updatedAt": "2026-06-26T20:28:48.283Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -88,6 +88,16 @@
       "teamName": "Morocco",
       "nationality": "Morocco",
       "dateOfBirth": "2001-01-28",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Ismaïla Sarr",
+      "teamId": "SEN",
+      "teamName": "Senegal",
+      "nationality": "Senegal",
+      "dateOfBirth": "1998-02-25",
       "goals": 3,
       "assists": null,
       "playedMatches": 3
@@ -258,16 +268,6 @@
       "teamName": "United States",
       "nationality": "USA",
       "dateOfBirth": "2001-07-03",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
-      "playerName": "Ismaïla Sarr",
-      "teamId": "SEN",
-      "teamName": "Senegal",
-      "nationality": "Senegal",
-      "dateOfBirth": "1998-02-25",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
