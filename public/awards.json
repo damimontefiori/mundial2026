@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-26T19:11:07.483Z",
+  "updatedAt": "2026-06-26T19:14:50.651Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -11,6 +11,16 @@
       "goals": 5,
       "assists": null,
       "playedMatches": 2
+    },
+    {
+      "playerName": "Kylian Mbappé",
+      "teamId": "FRA",
+      "teamName": "France",
+      "nationality": "France",
+      "dateOfBirth": "1998-12-20",
+      "goals": 4,
+      "assists": 1,
+      "playedMatches": 3
     },
     {
       "playerName": "Vinicius Junior",
@@ -28,16 +38,6 @@
       "teamName": "Norway",
       "nationality": "Norway",
       "dateOfBirth": "2000-07-21",
-      "goals": 4,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
-      "playerName": "Kylian Mbappé",
-      "teamId": "FRA",
-      "teamName": "France",
-      "nationality": "France",
-      "dateOfBirth": "1998-12-20",
       "goals": 4,
       "assists": null,
       "playedMatches": 3
