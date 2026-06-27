@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-26T21:11:13.708Z",
+  "updatedAt": "2026-06-27T00:06:51.439Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -123,26 +123,6 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Maximiliano Araújo",
-      "teamId": "URU",
-      "teamName": "Uruguay",
-      "nationality": "Uruguay",
-      "dateOfBirth": "2000-02-15",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Mikel Oyarzabal",
-      "teamId": "ESP",
-      "teamName": "Spain",
-      "nationality": "Spain",
-      "dateOfBirth": "1997-04-21",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Ayase Ueda",
       "teamId": "JPN",
       "teamName": "Japan",
@@ -168,6 +148,26 @@
       "teamName": "Netherlands",
       "nationality": "Netherlands",
       "dateOfBirth": "2001-10-30",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Maximiliano Araújo",
+      "teamId": "URU",
+      "teamName": "Uruguay",
+      "nationality": "Uruguay",
+      "dateOfBirth": "2000-02-15",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Mikel Oyarzabal",
+      "teamId": "ESP",
+      "teamName": "Spain",
+      "nationality": "Spain",
+      "dateOfBirth": "1997-04-21",
       "goals": 2,
       "assists": 1,
       "playedMatches": 3
