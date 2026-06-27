@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-27T02:06:45.655Z",
+  "updatedAt": "2026-06-27T03:06:48.168Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -203,16 +203,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Elijah Just",
-      "teamId": "NZL",
-      "teamName": "New Zealand",
-      "nationality": "New Zealand",
-      "dateOfBirth": "2000-05-01",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Harry Kane",
       "teamId": "ENG",
       "teamName": "England",
@@ -248,6 +238,16 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Elijah Just",
+      "teamId": "NZL",
+      "teamName": "New Zealand",
+      "nationality": "New Zealand",
+      "dateOfBirth": "2000-05-01",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
