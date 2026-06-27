@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-27T05:16:46.454Z",
+  "updatedAt": "2026-06-27T21:06:44.939Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -213,16 +213,6 @@
       "playedMatches": 1
     },
     {
-      "playerName": "Harry Kane",
-      "teamId": "ENG",
-      "teamName": "England",
-      "nationality": "England",
-      "dateOfBirth": "1993-07-28",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Anthony Elanga",
       "teamId": "SWE",
       "teamName": "Sweden",
@@ -268,6 +258,16 @@
       "teamName": "United States",
       "nationality": "USA",
       "dateOfBirth": "2001-07-03",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 3
+    },
+    {
+      "playerName": "Harry Kane",
+      "teamId": "ENG",
+      "teamName": "England",
+      "nationality": "England",
+      "dateOfBirth": "1993-07-28",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
