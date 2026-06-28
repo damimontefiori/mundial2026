@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-28T04:04:46.656Z",
+  "updatedAt": "2026-06-28T19:06:49.498Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -133,16 +133,6 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Jonathan David",
-      "teamId": "CAN",
-      "teamName": "Canada",
-      "nationality": "Canada",
-      "dateOfBirth": "2000-01-14",
-      "goals": 3,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Matheus Cunha",
       "teamId": "BRA",
       "teamName": "Brazil",
@@ -151,6 +141,16 @@
       "goals": 3,
       "assists": null,
       "playedMatches": 3
+    },
+    {
+      "playerName": "Jonathan David",
+      "teamId": "CAN",
+      "teamName": "Canada",
+      "nationality": "Canada",
+      "dateOfBirth": "2000-01-14",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 4
     },
     {
       "playerName": "Cody Gakpo",
@@ -223,16 +223,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Cyle Larin",
-      "teamId": "CAN",
-      "teamName": "Canada",
-      "nationality": "Canada",
-      "dateOfBirth": "1995-04-17",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Daichi Kamada",
       "teamId": "JPN",
       "teamName": "Japan",
@@ -301,6 +291,16 @@
       "goals": 2,
       "assists": null,
       "playedMatches": 3
+    },
+    {
+      "playerName": "Cyle Larin",
+      "teamId": "CAN",
+      "teamName": "Canada",
+      "nationality": "Canada",
+      "dateOfBirth": "1995-04-17",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 4
     }
   ]
 }
