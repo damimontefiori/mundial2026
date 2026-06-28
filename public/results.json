@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-28T20:34:49.330Z",
+  "updatedAt": "2026-06-28T20:58:45.186Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -689,8 +689,9 @@
     },
     "M73": {
       "homeGoals": 0,
-      "awayGoals": 0,
+      "awayGoals": 1,
       "status": "PAUSED",
+      "winnerCode": "CAN",
       "halfTime": {
         "homeGoals": 0,
         "awayGoals": 0
