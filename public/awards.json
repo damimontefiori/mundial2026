@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-28T03:26:49.058Z",
+  "updatedAt": "2026-06-28T03:46:51.903Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -8,7 +8,7 @@
       "teamName": "Argentina",
       "nationality": "Argentina",
       "dateOfBirth": "1987-06-24",
-      "goals": 5,
+      "goals": 6,
       "assists": null,
       "playedMatches": 3
     },
