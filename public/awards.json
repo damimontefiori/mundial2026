@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-28T01:16:50.115Z",
+  "updatedAt": "2026-06-28T01:31:22.637Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -81,6 +81,16 @@
       "goals": 3,
       "assists": 1,
       "playedMatches": 3
+    },
+    {
+      "playerName": "Yoane Wissa",
+      "teamId": "COD",
+      "teamName": "Congo DR",
+      "nationality": "Congo DR",
+      "dateOfBirth": "1996-09-03",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 2
     },
     {
       "playerName": "Brian Brobbey",
@@ -208,16 +218,6 @@
       "teamName": "Colombia",
       "nationality": "Colombia",
       "dateOfBirth": "1996-05-26",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
-      "playerName": "Yoane Wissa",
-      "teamId": "COD",
-      "teamName": "Congo DR",
-      "nationality": "Congo DR",
-      "dateOfBirth": "1996-09-03",
       "goals": 2,
       "assists": null,
       "playedMatches": 2
