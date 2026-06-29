@@ -226,9 +226,9 @@ export function computeMessiRecords(
       status: 'extended',
       statusLabel: `Marca extendida a ${21 + appearances}`,
       detail:
-        'Ya era récord mundialista. Se estima con sus partidos jugados porque la API no expone capitán.',
+        'Ya era récord mundialista. Se estima con sus partidos jugados.',
       source: 'Estimación sobre PJ de Messi',
-      note: 'Si FIFA publica capitanías partido a partido, este contador puede hacerse exacto.',
+      note: 'Valores calculados en relación a los partidos jugados registrados.',
     },
     {
       id: 'longevity',

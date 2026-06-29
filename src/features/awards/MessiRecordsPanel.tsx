@@ -31,8 +31,8 @@ export function MessiRecordsPanel({
                 La carrera histórica de Leo en 2026
               </h2>
               <p className="mt-1 text-xs text-muted-foreground">
-                Base histórica + datos vivos del torneo actual. Algunas métricas dependen de lo que
-                expone la API.
+                Base histórica + datos vivos del torneo actual. Algunas métricas dependen de
+                integraciones con servicios externos.
               </p>
             </div>
           </div>

@@ -123,7 +123,7 @@ async function main(): Promise<void> {
   mkdirSync(dirname(OUT), { recursive: true });
   writeFileSync(OUT, `${JSON.stringify(file, null, 2)}\n`, 'utf8');
   console.log(
-    `✔ results.json: ${Object.keys(results).length} partidos mapeados (${finished} jugados) de ${matches.length} de la API.`,
+    `✔ results.json: ${Object.keys(results).length} partidos mapeados (${finished} jugados) de ${matches.length} del serv. ext.`,
   );
 
   // Los resultados cambiaron ⇒ es el momento de refrescar los premios (1 request extra).
