@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T23:01:41.971Z",
+  "updatedAt": "2026-06-29T23:22:41.861Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -701,7 +701,7 @@
     "M74": {
       "homeGoals": 2,
       "awayGoals": 1,
-      "status": "PAUSED",
+      "status": "FINISHED",
       "winnerCode": "GER",
       "halfTime": {
         "homeGoals": 0,
