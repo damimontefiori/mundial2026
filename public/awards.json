@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T19:08:45.068Z",
+  "updatedAt": "2026-06-29T20:36:50.647Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -60,7 +60,7 @@
       "dateOfBirth": "1996-07-19",
       "goals": 3,
       "assists": 2,
-      "playedMatches": 3
+      "playedMatches": 4
     },
     {
       "playerName": "Ismaïla Sarr",
@@ -253,16 +253,6 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Kai Havertz",
-      "teamId": "GER",
-      "teamName": "Germany",
-      "nationality": "Germany",
-      "dateOfBirth": "1999-06-11",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Marko Arnautovic",
       "teamId": "AUT",
       "teamName": "Austria",
@@ -298,6 +288,16 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Kai Havertz",
+      "teamId": "GER",
+      "teamName": "Germany",
+      "nationality": "Germany",
+      "dateOfBirth": "1999-06-11",
       "goals": 2,
       "assists": null,
       "playedMatches": 4
