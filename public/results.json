@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T17:06:44.899Z",
+  "updatedAt": "2026-06-29T17:34:45.014Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -700,8 +700,9 @@
     },
     "M76": {
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "IN_PLAY"
+      "awayGoals": 1,
+      "status": "IN_PLAY",
+      "winnerCode": "JPN"
     }
   }
 }
