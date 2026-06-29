@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T21:44:45.831Z",
+  "updatedAt": "2026-06-29T21:52:46.477Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -138,6 +138,16 @@
       "teamName": "Canada",
       "nationality": "Canada",
       "dateOfBirth": "2000-01-14",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Kai Havertz",
+      "teamId": "GER",
+      "teamName": "Germany",
+      "nationality": "Germany",
+      "dateOfBirth": "1999-06-11",
       "goals": 3,
       "assists": null,
       "playedMatches": 4
@@ -288,16 +298,6 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
-      "playerName": "Kai Havertz",
-      "teamId": "GER",
-      "teamName": "Germany",
-      "nationality": "Germany",
-      "dateOfBirth": "1999-06-11",
       "goals": 2,
       "assists": null,
       "playedMatches": 4
