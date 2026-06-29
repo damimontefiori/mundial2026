@@ -7,6 +7,7 @@ import { useStickersStore } from '@/store/stickers';
 import { useResultsStore } from '@/store/results';
 import { useAwardsStore } from '@/store/awards';
 import { usePwaStore, type InstallPromptEvent } from '@/store/pwa';
+import { useRadioPlayerStore } from '@/store/radioPlayer';
 import { useCloudSync } from '@/hooks/useCloudSync';
 import { NudgeManager } from '@/features/nudges/NudgeManager';
 
@@ -50,6 +51,16 @@ export function Providers({ children }: { children: React.ReactNode }) {
     return () => {
       window.removeEventListener('beforeinstallprompt', onPrompt);
       window.removeEventListener('appinstalled', onInstalled);
+    };
+  }, []);
+
+  useEffect(() => {
+    const stopRadio = () => useRadioPlayerStore.getState().stop();
+    window.addEventListener('pagehide', stopRadio);
+    window.addEventListener('beforeunload', stopRadio);
+    return () => {
+      window.removeEventListener('pagehide', stopRadio);
+      window.removeEventListener('beforeunload', stopRadio);
     };
   }, []);
 

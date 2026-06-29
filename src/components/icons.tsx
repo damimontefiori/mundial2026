@@ -104,6 +104,15 @@ export const DownloadIcon = (p: IconProps) => (
   </Base>
 );
 
+export const ShareIcon = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="18" cy="5" r="3" />
+    <circle cx="6" cy="12" r="3" />
+    <circle cx="18" cy="19" r="3" />
+    <path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4" />
+  </Base>
+);
+
 export const TrophyIcon = (p: IconProps) => (
   <Base {...p}>
     <path d="M6 4h12v3a6 6 0 0 1-12 0V4Z" />

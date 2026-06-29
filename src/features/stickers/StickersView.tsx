@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { StickerSection } from '@/types';
 import { stickerAlbum, baseStickerCodes } from '@/data/stickers';
 import { STAR_STICKERS, STAR_IMAGES, type StarSticker } from '@/data/starStickers';
+import { teamsById } from '@/data/teams';
 import { cn } from '@/lib/cn';
 import { useStickersStore } from '@/store/stickers';
 import { shareViaWhatsApp } from '@/lib/share';
@@ -14,14 +15,25 @@ import {
   hasRepeated,
 } from '@/lib/stickerShare';
 import { PageHeader } from '@/components/PageHeader';
+import { Sheet } from '@/components/Sheet';
 import { Button, Card, ProgressBar, SegmentedControl } from '@/components/ui';
 import { SearchIcon, WhatsAppIcon } from '@/components/icons';
 import { StickerCelebration } from './StickerCelebration';
 
 type Mode = 'have' | 'addRepe' | 'subRepe';
+type TeamStickerSection = StickerSection & { teamId: string };
 
 /** Todos los códigos del álbum (incluida la promo), para la búsqueda. */
 const allCodes = stickerAlbum.sections.flatMap((s) => s.codes);
+const isTeamSection = (section: StickerSection): section is TeamStickerSection =>
+  section.kind === 'team' && typeof section.teamId === 'string';
+const teamSections = stickerAlbum.sections.filter(isTeamSection);
+const norm = (value: string): string =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .trim();
 
 function Cell({
   code,
@@ -71,8 +83,10 @@ export function StickersView() {
   const [search, setSearch] = useState('');
   const [highlight, setHighlight] = useState<string | null>(null);
   const [celebrate, setCelebrate] = useState<StarSticker | null>(null);
+  const [completedTeamId, setCompletedTeamId] = useState<string | null>(null);
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const lastMatch = useRef<string | null>(null);
+  const lastTarget = useRef<string | null>(null);
+  const completedTeam = completedTeamId ? teamsById[completedTeamId] : null;
 
   // Precarga (una vez) las imágenes de las estrellas para que el festejo sea instantáneo.
   useEffect(() => {
@@ -97,12 +111,31 @@ export function StickersView() {
 
   const act = (code: string) => {
     const wasOwned = (owned[code] ?? 0) > 0;
+    const section = teamSections.find((s) => s.codes.includes(code));
+    const wasSectionComplete = section?.codes.every((c) => (owned[c] ?? 0) > 0) ?? false;
+    const current = owned[code] ?? 0;
+    const nextCount =
+      mode === 'have'
+        ? current > 0
+          ? 0
+          : 1
+        : mode === 'addRepe'
+          ? current + 1
+          : Math.max(0, current - 1);
     if (mode === 'have') toggle(code);
     else if (mode === 'addRepe') increment(code);
     else decrement(code);
     // Festejo al CONSEGUIR (de "no la tengo" → "la tengo") una figurita estrella.
     if (mode !== 'subRepe' && !wasOwned && STAR_STICKERS[code]) {
       setCelebrate(STAR_STICKERS[code]);
+    }
+    if (
+      section &&
+      mode !== 'subRepe' &&
+      !wasSectionComplete &&
+      section.codes.every((c) => (c === code ? nextCount : (owned[c] ?? 0)) > 0)
+    ) {
+      setCompletedTeamId(section.teamId);
     }
   };
 
@@ -112,23 +145,57 @@ export function StickersView() {
     const msg = owned
       ? `¿Marcar como completas las ${section.codes.length} figuritas de ${section.title}?`
       : `¿Borrar tus figuritas de ${section.title}? Vas a perder las marcadas y las repes de esta sección.`;
-    if (window.confirm(msg)) markCodes(section.codes, owned);
+    const wasComplete = section.codes.every(
+      (code) => (useStickersStore.getState().owned[code] ?? 0) > 0,
+    );
+    if (window.confirm(msg)) {
+      markCodes(section.codes, owned);
+      if (owned && isTeamSection(section) && !wasComplete) setCompletedTeamId(section.teamId);
+    }
+  };
+
+  const findSearchMatch = (query: string): { code: string; sectionId?: string } | null => {
+    const codeQuery = query.trim().toUpperCase();
+    const codeMatch =
+      allCodes.find((c) => c === codeQuery) ?? allCodes.find((c) => c.startsWith(codeQuery));
+    if (codeMatch) return { code: codeMatch };
+
+    const countryQuery = norm(query);
+    if (!countryQuery) return null;
+    const section = teamSections.find((s) => {
+      const team = teamsById[s.teamId];
+      return (
+        norm(team.name).includes(countryQuery) ||
+        norm(team.fifaCode).includes(countryQuery) ||
+        norm(team.id).includes(countryQuery)
+      );
+    });
+    if (!section) return null;
+    return {
+      code:
+        section.codes.find((code) => !onlyMissing || (owned[code] ?? 0) === 0) ?? section.codes[0],
+      sectionId: section.id,
+    };
   };
 
   const onSearch = (value: string) => {
     setSearch(value);
     if (searchTimer.current) clearTimeout(searchTimer.current);
-    const q = value.trim().toUpperCase();
+    const q = value.trim();
     if (!q) {
-      lastMatch.current = null;
+      lastTarget.current = null;
+      setHighlight(null);
       return;
     }
     searchTimer.current = setTimeout(() => {
-      const match = allCodes.find((c) => c === q) ?? allCodes.find((c) => c.startsWith(q));
+      const match = findSearchMatch(q);
       if (!match) return;
-      lastMatch.current = match;
-      setHighlight(match);
-      document.getElementById(`fig-${match}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setHighlight(match.code);
+      const target =
+        document.getElementById(`fig-${match.code}`) ??
+        (match.sectionId ? document.getElementById(`fig-section-${match.sectionId}`) : null);
+      lastTarget.current = target?.id ?? null;
+      target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       setTimeout(() => setHighlight(null), 1800);
     }, 250);
   };
@@ -137,10 +204,10 @@ export function StickersView() {
   // el scroll al tope: lo re-posicionamos en la última figurita encontrada, tras el
   // reacomodo del viewport, para no perder el lugar.
   const onSearchBlur = () => {
-    const code = lastMatch.current;
-    if (!code) return;
+    const targetId = lastTarget.current;
+    if (!targetId) return;
     setTimeout(() => {
-      document.getElementById(`fig-${code}`)?.scrollIntoView({ block: 'center' });
+      document.getElementById(targetId)?.scrollIntoView({ block: 'center' });
     }, 300);
   };
 
@@ -154,7 +221,10 @@ export function StickersView() {
             <div>
               <p className="text-2xl font-bold">
                 {stats.have}
-                <span className="text-base font-medium text-muted-foreground"> / {stats.total}</span>
+                <span className="text-base font-medium text-muted-foreground">
+                  {' '}
+                  / {stats.total}
+                </span>
               </p>
               <p className="text-sm text-muted-foreground">
                 {Math.round((stats.have / stats.total) * 100)}% del álbum
@@ -191,7 +261,6 @@ export function StickersView() {
             </Button>
           </div>
         </div>
-
       </div>
 
       <div className="space-y-5 px-4 pb-6">
@@ -205,7 +274,7 @@ export function StickersView() {
               value={search}
               onChange={(e) => onSearch(e.target.value)}
               onBlur={onSearchBlur}
-              placeholder="Buscar por código (ej. MEX1, FWC1, CC3)…"
+              placeholder="Buscar por código, país o selección…"
               className="h-10 w-full rounded-xl border border-border bg-card pl-10 pr-3 text-base uppercase outline-none placeholder:normal-case focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
@@ -235,16 +304,14 @@ export function StickersView() {
         </div>
 
         {stickerAlbum.sections.map((section) => {
-          const visible = section.codes.filter(
-            (code) => !onlyMissing || (owned[code] ?? 0) === 0,
-          );
+          const visible = section.codes.filter((code) => !onlyMissing || (owned[code] ?? 0) === 0);
           const sectionHave = section.codes.filter((code) => (owned[code] ?? 0) > 0).length;
           const sectionTotal = section.codes.length;
           const firstCode = section.codes[0];
           const lastCode = section.codes[section.codes.length - 1];
 
           return (
-            <section key={section.id}>
+            <section key={section.id} id={`fig-section-${section.id}`}>
               <div className="mb-2 flex items-center justify-between gap-2">
                 <div className="min-w-0">
                   <h2 className="truncate font-bold">{section.title}</h2>
@@ -295,6 +362,28 @@ export function StickersView() {
         star={celebrate}
         onClose={() => setCelebrate(null)}
       />
+      <Sheet
+        open={completedTeam !== null}
+        onClose={() => setCompletedTeamId(null)}
+        title="¡País completo!"
+      >
+        {completedTeam ? (
+          <div className="space-y-4 text-center">
+            <div className="text-5xl" aria-hidden>
+              {completedTeam.flag}
+            </div>
+            <div>
+              <p className="text-lg font-bold">Completaste {completedTeam.name}</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Ya tenés las 20 figuritas de esta selección.
+              </p>
+            </div>
+            <Button className="w-full" onClick={() => setCompletedTeamId(null)}>
+              Genial
+            </Button>
+          </div>
+        ) : null}
+      </Sheet>
     </>
   );
 }

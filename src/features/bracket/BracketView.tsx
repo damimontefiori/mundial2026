@@ -22,7 +22,7 @@ export function BracketView() {
   const official = useResultsStore((s) => s.official);
   const updatedAt = useResultsStore((s) => s.updatedAt);
 
-  const [tab, setTab] = useState<'groups' | 'knockout'>('groups');
+  const [tab, setTab] = useState<'knockout' | 'groups'>('knockout');
 
   // Efectivo = simulación del usuario + resultados reales (estos pisan y bloquean).
   const { groupResults, picks, locked } = useMemo(
@@ -91,9 +91,9 @@ export function BracketView() {
         <div className="mx-4 mt-3 flex items-center gap-2 rounded-xl border border-accent/40 bg-accent/10 px-3 py-2 text-xs text-muted-foreground">
           <ForecastIcon className="h-4 w-4 shrink-0 text-accent" aria-hidden />
           <span className="flex-1">
-            <span className="font-semibold text-accent">Pronóstico aplicado</span> — los partidos sin
-            jugar muestran una proyección del modelo, no resultados reales. Editá lo que quieras o
-            reiniciá con ↺.
+            <span className="font-semibold text-accent">Pronóstico aplicado</span> — los partidos
+            sin jugar muestran una proyección del modelo, no resultados reales. Editá lo que quieras
+            o reiniciá con ↺.
           </span>
         </div>
       ) : null}
@@ -101,8 +101,8 @@ export function BracketView() {
       <div className="px-4 pt-3">
         <SegmentedControl
           options={[
-            { value: 'groups', label: 'Grupos' },
             { value: 'knockout', label: 'Llave' },
+            { value: 'groups', label: 'Grupos' },
           ]}
           value={tab}
           onChange={setTab}
@@ -110,10 +110,10 @@ export function BracketView() {
       </div>
 
       <div className="mt-3">
-        {tab === 'groups' ? (
-          <GroupsPanel results={groupResults} locked={locked} ratings={ratings} />
-        ) : (
+        {tab === 'knockout' ? (
           <KnockoutPanel view={view} locked={locked} official={official} ratings={ratings} />
+        ) : (
+          <GroupsPanel results={groupResults} locked={locked} ratings={ratings} />
         )}
       </div>
     </>

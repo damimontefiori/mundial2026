@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { teamsById } from '@/data/teams';
 import { stickerAlbum } from '@/data/stickers';
 import { cn } from '@/lib/cn';
+import { shareApp } from '@/lib/share';
 import { usePreferencesStore } from '@/store/preferences';
 import { useSimulationStore } from '@/store/simulation';
 import { useStickersStore } from '@/store/stickers';
@@ -20,6 +21,7 @@ import {
   LinkedInIcon,
   MonitorIcon,
   MoonIcon,
+  ShareIcon,
   StarIcon,
   SunIcon,
   UsersIcon,
@@ -63,6 +65,7 @@ export function SettingsView() {
 
   const [pickerOpen, setPickerOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  const [shareMessage, setShareMessage] = useState<string | null>(null);
   const canInstall = usePwaStore((s) => s.canInstall);
   const promptInstall = usePwaStore((s) => s.promptInstall);
 
@@ -70,6 +73,20 @@ export function SettingsView() {
 
   const confirmReset = (message: string, fn: () => void) => {
     if (window.confirm(message)) fn();
+  };
+
+  const handleShareApp = async () => {
+    setShareMessage(null);
+    try {
+      const result = await shareApp();
+      setShareMessage(
+        result === 'copied' ? 'Link copiado para compartir.' : 'Listo para compartir.',
+      );
+      window.setTimeout(() => setShareMessage(null), 2500);
+    } catch (err) {
+      if (err instanceof DOMException && err.name === 'AbortError') return;
+      setShareMessage('No se pudo compartir. Probá de nuevo.');
+    }
   };
 
   return (
@@ -221,18 +238,33 @@ export function SettingsView() {
           </section>
         ) : null}
 
-        {/* Instalar */}
-        {canInstall ? (
-          <section>
-            <SectionTitle>App</SectionTitle>
-            <Card className="p-3">
-              <Button onClick={() => void promptInstall()} className="w-full">
-                <DownloadIcon className="h-5 w-5" />
-                Instalar en mi teléfono
+        {/* App */}
+        <section>
+          <SectionTitle>App</SectionTitle>
+          <Card className="divide-y divide-border p-3">
+            {canInstall ? (
+              <div className="pb-3">
+                <Button onClick={() => void promptInstall()} className="w-full">
+                  <DownloadIcon className="h-5 w-5" />
+                  Instalar en mi teléfono
+                </Button>
+              </div>
+            ) : null}
+            <div className={cn(canInstall && 'pt-3')}>
+              <Button
+                onClick={() => void handleShareApp()}
+                variant={canInstall ? 'outline' : 'primary'}
+                className="w-full"
+              >
+                <ShareIcon className="h-5 w-5" />
+                Compartir esta App
               </Button>
-            </Card>
-          </section>
-        ) : null}
+              {shareMessage ? (
+                <p className="mt-2 text-center text-xs text-muted-foreground">{shareMessage}</p>
+              ) : null}
+            </div>
+          </Card>
+        </section>
 
         {/* Datos */}
         <section>
@@ -265,15 +297,14 @@ export function SettingsView() {
           <SectionTitle>Acerca de</SectionTitle>
           <Card className="space-y-2 p-4 text-sm text-muted-foreground">
             <p>
-              <span className="font-semibold text-foreground">Mundial 2026</span> · versión 2.0
+              <span className="font-semibold text-foreground">Mundial 2026</span> · versión 3.0
             </p>
             <p>
               Horarios en hora de Argentina (UTC−3). El álbum tiene {stickerAlbum.total} figuritas.
             </p>
             <p>
-              Equipos, grupos y calendario provienen del{' '}
-              <strong>sorteo oficial de la FIFA</strong> (5 de diciembre de 2025). Los resultados los
-              simulás vos.
+              Equipos, grupos y calendario provienen del <strong>sorteo oficial de la FIFA</strong>{' '}
+              (5 de diciembre de 2025). Los resultados los simulás vos.
             </p>
             <a
               href="https://www.linkedin.com/in/damian-montefiori/"

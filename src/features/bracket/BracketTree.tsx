@@ -7,10 +7,32 @@ import type { RatingTable } from '@/lib/predict';
 import { buildBracketColumns } from '@/lib/bracketLayout';
 import { teamsById } from '@/data/teams';
 import { formatShortDate } from '@/lib/dates';
+import { useNow } from '@/lib/useNow';
 import { cn } from '@/lib/cn';
 import { useSimulationStore } from '@/store/simulation';
 import { placeholderForSlot } from '@/features/shared/matchDisplay';
 import { ForecastBar } from './Forecast';
+
+type BracketRoundKey = 'R32' | 'R16' | 'QF' | 'SF' | 'final';
+
+function currentRoundKey(
+  columns: ReturnType<typeof buildBracketColumns>['columns'],
+  official: Record<string, OfficialResult>,
+  now: Date,
+): BracketRoundKey {
+  const active = columns.find((col) =>
+    col.matches.some((m) => official[m.id]?.status !== 'FINISHED'),
+  );
+  if (active) return active.key;
+
+  let current: BracketRoundKey = 'R32';
+  const nowMs = now.getTime();
+  for (const col of columns) {
+    const firstKickoff = Math.min(...col.matches.map((m) => new Date(m.kickoffUTC).getTime()));
+    if (firstKickoff <= nowMs) current = col.key;
+  }
+  return current;
+}
 
 /** Una de las dos filas (equipo) dentro de la tarjeta de un cruce. */
 function TeamRow({
@@ -151,6 +173,11 @@ export function BracketTree({
   ratings: RatingTable;
 }) {
   const { columns, thirdPlace } = useMemo(() => buildBracketColumns(), []);
+  const now = useNow(true, 60_000);
+  const currentRound = useMemo(
+    () => currentRoundKey(columns, official, now),
+    [columns, official, now],
+  );
   const paneRef = useRef<HTMLDivElement>(null);
   const [paneH, setPaneH] = useState<number | null>(null);
 
@@ -180,6 +207,17 @@ export function BracketTree({
     };
   }, []);
 
+  useEffect(() => {
+    const pane = paneRef.current;
+    if (!pane) return;
+    const target = pane.querySelector<HTMLElement>(`[data-round="${currentRound}"]`);
+    if (!target) return;
+    const raf = requestAnimationFrame(() => {
+      pane.scrollTo({ left: Math.max(0, target.offsetLeft - 16), behavior: 'auto' });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [currentRound]);
+
   return (
     <div className="px-4 pb-6">
       <p className="mb-2 text-xs text-muted-foreground">
@@ -192,7 +230,7 @@ export function BracketTree({
       >
         <div className="flex min-w-max items-stretch gap-2">
           {columns.map((col, colIdx) => (
-            <div key={col.key} className="flex flex-col">
+            <div key={col.key} data-round={col.key} className="flex flex-col">
               <div className="sticky top-0 z-10 mb-1 bg-background pb-1 pt-1 text-center text-xs font-semibold text-muted-foreground">
                 {col.label}
               </div>
