@@ -90,6 +90,27 @@ describe('computeBracket', () => {
 });
 
 describe('allocateThirds', () => {
+  it('usa la asignación oficial para los mejores terceros reales de 2026', () => {
+    const slots = knockoutStageMatches
+      .filter((m) => m.away.kind === 'thirdFrom')
+      .map((m) => ({
+        matchId: m.id,
+        allowed: m.away.kind === 'thirdFrom' ? m.away.groups : [],
+      }));
+
+    const allocation = allocateThirds(['K', 'F', 'E', 'L', 'B', 'J', 'D', 'I'], slots);
+    expect(allocation).toEqual({
+      M74: 'D',
+      M77: 'F',
+      M79: 'E',
+      M80: 'K',
+      M81: 'B',
+      M82: 'I',
+      M85: 'J',
+      M87: 'L',
+    });
+  });
+
   it('encuentra una asignación válida para cualquier combinación de 8 de 12', () => {
     const slots = knockoutStageMatches
       .filter((m) => m.away.kind === 'thirdFrom')

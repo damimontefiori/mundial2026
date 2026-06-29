@@ -220,9 +220,7 @@ export function BracketTree({
 
   return (
     <div className="px-4 pb-6">
-      <p className="mb-2 text-xs text-muted-foreground">
-        Tocá el equipo que pasa en cada cruce. Deslizá → para ver toda la llave.
-      </p>
+      <p className="mb-2 text-xs text-muted-foreground">Deslizá → para ver toda la llave.</p>
       <div
         ref={paneRef}
         style={paneH ? { height: `${paneH}px` } : undefined}

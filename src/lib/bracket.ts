@@ -43,6 +43,42 @@ interface ThirdSlot {
   allowed: GroupId[];
 }
 
+const OFFICIAL_THIRD_ALLOCATIONS: Record<string, Record<string, GroupId>> = {
+  BDEFIJKL: {
+    M74: 'D',
+    M77: 'F',
+    M79: 'E',
+    M80: 'K',
+    M81: 'B',
+    M82: 'I',
+    M85: 'J',
+    M87: 'L',
+  },
+};
+
+function thirdGroupKey(groups: readonly GroupId[]): string {
+  return [...groups].sort().join('');
+}
+
+function officialThirdAllocation(
+  qualifiedGroups: GroupId[],
+  slots: ThirdSlot[],
+): Record<string, GroupId> | null {
+  const allocation = OFFICIAL_THIRD_ALLOCATIONS[thirdGroupKey(qualifiedGroups)];
+  if (!allocation) return null;
+
+  const slotById = new Map(slots.map((slot) => [slot.matchId, slot]));
+  const used = new Set<GroupId>();
+  for (const slot of slots) {
+    const group = allocation[slot.matchId];
+    if (!group || used.has(group) || !qualifiedGroups.includes(group)) return null;
+    if (!slotById.get(slot.matchId)?.allowed.includes(group)) return null;
+    used.add(group);
+  }
+
+  return { ...allocation };
+}
+
 /** Cupos de R32 reservados para mejores terceros (lado visitante en la data). */
 function thirdSlots(): ThirdSlot[] {
   const slots: ThirdSlot[] = [];
@@ -71,6 +107,9 @@ export function allocateThirds(
   qualifiedGroups: GroupId[],
   slots: ThirdSlot[],
 ): Record<string, GroupId> | null {
+  const official = officialThirdAllocation(qualifiedGroups, slots);
+  if (official) return official;
+
   const assignment: Record<string, GroupId> = {};
   const used = new Set<GroupId>();
 
