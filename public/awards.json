@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-28T21:02:46.633Z",
+  "updatedAt": "2026-06-29T17:06:45.449Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -40,7 +40,7 @@
       "dateOfBirth": "2000-07-12",
       "goals": 4,
       "assists": 1,
-      "playedMatches": 3
+      "playedMatches": 4
     },
     {
       "playerName": "Erling Haaland",
@@ -133,21 +133,21 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Matheus Cunha",
-      "teamId": "BRA",
-      "teamName": "Brazil",
-      "nationality": "Brazil",
-      "dateOfBirth": "1999-05-27",
-      "goals": 3,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Jonathan David",
       "teamId": "CAN",
       "teamName": "Canada",
       "nationality": "Canada",
       "dateOfBirth": "2000-01-14",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Matheus Cunha",
+      "teamId": "BRA",
+      "teamName": "Brazil",
+      "nationality": "Brazil",
+      "dateOfBirth": "1999-05-27",
       "goals": 3,
       "assists": null,
       "playedMatches": 4
@@ -223,16 +223,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Daichi Kamada",
-      "teamId": "JPN",
-      "teamName": "Japan",
-      "nationality": "Japan",
-      "dateOfBirth": "1996-08-05",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Ermin Mahmic",
       "teamId": "BIH",
       "teamName": "Bosnia-Herzegovina",
@@ -298,6 +288,16 @@
       "teamName": "Canada",
       "nationality": "Canada",
       "dateOfBirth": "1995-04-17",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Daichi Kamada",
+      "teamId": "JPN",
+      "teamName": "Japan",
+      "nationality": "Japan",
+      "dateOfBirth": "1996-08-05",
       "goals": 2,
       "assists": null,
       "playedMatches": 4
