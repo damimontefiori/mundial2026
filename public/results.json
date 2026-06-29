@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T20:36:49.788Z",
+  "updatedAt": "2026-06-29T21:18:47.079Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -700,8 +700,9 @@
     },
     "M74": {
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "IN_PLAY"
+      "awayGoals": 1,
+      "status": "IN_PLAY",
+      "winnerCode": "PAR"
     },
     "M76": {
       "homeGoals": 2,
