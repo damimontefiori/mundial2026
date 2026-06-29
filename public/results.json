@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T23:22:41.861Z",
+  "updatedAt": "2026-06-29T23:31:28.213Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -699,10 +699,10 @@
       "secondHalfStartedAt": "2026-06-28T20:12:50.045Z"
     },
     "M74": {
-      "homeGoals": 2,
-      "awayGoals": 1,
+      "homeGoals": 5,
+      "awayGoals": 6,
       "status": "FINISHED",
-      "winnerCode": "GER",
+      "duration": "PENALTY_SHOOTOUT",
       "halfTime": {
         "homeGoals": 0,
         "awayGoals": 1
