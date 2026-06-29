@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T18:12:44.842Z",
+  "updatedAt": "2026-06-29T18:22:49.187Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -699,10 +699,9 @@
       "secondHalfStartedAt": "2026-06-28T20:12:50.045Z"
     },
     "M76": {
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 1,
       "status": "IN_PLAY",
-      "winnerCode": "JPN",
       "halfTime": {
         "homeGoals": 0,
         "awayGoals": 1
