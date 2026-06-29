@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T19:02:48.296Z",
+  "updatedAt": "2026-06-29T19:08:44.448Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -701,7 +701,7 @@
     "M76": {
       "homeGoals": 2,
       "awayGoals": 1,
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "winnerCode": "BRA",
       "halfTime": {
         "homeGoals": 0,
