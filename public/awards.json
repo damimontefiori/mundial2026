@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T18:11:15.291Z",
+  "updatedAt": "2026-06-30T18:41:20.494Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -233,11 +233,11 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Ermin Mahmic",
-      "teamId": "BIH",
-      "teamName": "Bosnia-Herzegovina",
-      "nationality": "Bosnia and Herzegovina",
-      "dateOfBirth": "2005-03-14",
+      "playerName": "Amad Diallo",
+      "teamId": "CIV",
+      "teamName": "Ivory Coast",
+      "nationality": "Ivory Coast",
+      "dateOfBirth": "2002-07-11",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
