@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T22:11:16.722Z",
+  "updatedAt": "2026-06-30T22:16:47.590Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -213,14 +213,14 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Ruben Vargas",
-      "teamId": "SUI",
-      "teamName": "Switzerland",
-      "nationality": "Switzerland",
-      "dateOfBirth": "1998-08-05",
+      "playerName": "Bradley Barcola",
+      "teamId": "FRA",
+      "teamName": "France",
+      "nationality": "France",
+      "dateOfBirth": "2002-09-02",
       "goals": 2,
       "assists": 1,
-      "playedMatches": 3
+      "playedMatches": 4
     },
     {
       "playerName": "Daniel Muñoz",
