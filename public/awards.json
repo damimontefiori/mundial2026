@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T21:51:13.901Z",
+  "updatedAt": "2026-06-30T21:54:46.498Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -13,6 +13,16 @@
       "playedMatches": 3
     },
     {
+      "playerName": "Kylian Mbappé",
+      "teamId": "FRA",
+      "teamName": "France",
+      "nationality": "France",
+      "dateOfBirth": "1998-12-20",
+      "goals": 5,
+      "assists": 2,
+      "playedMatches": 4
+    },
+    {
       "playerName": "Erling Haaland",
       "teamId": "NOR",
       "teamName": "Norway",
@@ -23,23 +33,13 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Kylian Mbappé",
-      "teamId": "FRA",
-      "teamName": "France",
-      "nationality": "France",
-      "dateOfBirth": "1998-12-20",
-      "goals": 4,
-      "assists": 2,
-      "playedMatches": 4
-    },
-    {
       "playerName": "Ousmane Dembélé",
       "teamId": "FRA",
       "teamName": "France",
       "nationality": "France",
       "dateOfBirth": "1997-05-15",
       "goals": 4,
-      "assists": 1,
+      "assists": 2,
       "playedMatches": 4
     },
     {
