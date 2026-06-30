@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T02:41:17.326Z",
+  "updatedAt": "2026-06-30T02:58:43.312Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -711,9 +711,8 @@
     },
     "M75": {
       "homeGoals": 1,
-      "awayGoals": 0,
+      "awayGoals": 1,
       "status": "IN_PLAY",
-      "winnerCode": "NED",
       "halfTime": {
         "homeGoals": 0,
         "awayGoals": 0
