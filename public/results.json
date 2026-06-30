@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T23:36:44.448Z",
+  "updatedAt": "2026-06-30T00:28:43.983Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -699,8 +699,8 @@
       "secondHalfStartedAt": "2026-06-28T20:12:50.045Z"
     },
     "M74": {
-      "homeGoals": 5,
-      "awayGoals": 6,
+      "homeGoals": 4,
+      "awayGoals": 5,
       "status": "FINISHED",
       "duration": "PENALTY_SHOOTOUT",
       "halfTime": {

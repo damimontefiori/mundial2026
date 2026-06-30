@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-29T23:36:45.194Z",
+  "updatedAt": "2026-06-30T00:28:44.469Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -93,16 +93,6 @@
       "playedMatches": 2
     },
     {
-      "playerName": "Brian Brobbey",
-      "teamId": "NED",
-      "teamName": "Netherlands",
-      "nationality": "Netherlands",
-      "dateOfBirth": "2002-02-01",
-      "goals": 3,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Elijah Just",
       "teamId": "NZL",
       "teamName": "New Zealand",
@@ -123,6 +113,16 @@
       "playedMatches": 3
     },
     {
+      "playerName": "Brian Brobbey",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "nationality": "Netherlands",
+      "dateOfBirth": "2002-02-01",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
       "playerName": "Ismael Saibari",
       "teamId": "MAR",
       "teamName": "Morocco",
@@ -130,7 +130,7 @@
       "dateOfBirth": "2001-01-28",
       "goals": 3,
       "assists": null,
-      "playedMatches": 3
+      "playedMatches": 4
     },
     {
       "playerName": "Jonathan David",
@@ -161,26 +161,6 @@
       "goals": 3,
       "assists": null,
       "playedMatches": 4
-    },
-    {
-      "playerName": "Cody Gakpo",
-      "teamId": "NED",
-      "teamName": "Netherlands",
-      "nationality": "Netherlands",
-      "dateOfBirth": "1999-05-07",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 3
-    },
-    {
-      "playerName": "Crysencio Summerville",
-      "teamId": "NED",
-      "teamName": "Netherlands",
-      "nationality": "Netherlands",
-      "dateOfBirth": "2001-10-30",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 3
     },
     {
       "playerName": "Jude Bellingham",
@@ -221,6 +201,26 @@
       "goals": 2,
       "assists": 1,
       "playedMatches": 3
+    },
+    {
+      "playerName": "Cody Gakpo",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "nationality": "Netherlands",
+      "dateOfBirth": "1999-05-07",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Crysencio Summerville",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "nationality": "Netherlands",
+      "dateOfBirth": "2001-10-30",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 4
     },
     {
       "playerName": "Daniel Muñoz",
