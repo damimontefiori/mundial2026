@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T02:12:49.235Z",
+  "updatedAt": "2026-06-30T02:41:17.741Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -83,6 +83,16 @@
       "playedMatches": 3
     },
     {
+      "playerName": "Cody Gakpo",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "nationality": "Netherlands",
+      "dateOfBirth": "1999-05-07",
+      "goals": 3,
+      "assists": 1,
+      "playedMatches": 4
+    },
+    {
       "playerName": "Yoane Wissa",
       "teamId": "COD",
       "teamName": "Congo DR",
@@ -163,6 +173,16 @@
       "playedMatches": 4
     },
     {
+      "playerName": "Crysencio Summerville",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "nationality": "Netherlands",
+      "dateOfBirth": "2001-10-30",
+      "goals": 2,
+      "assists": 2,
+      "playedMatches": 4
+    },
+    {
       "playerName": "Jude Bellingham",
       "teamId": "ENG",
       "teamName": "England",
@@ -201,26 +221,6 @@
       "goals": 2,
       "assists": 1,
       "playedMatches": 3
-    },
-    {
-      "playerName": "Cody Gakpo",
-      "teamId": "NED",
-      "teamName": "Netherlands",
-      "nationality": "Netherlands",
-      "dateOfBirth": "1999-05-07",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 4
-    },
-    {
-      "playerName": "Crysencio Summerville",
-      "teamId": "NED",
-      "teamName": "Netherlands",
-      "nationality": "Netherlands",
-      "dateOfBirth": "2001-10-30",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 4
     },
     {
       "playerName": "Daniel Muñoz",
