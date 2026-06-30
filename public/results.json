@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T06:04:41.414Z",
+  "updatedAt": "2026-06-30T06:06:48.907Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -702,6 +702,7 @@
       "homeGoals": 4,
       "awayGoals": 5,
       "status": "FINISHED",
+      "winnerCode": "PAR",
       "duration": "PENALTY_SHOOTOUT",
       "halfTime": {
         "homeGoals": 0,
@@ -713,6 +714,7 @@
       "homeGoals": 3,
       "awayGoals": 4,
       "status": "FINISHED",
+      "winnerCode": "MAR",
       "duration": "PENALTY_SHOOTOUT",
       "halfTime": {
         "homeGoals": 0,
