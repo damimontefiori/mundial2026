@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T18:41:20.494Z",
+  "updatedAt": "2026-06-30T18:51:23.042Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -11,6 +11,16 @@
       "goals": 6,
       "assists": null,
       "playedMatches": 3
+    },
+    {
+      "playerName": "Erling Haaland",
+      "teamId": "NOR",
+      "teamName": "Norway",
+      "nationality": "Norway",
+      "dateOfBirth": "2000-07-21",
+      "goals": 5,
+      "assists": null,
+      "playedMatches": 4
     },
     {
       "playerName": "Kylian Mbappé",
@@ -40,16 +50,6 @@
       "dateOfBirth": "2000-07-12",
       "goals": 4,
       "assists": 1,
-      "playedMatches": 4
-    },
-    {
-      "playerName": "Erling Haaland",
-      "teamId": "NOR",
-      "teamName": "Norway",
-      "nationality": "Norway",
-      "dateOfBirth": "2000-07-21",
-      "goals": 4,
-      "assists": null,
       "playedMatches": 4
     },
     {
