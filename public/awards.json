@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T19:06:50.062Z",
+  "updatedAt": "2026-06-30T21:06:47.581Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -30,7 +30,7 @@
       "dateOfBirth": "1998-12-20",
       "goals": 4,
       "assists": 2,
-      "playedMatches": 3
+      "playedMatches": 4
     },
     {
       "playerName": "Ousmane Dembélé",
@@ -40,7 +40,7 @@
       "dateOfBirth": "1997-05-15",
       "goals": 4,
       "assists": 1,
-      "playedMatches": 3
+      "playedMatches": 4
     },
     {
       "playerName": "Vinicius Junior",
@@ -273,16 +273,6 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Yasin Ayari",
-      "teamId": "SWE",
-      "teamName": "Sweden",
-      "nationality": "Sweden",
-      "dateOfBirth": "2003-10-06",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Cyle Larin",
       "teamId": "CAN",
       "teamName": "Canada",
@@ -298,6 +288,16 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Yasin Ayari",
+      "teamId": "SWE",
+      "teamName": "Sweden",
+      "nationality": "Sweden",
+      "dateOfBirth": "2003-10-06",
       "goals": 2,
       "assists": null,
       "playedMatches": 4
