@@ -1,7 +1,17 @@
 {
-  "updatedAt": "2026-06-30T22:16:47.590Z",
+  "updatedAt": "2026-06-30T22:38:44.518Z",
   "source": "football-data.org",
   "scorers": [
+    {
+      "playerName": "Kylian Mbappé",
+      "teamId": "FRA",
+      "teamName": "France",
+      "nationality": "France",
+      "dateOfBirth": "1998-12-20",
+      "goals": 6,
+      "assists": 2,
+      "playedMatches": 4
+    },
     {
       "playerName": "Lionel Messi",
       "teamId": "ARG",
@@ -11,16 +21,6 @@
       "goals": 6,
       "assists": null,
       "playedMatches": 3
-    },
-    {
-      "playerName": "Kylian Mbappé",
-      "teamId": "FRA",
-      "teamName": "France",
-      "nationality": "France",
-      "dateOfBirth": "1998-12-20",
-      "goals": 5,
-      "assists": 2,
-      "playedMatches": 4
     },
     {
       "playerName": "Erling Haaland",
