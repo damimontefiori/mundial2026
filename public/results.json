@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T22:04:48.856Z",
+  "updatedAt": "2026-06-30T22:11:16.412Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -736,12 +736,13 @@
     "M77": {
       "homeGoals": 1,
       "awayGoals": 0,
-      "status": "PAUSED",
+      "status": "IN_PLAY",
       "winnerCode": "FRA",
       "halfTime": {
         "homeGoals": 1,
         "awayGoals": 0
-      }
+      },
+      "secondHalfStartedAt": "2026-06-30T22:11:16.412Z"
     },
     "M78": {
       "homeGoals": 1,
