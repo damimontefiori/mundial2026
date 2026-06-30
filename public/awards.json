@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T06:11:14.125Z",
+  "updatedAt": "2026-06-30T17:06:47.133Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -50,7 +50,7 @@
       "dateOfBirth": "2000-07-21",
       "goals": 4,
       "assists": null,
-      "playedMatches": 3
+      "playedMatches": 4
     },
     {
       "playerName": "Deniz Undav",
