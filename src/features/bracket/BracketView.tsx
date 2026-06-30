@@ -1,16 +1,14 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { computeBracket } from '@/lib/bracket';
-import { mergeOfficial, hasOfficialResults } from '@/lib/officialResults';
+import { mergeOfficial } from '@/lib/officialResults';
 import { adjustRatingsFromOfficial } from '@/lib/predict';
 import { useSimulationStore } from '@/store/simulation';
 import { useResultsStore } from '@/store/results';
-import { formatShortDate, formatTime } from '@/lib/dates';
 import { PageHeader } from '@/components/PageHeader';
-import { Button, IconButton, SegmentedControl } from '@/components/ui';
+import { Button, IconButton } from '@/components/ui';
 import { ForecastIcon, ResetIcon } from '@/components/icons';
-import { GroupsPanel } from './GroupsPanel';
 import { KnockoutPanel } from './KnockoutPanel';
 
 export function BracketView() {
@@ -20,9 +18,6 @@ export function BracketView() {
   const resetAll = useSimulationStore((s) => s.resetAll);
   const forecastApplied = useSimulationStore((s) => s.forecastApplied);
   const official = useResultsStore((s) => s.official);
-  const updatedAt = useResultsStore((s) => s.updatedAt);
-
-  const [tab, setTab] = useState<'knockout' | 'groups'>('knockout');
 
   // Efectivo = simulación del usuario + resultados reales (estos pisan y bloquean).
   const { groupResults, picks, locked } = useMemo(
@@ -33,8 +28,6 @@ export function BracketView() {
 
   // Ratings recalibrados con los resultados reales: alimentan los pronósticos en pantalla.
   const ratings = useMemo(() => adjustRatingsFromOfficial(official), [official]);
-
-  const showOfficial = hasOfficialResults(official);
 
   const handleReset = () => {
     if (window.confirm('¿Querés borrar toda tu simulación (grupos y llave)?')) resetAll();
@@ -75,18 +68,6 @@ export function BracketView() {
         }
       />
 
-      {showOfficial ? (
-        <div className="mx-4 mt-3 rounded-xl border border-success/40 bg-success/10 px-3 py-2 text-xs text-muted-foreground">
-          <span className="font-semibold text-success">● Resultados reales</span> — los partidos
-          jugados se completan solos y quedan bloqueados; vos simulás el resto.
-          {updatedAt ? (
-            <span className="block opacity-80">
-              Actualizado: {formatShortDate(updatedAt)} · {formatTime(updatedAt)}
-            </span>
-          ) : null}
-        </div>
-      ) : null}
-
       {forecastApplied ? (
         <div className="mx-4 mt-3 flex items-center gap-2 rounded-xl border border-accent/40 bg-accent/10 px-3 py-2 text-xs text-muted-foreground">
           <ForecastIcon className="h-4 w-4 shrink-0 text-accent" aria-hidden />
@@ -98,23 +79,8 @@ export function BracketView() {
         </div>
       ) : null}
 
-      <div className="px-4 pt-3">
-        <SegmentedControl
-          options={[
-            { value: 'knockout', label: 'Llave' },
-            { value: 'groups', label: 'Grupos' },
-          ]}
-          value={tab}
-          onChange={setTab}
-        />
-      </div>
-
-      <div className="mt-3">
-        {tab === 'knockout' ? (
-          <KnockoutPanel view={view} locked={locked} official={official} ratings={ratings} />
-        ) : (
-          <GroupsPanel results={groupResults} locked={locked} ratings={ratings} />
-        )}
+      <div className="mt-2">
+        <KnockoutPanel view={view} locked={locked} official={official} ratings={ratings} />
       </div>
     </>
   );
