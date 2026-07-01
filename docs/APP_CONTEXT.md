@@ -1,6 +1,6 @@
 # Contexto de la aplicacion
 
-Fecha de analisis: 2026-06-28.
+Fecha de analisis: 2026-07-01.
 
 Este documento resume el estado real de la aplicacion para mantener contexto tecnico y de producto
 sin tener que reconstruirlo desde cero en cada cambio. No reemplaza a los documentos de arquitectura,
@@ -11,7 +11,7 @@ los flujos principales.
 
 Mundial 2026 es una PWA mobile-first hecha con Next.js App Router, TypeScript, Tailwind, Zustand y
 Vitest. El producto principal es una app para seguir el Mundial 2026 desde Argentina: fixture en hora
-AR, simulador de grupos y llave, album de figuritas, premios en vivo y ajustes personales.
+AR, simulador de llave, album de figuritas, premios en vivo y ajustes personales.
 
 La arquitectura partio como local-first, pero el estado actual incluye dos integraciones opcionales
 sin servidor propio:
@@ -31,10 +31,10 @@ La regla central de mantenimiento sigue siendo la misma: la logica de torneo y d
 | Ruta | Tab | Proposito |
 | --- | --- | --- |
 | `/` | Partidos | Fixture completo, horarios AR, filtros, detalle, calendario, radio del proximo partido. |
-| `/llave` | Llave | Simulacion de grupos y eliminatorias, pronostico predictivo, resultados reales bloqueados. |
-| `/premios` | Premios | Botin de Oro, Guante de Oro, Mejor Jugador Joven estimado, premios por fase. |
-| `/figuritas` | Figus | Album Panini, faltantes, repetidas, busqueda, compartir por WhatsApp, festejos de estrellas. |
-| `/mas` | Mas | Guia, favorito, tema, cuenta/sync, instalacion PWA, reinicio de datos y acerca de. |
+| `/llave` | Llave | Simulacion de eliminatorias con resultados reales bloqueados, pronostico predictivo. Solo muestra la llave (sin selector Grupos). |
+| `/premios` | Premios | Botin de Oro, Guante de Oro, Mejor Jugador Joven estimado, premios por fase, Records de Messi. |
+| `/figuritas` | Figus | Album Panini, faltantes, repetidas, busqueda mejorada, compartir por WhatsApp, festejos de estrellas y festejo de pais completo. |
+| `/mas` | Mas | Guia, favorito, tema, cuenta/sync, instalar PWA, compartir app, reinicio de datos y acerca de. |
 
 Nota: algunos docs historicos todavia hablan de 4 tabs y v1 sin backend. El codigo actual tiene 5
 tabs y capacidades opcionales de resultados, premios, radio y Firebase.
@@ -45,12 +45,13 @@ tabs y capacidades opcionales de resultados, premios, radio y Firebase.
 - Puede elegir equipo favorito; se resalta en fixture y llave, y habilita filtro de partidos propios.
 - La app muestra resultados reales si `public/results.json` esta poblado. Los partidos finalizados se
   bloquean y pisan la simulacion local.
-- En `Llave`, el usuario carga marcadores de grupos con steppers o usa `Pronostico` para completar lo
-  faltante con el modelo predictivo deterministico.
-- Al completar grupos se resuelven 1ros, 2dos, 8 mejores 3ros, asignacion de terceros y toda la llave.
-- `Premios` deriva candidatos desde resultados reales y goleadores del archivo estatico de premios.
-- `Figuritas` persiste cantidades por codigo oficial de figurita y permite compartir faltantes/repes.
-- `Mas` centraliza onboarding, preferencias, login/sync opcional, instalacion y reset de datos.
+- En `Llave`, la vista muestra directamente el arbol de eliminatorias (sin selector Grupos/Llave).
+  El arbol hace auto-scroll horizontal a la ronda activa del torneo. El usuario puede tocar
+  selecciones para simular avances; los partidos reales quedan bloqueados.
+- `Premios` tiene dos tabs: `Premios` (Botin, Guante, Joven, Dinero, Balon) y `Records de Messi`
+  (metricas historicas comparadas con datos vivos del torneo).
+- `Figuritas` celebra al completar un pais (Sheet con bandera) y al conseguir una figurita estrella.
+- `Mas` incluye boton de compartir la app (Web Share API con fallback a clipboard).
 
 ## Arquitectura
 
@@ -66,7 +67,7 @@ Dependencias esperadas:
 - `src/types`: fuente de verdad del dominio; no depende de React.
 - `src/data`: datasets curados y helpers de acceso; valida integridad con Zod.
 - `src/lib`: reglas puras y testeables: standings, bracket, prediccion, fechas, ICS, resultados,
-  premios, radio, share.
+  premios, radio, share, messiRecords.
 - `src/store`: Zustand. Los stores persistidos usan `persist`, `skipHydration: true` y rehidratacion
   manual en `Providers`.
 - `src/features`: UI con estado/hook por feature. Debe llamar a `src/lib`, no reimplementar reglas.
@@ -75,14 +76,16 @@ Dependencias esperadas:
 
 ### Shell de la app
 
-- `src/app/layout.tsx` define metadata, manifest, viewport, script anti-flash de tema, `Providers`,
-  contenedor `max-w-app`, `BottomNav` y `WelcomeGate`.
+- `src/app/layout.tsx` define metadata, manifest, viewport (con `maximumScale: 1, userScalable: false`
+  para bloquear zoom accidental en mobile), script anti-flash de tema, `Providers`, contenedor
+  `max-w-app`, `BottomNav` y `WelcomeGate`.
 - `src/components/Providers.tsx` hace el trabajo de cliente global:
   - rehidrata stores persistidos;
   - registra apertura (`launchCount`);
   - carga `results.json` y `awards.json`;
   - refresca resultados/premios en foco, visibility change y cada 2 min;
   - captura `beforeinstallprompt`;
+  - para el radio en `pagehide` y `beforeunload` (evita que el stream quede colgado al salir);
   - monta `useCloudSync`;
   - aplica tema y registra el service worker en produccion.
 
@@ -104,6 +107,7 @@ Dependencias esperadas:
 | `awards` | Carga/refresca goleadores desde `/awards.json`. Replica el guard anti-degradacion del store de resultados. |
 | `auth` | Expone Firebase Auth, estado de sync, errores amigables y login/logout con Google. |
 | `pwa` | Guarda el `beforeinstallprompt` diferido y permite disparar instalacion nativa. |
+| `radioPlayer` | Singleton global del audio de radio. Estado: `idle \| connecting \| playing \| error`. Expone `play()` y `stop()`. HTMLAudioElement fuera del store (modulo-level), timeout de 30 s para conexion. |
 
 ### Sync en la nube
 
@@ -181,7 +185,11 @@ Tambien expone `isGroupComplete` y `groupProgress`.
 - completitud por grupo;
 - ranking de terceros;
 - 8 mejores terceros clasificados si todos los grupos estan completos;
-- asignacion de terceros a R32 con backtracking deterministico;
+- asignacion de terceros a R32: **primero intenta `OFFICIAL_THIRD_ALLOCATIONS`** (tabla hardcodeada
+  con la asignacion real de FIFA para combinaciones conocidas de grupos calificados, ej. BDEFIJKL);
+  si no hay coincidencia, cae al backtracking deterministico. Esto es importante: el backtracking
+  puede no coincidir con la asignacion oficial de FIFA, por lo que las combinaciones ya jugadas
+  deben incluirse en `OFFICIAL_THIRD_ALLOCATIONS`;
 - resolucion de cruces por `groupWinner`, `groupRunnerUp`, `thirdFrom`, `winnerOf` y `loserOf`.
 
 La progresion se procesa por numero de partido, asi cada `winnerOf`/`loserOf` ya esta disponible.
@@ -243,23 +251,30 @@ cliente ni a Vercel. La ventana del workflow es 2026-06-10 a 2026-07-20.
 - grupos se mapean por par de equipos;
 - eliminatorias se anclan por el lado sembrado en R32 y despues se propagan con ganadores reales;
 - evita publicar `FINISHED` sin goles numericos para no bloquear falsos 0-0;
-- orienta goles y entretiempo a nuestro home/away.
+- orienta goles y entretiempo a nuestro home/away;
+- `mapStatus` incluye `case 'LIVE':` (football-data usa "LIVE", no "IN_PLAY" para partidos en curso).
 
 `src/lib/ingestAwards.ts` arma el ranking de goleadores para `awards.json` y ordena por goles,
 asistencias, menos partidos y nombre.
 
 ### Premios en UI
 
-`src/features/awards/AwardsView.tsx` usa:
+`src/features/awards/AwardsView.tsx` tiene dos tabs mediante `SegmentedControl`:
 
+**Tab "Premios":**
 - goleadores de `awards` para Botin de Oro;
 - `computeGoalkeeping` para Guante de Oro por vallas invictas, goles recibidos y PJ;
 - `isYoungPlayer` para estimar Mejor Jugador Joven con corte `2005-01-01`;
 - `computePrizeMoney` para dinero por fase segun la llave real resuelta;
-- festejos especiales al tocar Messi/Dibu si aparecen.
+- festejos especiales (`StickerCelebration`) al tocar Messi o Dibu en las listas.
 
-El archivo actual `public/results.json` fue generado el 2026-06-24; al 2026-06-28 puede estar atrasado
-si el workflow externo o el redeploy no siguieron corriendo.
+**Tab "Records de Messi":**
+- `computeMessiRecords(scorers, official, view)` en `src/lib/messiRecords.ts` devuelve un
+  `MessiRecordsDashboard` con dos grupos: `chasing` (marcas que buscaba alcanzar) y `extending`
+  (records propios que agranda en cada partido).
+- Cada metrica (`MessiRecordMetric`) tiene `baseline`, `live` (delta del torneo), `current`, `record`,
+  `progressMax`, `status` (pending/tied/broken/extended/unavailable) y `statusLabel`.
+- `src/features/awards/MessiRecordsPanel.tsx` renderiza los dos grupos con `ProgressBar`.
 
 ## Fixture y calendario
 
@@ -290,9 +305,27 @@ ICS:
 
 Radio:
 
-- `src/lib/radio.ts` define stream, flag `NEXT_PUBLIC_RADIO_ENABLED`, nombre y ventana de 30 min;
-- `RadioControl` usa audio nativo, corta en timeout de 30 s y libera `src` al detener;
+- `src/lib/radio.ts` define stream URL, flag `NEXT_PUBLIC_RADIO_ENABLED`, nombre y ventana de 30 min.
+- `src/store/radioPlayer.ts` (NO persistido): singleton global del `HTMLAudioElement` a nivel modulo.
+  `play()` arranca el stream, `stop(next?)` pausa y libera `src`. El estado se propaga via Zustand.
+  Timeout de 30 s en `connecting` antes de marcar `error`.
+- `RadioControl` lee `useRadioPlayerStore` (ya no maneja audio localmente). Muestra aviso sutil
+  fuera de la ventana de 30 min; boton play/stop dentro de la ventana.
+- `Providers` escucha `pagehide`/`beforeunload` para llamar `stop()` al salir de la app.
 - `activeRadioMatchId` elige el primer partido que todavia no termino, con backstop por ventana viva.
+
+## Llave
+
+`src/features/bracket/BracketView.tsx` ya no tiene selector Grupos/Llave; muestra siempre el arbol
+de eliminatorias (`KnockoutPanel`). Tampoco muestra el banner "Resultados reales" (se elimino para
+dar protagonismo al contenido). El banner de pronostico aplicado (`forecastApplied`) se mantiene.
+
+`src/features/bracket/KnockoutPanel.tsx` muestra una pista de simulacion cuando todos los grupos
+estan completos: "Toca una seleccion para simular quien avanza."
+
+`src/features/bracket/BracketTree.tsx` calcula la ronda activa (`currentRoundKey`) en base a partidos
+no finalizados y fechas de inicio, y hace auto-scroll horizontal al columna de esa ronda al montar.
+Se actualiza cada 60 s con `useNow`. Cada columna lleva `data-round` para el scroll target.
 
 ## Figuritas
 
@@ -302,11 +335,14 @@ Funciones de UI:
 
 - modos `Tengo`, `+ Repe`, `- Repe`;
 - progreso sobre `baseStickerCodes` (980, sin promo Coca-Cola);
-- buscador por codigo exacto o prefijo;
+- buscador mejorado: por codigo exacto o prefijo; por nombre de pais normalizado (sin acentos);
+  scroll al resultado y highlight con ring por 1.8 s;
+- re-posicionamiento del scroll al cerrar el teclado virtual en mobile (`onBlur`);
 - filtro `Solo faltan`;
 - acciones por seccion `Todas` y `Limpiar` con confirmacion;
 - compartir faltantes y repetidas por WhatsApp (`src/lib/stickerShare.ts` + `src/lib/share.ts`);
-- festejo con confeti e imagen al conseguir una figurita estrella.
+- festejo con confeti e imagen al conseguir una figurita estrella;
+- festejo con Sheet (bandera + mensaje) al completar las 20 figuritas de un pais.
 
 Riesgo de mantenimiento: la migracion v2 de `stickers` descarta colecciones viejas con claves
 numericas. No volver a mezclar indices secuenciales con codigos oficiales.
@@ -317,7 +353,9 @@ numericas. No volver a mezclar indices secuenciales con codigos oficiales.
 - `WelcomeSheet` tambien se abre desde `Mas -> Como funciona`.
 - `NudgeManager` se monta en `Providers` y sugiere instalar o iniciar sesion en aperturas 3, 7, 11,
   alternando si aplican ambas.
-- `SettingsView` concentra favorito, tema, cuenta, install prompt, resets y acerca de.
+- `SettingsView` concentra favorito, tema, cuenta, install prompt, compartir app y resets.
+  La seccion "App" agrupa instalar (si disponible) y compartir (siempre visible). `shareApp()` en
+  `src/lib/share.ts` usa `navigator.share` con fallback a `clipboard.writeText`.
 - El tema se inicializa antes de pintar en `layout.tsx` y luego se mantiene desde `Providers`.
 
 ## PWA y offline
@@ -325,6 +363,7 @@ numericas. No volver a mezclar indices secuenciales con codigos oficiales.
 - Manifest: `public/manifest.webmanifest`.
 - Service worker: `public/sw.js`, cache `m26-cache-v2`.
 - Registro solo en produccion desde `Providers`.
+- Viewport: `maximumScale: 1, userScalable: false` (bloquea zoom accidental en iOS/Android).
 
 Estrategias:
 
@@ -347,7 +386,8 @@ premios, conviene agregarlo explicitamente.
 - Primitivos en `src/components/ui.tsx`: `Button`, `IconButton`, `Card`, `SegmentedControl`, `Chip`,
   `ProgressBar`, `EmptyState`.
 - `Sheet` usa portal, bloqueo de scroll y cierre con Escape/backdrop.
-- Iconos propios en `src/components/icons.tsx`; no hay libreria de iconos instalada.
+- Iconos propios en `src/components/icons.tsx`; no hay libreria de iconos instalada. Iconos
+  disponibles al 2026-07-01: todos los anteriores mas `ShareIcon`, `PlayIcon`, `StopIcon`, `RadioIcon`.
 
 ## Tests y calidad
 
@@ -356,19 +396,23 @@ Scripts declarados:
 ```bash
 npm run typecheck
 npm run lint
-npm test
+npm test                                      # vitest con --no-file-parallelism (flakiness conocida)
 npm run build
 ```
 
 Cobertura actual observada:
 
 - datos: `data.test.ts`, `starStickers.test.ts`;
-- torneo: `standings.test.ts`, `bracket.test.ts`, `bracketLayout.test.ts`;
+- torneo: `standings.test.ts`, `bracket.test.ts` (incluye tests de `allocateThirds` con tabla
+  oficial), `bracketLayout.test.ts`;
 - prediccion: `predict.test.ts`;
 - resultados/premios: `officialResults.test.ts`, `ingestApiResults.test.ts`, `ingestAwards.test.ts`,
-  `awards.test.ts`;
+  `awards.test.ts`, `messiRecords.test.ts`;
 - fechas/estado en vivo/radio: `dates.test.ts`, `liveClock.test.ts`, `radio.test.ts`;
 - compartir figuritas: `stickerShare.test.ts`.
+
+Nota: vitest 4.1.8 falla intermitentemente con paralelismo de archivos. Siempre correr con
+`--no-file-parallelism`. El script `npm test` ya lo incluye.
 
 Antes de cerrar cambios relevantes, correr todo. Si el cambio toca solo docs, al menos correr Prettier
 o `npm run format:check` sobre el archivo/documentacion tocada.
@@ -402,6 +446,7 @@ normalizarlas:
   + sync actual con Firebase, pero el Prode de ligas sigue abierto.
 - `docs/DATA_SOURCES.md` deja "Datos en vivo" como futuro opcional, aunque resultados reales ya estan
   implementados como archivos estaticos generados por workflow.
+- `BracketView` ya no tiene el tab "Grupos"; cualquier referencia a ese selector en docs es obsoleta.
 
 ## Puntos sensibles al modificar
 
@@ -416,6 +461,11 @@ normalizarlas:
 - Cambios en PWA/cache deben subir version de cache si la estrategia cambia.
 - Cambios de UI deben conservar mobile-first, area tactil comoda, tokens de color y compatibilidad
   claro/oscuro.
+- Al agregar nuevas combinaciones de terceros calificados (nuevas rondas de R32), agregar la
+  asignacion oficial en `OFFICIAL_THIRD_ALLOCATIONS` en `src/lib/bracket.ts` para que el bracket
+  refleje la asignacion real de FIFA en lugar del backtracking deterministico.
+- `radioPlayer` es un singleton a nivel modulo (no React): el `HTMLAudioElement` vive fuera del
+  store. No duplicar la instancia ni crear otro elemento audio en ningun componente.
 
 ## Guia rapida para agregar features
 
@@ -436,3 +486,6 @@ normalizarlas:
 - Firebase: `docs/DECISIONS/0005-firebase-auth-sync.md`.
 - Prediccion: `docs/DECISIONS/0006-prode-predictivo.md`, `docs/Prode_Rendimiento_Predictivo.md`.
 - Testing: `docs/TESTING.md`, `vitest.config.ts`.
+- APIs externas: `docs/APIs_Futbol_Mundial_2026.md`, `docs/Integracion-Info_Mundial2026.md`.
+- Radio: `docs/integracion-radio-am910-node-tsx.md`.
+- Arqueros: `docs/arqueros_titulares_mundial_2026_confirmados.md`.

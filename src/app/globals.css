@@ -92,4 +92,35 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /* Bracket tree — conectores verticales entre pares de tarjetas */
+  .bracket-pair-l,
+  .bracket-pair-r {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Barra vertical a la derecha del par (mitad izquierda del árbol) */
+  .bracket-pair-l::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background: hsl(var(--border));
+  }
+
+  /* Barra vertical a la izquierda del par (mitad derecha del árbol) */
+  .bracket-pair-r::after {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background: hsl(var(--border));
+  }
 }

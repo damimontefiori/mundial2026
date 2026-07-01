@@ -4,35 +4,13 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Match, OfficialResult } from '@/types';
 import type { BracketView } from '@/lib/bracket';
 import type { RatingTable } from '@/lib/predict';
-import { buildBracketColumns } from '@/lib/bracketLayout';
+import { buildBracketColumns, type BracketColumn } from '@/lib/bracketLayout';
 import { teamsById } from '@/data/teams';
 import { formatShortDate } from '@/lib/dates';
-import { useNow } from '@/lib/useNow';
 import { cn } from '@/lib/cn';
 import { useSimulationStore } from '@/store/simulation';
 import { placeholderForSlot } from '@/features/shared/matchDisplay';
 import { ForecastBar } from './Forecast';
-
-type BracketRoundKey = 'R32' | 'R16' | 'QF' | 'SF' | 'final';
-
-function currentRoundKey(
-  columns: ReturnType<typeof buildBracketColumns>['columns'],
-  official: Record<string, OfficialResult>,
-  now: Date,
-): BracketRoundKey {
-  const active = columns.find((col) =>
-    col.matches.some((m) => official[m.id]?.status !== 'FINISHED'),
-  );
-  if (active) return active.key;
-
-  let current: BracketRoundKey = 'R32';
-  const nowMs = now.getTime();
-  for (const col of columns) {
-    const firstKickoff = Math.min(...col.matches.map((m) => new Date(m.kickoffUTC).getTime()));
-    if (firstKickoff <= nowMs) current = col.key;
-  }
-  return current;
-}
 
 /** Una de las dos filas (equipo) dentro de la tarjeta de un cruce. */
 function TeamRow({
@@ -112,7 +90,7 @@ function MatchCell({
 
   return (
     <div className="relative shrink-0">
-      {/* Conectores hacia las columnas vecinas */}
+      {/* Conectores horizontales hacia las columnas vecinas */}
       {hasLeft ? (
         <span className="absolute right-full top-1/2 h-px w-3 bg-border" aria-hidden />
       ) : null}
@@ -159,6 +137,116 @@ function MatchCell({
   );
 }
 
+/** Columna de una de las dos mitades del árbol V. */
+function HalfColumn({
+  col,
+  side,
+  roundKey,
+  isFirst,
+  isLast,
+  view,
+  favoriteId,
+  locked,
+  official,
+  ratings,
+  collapsed,
+  canCollapse,
+  onToggleCollapse,
+}: {
+  col: BracketColumn;
+  side: 'left' | 'right';
+  roundKey: BracketColumn['key'];
+  isFirst: boolean;
+  isLast: boolean;
+  view: BracketView;
+  favoriteId: string | null;
+  locked: Set<string>;
+  official: Record<string, OfficialResult>;
+  ratings: RatingTable;
+  collapsed: boolean;
+  canCollapse: boolean;
+  onToggleCollapse: () => void;
+}) {
+  // Conectores horizontales:
+  // Mitad izquierda: sin conector izquierdo en R32, siempre conector derecho.
+  // Mitad derecha: siempre conector izquierdo, sin conector derecho en R32.
+  const hasLeft = side === 'left' ? !isFirst : true;
+  const hasRight = side === 'left' ? true : !isLast;
+
+  // Par de partidos que comparten el mismo match en la ronda siguiente.
+  const pairs: Match[][] = [];
+  for (let i = 0; i < col.matches.length; i += 2) {
+    pairs.push(col.matches.slice(i, i + 2));
+  }
+  const isSingle = col.matches.length === 1;
+  const pairClass = side === 'left' ? 'bracket-pair-l' : 'bracket-pair-r';
+
+  return (
+    <div
+      data-round={side === 'right' ? roundKey + '-right' : roundKey}
+      className="flex flex-col"
+    >
+      {/* Encabezado de columna con botón de colapsar */}
+      <div className="sticky top-0 z-10 mb-1 flex items-center justify-center gap-1 bg-background pb-1 pt-1 text-center text-xs font-semibold text-muted-foreground">
+        <span>{col.label}</span>
+        {canCollapse ? (
+          <button
+            onClick={onToggleCollapse}
+            aria-label={collapsed ? 'Expandir ronda' : 'Colapsar ronda'}
+            className="rounded p-0.5 hover:text-foreground"
+          >
+            {collapsed ? '▸' : '▾'}
+          </button>
+        ) : null}
+      </div>
+
+      {collapsed ? (
+        /* Vista colapsada: solo un chip con el recuento */
+        <div className="flex w-40 flex-1 items-center justify-center">
+          <span className="rounded-full bg-success/15 px-2 py-0.5 text-[10px] text-success">
+            {col.matches.length}/{col.matches.length} ✓
+          </span>
+        </div>
+      ) : isSingle ? (
+        /* SF: una sola tarjeta, sin wrapper de par */
+        <div className="flex flex-1 flex-col justify-around">
+          <MatchCell
+            match={col.matches[0]}
+            view={view}
+            favoriteId={favoriteId}
+            locked={locked}
+            official={official}
+            ratings={ratings}
+            hasLeft={hasLeft}
+            hasRight={hasRight}
+          />
+        </div>
+      ) : (
+        /* R32, R16, QF: pares de tarjetas con conector vertical */
+        <div className="flex flex-1 flex-col justify-around gap-2">
+          {pairs.map((pair, pairIdx) => (
+            <div key={pairIdx} className={cn(pairClass, 'flex flex-col gap-2')}>
+              {pair.map((match) => (
+                <MatchCell
+                  key={match.id}
+                  match={match}
+                  view={view}
+                  favoriteId={favoriteId}
+                  locked={locked}
+                  official={official}
+                  ratings={ratings}
+                  hasLeft={hasLeft}
+                  hasRight={hasRight}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function BracketTree({
   view,
   favoriteId,
@@ -173,26 +261,48 @@ export function BracketTree({
   ratings: RatingTable;
 }) {
   const { columns, thirdPlace } = useMemo(() => buildBracketColumns(), []);
-  const now = useNow(true, 60_000);
-  const currentRound = useMemo(
-    () => currentRoundKey(columns, official, now),
-    [columns, official, now],
-  );
   const paneRef = useRef<HTMLDivElement>(null);
   const [paneH, setPaneH] = useState<number | null>(null);
+  const [collapsedRounds, setCollapsedRounds] = useState<Set<string>>(new Set());
 
-  // El árbol vive en un panel de scroll 2D acotado: así los títulos de columna
-  // (sticky top-0) quedan fijos al desplazarse. La altura se calcula para llenar
-  // desde el panel hasta arriba de la barra inferior, sin que scrollee la página.
-  // Un ResizeObserver sobre el body recalcula ante CUALQUIER cambio de layout de lo
-  // que está arriba (banner de resultados/campeón, nota de grupos, etc.), no solo
-  // cuando cambian los resultados reales.
+  // columns[0..3] = R32, R16, QF, SF  |  columns[4] = final
+  const dataColumns = columns.slice(0, 4);
+  const finalCol = columns[4];
+
+  // Mitad izquierda: rama M101, primeras n/2 tarjetas de cada columna.
+  const leftCols = dataColumns.map((col) => ({
+    ...col,
+    matches: col.matches.slice(0, col.matches.length / 2),
+  }));
+
+  // Mitad derecha: rama M102, invertida para que SF quede más cerca del centro.
+  const rightCols = [...dataColumns].reverse().map((col) => ({
+    ...col,
+    matches: col.matches.slice(col.matches.length / 2),
+  }));
+
+  // Una ronda es colapsable cuando TODOS sus partidos (ambas mitades) están jugados.
+  const isRoundComplete = (key: BracketColumn['key']): boolean => {
+    const col = dataColumns.find((c) => c.key === key);
+    return !!col && col.matches.every((m) => official[m.id]?.status === 'FINISHED');
+  };
+
+  const toggleRound = (key: string) => {
+    setCollapsedRounds((prev) => {
+      const next = new Set(prev);
+      next.has(key) ? next.delete(key) : next.add(key);
+      return next;
+    });
+  };
+
+  // Calcula la altura del panel para llenar el viewport sin que scrollee la página.
+  // ResizeObserver detecta cambios de layout arriba (banner de campeón, etc.).
   useEffect(() => {
     const recompute = () => {
       const el = paneRef.current;
       if (!el) return;
       const top = el.getBoundingClientRect().top;
-      const reserveBottom = 88; // barra de navegación inferior + respiro
+      const reserveBottom = 88;
       setPaneH(Math.max(260, window.innerHeight - top - reserveBottom));
     };
     recompute();
@@ -207,47 +317,93 @@ export function BracketTree({
     };
   }, []);
 
+  // Auto-scroll al centro (Final) al montar: el usuario ve la sala de trofeos primero
+  // y puede scrollear a izquierda o derecha para ver las rondas anteriores.
   useEffect(() => {
     const pane = paneRef.current;
     if (!pane) return;
-    const target = pane.querySelector<HTMLElement>(`[data-round="${currentRound}"]`);
+    const target = pane.querySelector<HTMLElement>('[data-round="final"]');
     if (!target) return;
     const raf = requestAnimationFrame(() => {
-      pane.scrollTo({ left: Math.max(0, target.offsetLeft - 16), behavior: 'auto' });
+      const scrollLeft = Math.max(
+        0,
+        target.offsetLeft - (pane.offsetWidth - target.offsetWidth) / 2,
+      );
+      pane.scrollTo({ left: scrollLeft, behavior: 'auto' });
     });
     return () => cancelAnimationFrame(raf);
-  }, [currentRound]);
+  }, []);
+
+  const finalMatch = finalCol?.matches[0];
 
   return (
     <div className="px-4 pb-6">
-      <p className="mb-2 text-xs text-muted-foreground">Deslizá → para ver toda la llave.</p>
+      <p className="mb-2 text-xs text-muted-foreground">← Deslizá para ver toda la llave →</p>
       <div
         ref={paneRef}
         style={paneH ? { height: `${paneH}px` } : undefined}
         className="no-scrollbar -mx-4 overflow-auto overscroll-contain px-4"
       >
         <div className="flex min-w-max items-stretch gap-2">
-          {columns.map((col, colIdx) => (
-            <div key={col.key} data-round={col.key} className="flex flex-col">
+          {/* Mitad izquierda: R32_L → R16_L → QF_L → SF_L */}
+          {leftCols.map((col, i) => (
+            <HalfColumn
+              key={col.key}
+              col={col}
+              side="left"
+              roundKey={col.key}
+              isFirst={i === 0}
+              isLast={i === leftCols.length - 1}
+              view={view}
+              favoriteId={favoriteId}
+              locked={locked}
+              official={official}
+              ratings={ratings}
+              collapsed={collapsedRounds.has(col.key)}
+              canCollapse={isRoundComplete(col.key)}
+              onToggleCollapse={() => toggleRound(col.key)}
+            />
+          ))}
+
+          {/* Centro: Final */}
+          {finalMatch ? (
+            <div data-round="final" className="flex flex-col">
               <div className="sticky top-0 z-10 mb-1 bg-background pb-1 pt-1 text-center text-xs font-semibold text-muted-foreground">
-                {col.label}
+                {finalCol.label}
               </div>
-              <div className="flex flex-1 flex-col justify-around gap-2">
-                {col.matches.map((m) => (
-                  <MatchCell
-                    key={m.id}
-                    match={m}
-                    view={view}
-                    favoriteId={favoriteId}
-                    locked={locked}
-                    official={official}
-                    ratings={ratings}
-                    hasLeft={colIdx > 0}
-                    hasRight={colIdx < columns.length - 1}
-                  />
-                ))}
+              <div className="flex flex-1 flex-col justify-around">
+                <MatchCell
+                  match={finalMatch}
+                  view={view}
+                  favoriteId={favoriteId}
+                  locked={locked}
+                  official={official}
+                  ratings={ratings}
+                  hasLeft
+                  hasRight
+                />
               </div>
             </div>
+          ) : null}
+
+          {/* Mitad derecha: SF_R → QF_R → R16_R → R32_R */}
+          {rightCols.map((col, i) => (
+            <HalfColumn
+              key={col.key + '-right'}
+              col={col}
+              side="right"
+              roundKey={col.key}
+              isFirst={i === 0}
+              isLast={i === rightCols.length - 1}
+              view={view}
+              favoriteId={favoriteId}
+              locked={locked}
+              official={official}
+              ratings={ratings}
+              collapsed={collapsedRounds.has(col.key)}
+              canCollapse={isRoundComplete(col.key)}
+              onToggleCollapse={() => toggleRound(col.key)}
+            />
           ))}
         </div>
       </div>
