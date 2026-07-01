@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T04:08:48.967Z",
+  "updatedAt": "2026-07-01T16:06:46.442Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -103,16 +103,6 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Yoane Wissa",
-      "teamId": "COD",
-      "teamName": "Congo DR",
-      "nationality": "Congo DR",
-      "dateOfBirth": "1996-09-03",
-      "goals": 3,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Elijah Just",
       "teamId": "NZL",
       "teamName": "New Zealand",
@@ -123,11 +113,11 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Harry Kane",
-      "teamId": "ENG",
-      "teamName": "England",
-      "nationality": "England",
-      "dateOfBirth": "1993-07-28",
+      "playerName": "Yoane Wissa",
+      "teamId": "COD",
+      "teamName": "Congo DR",
+      "nationality": "Congo DR",
+      "dateOfBirth": "1996-09-03",
       "goals": 3,
       "assists": null,
       "playedMatches": 3
@@ -138,6 +128,16 @@
       "teamName": "Netherlands",
       "nationality": "Netherlands",
       "dateOfBirth": "2002-02-01",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Harry Kane",
+      "teamId": "ENG",
+      "teamName": "England",
+      "nationality": "England",
+      "dateOfBirth": "1993-07-28",
       "goals": 3,
       "assists": null,
       "playedMatches": 4
@@ -193,16 +193,6 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Jude Bellingham",
-      "teamId": "ENG",
-      "teamName": "England",
-      "nationality": "England",
-      "dateOfBirth": "2003-06-29",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Maximiliano Araújo",
       "teamId": "URU",
       "teamName": "Uruguay",
@@ -228,6 +218,16 @@
       "teamName": "France",
       "nationality": "France",
       "dateOfBirth": "2002-09-02",
+      "goals": 2,
+      "assists": 1,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Jude Bellingham",
+      "teamId": "ENG",
+      "teamName": "England",
+      "nationality": "England",
+      "dateOfBirth": "2003-06-29",
       "goals": 2,
       "assists": 1,
       "playedMatches": 4
