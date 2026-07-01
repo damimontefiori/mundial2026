@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T22:58:44.148Z",
+  "updatedAt": "2026-07-01T01:06:47.431Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -253,16 +253,6 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Julián Quiñones",
-      "teamId": "MEX",
-      "teamName": "Mexico",
-      "nationality": "Colombia",
-      "dateOfBirth": "1997-03-24",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Marko Arnautovic",
       "teamId": "AUT",
       "teamName": "Austria",
@@ -288,6 +278,16 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Julián Quiñones",
+      "teamId": "MEX",
+      "teamName": "Mexico",
+      "nationality": "Colombia",
+      "dateOfBirth": "1997-03-24",
       "goals": 2,
       "assists": null,
       "playedMatches": 4
