@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T18:06:46.953Z",
+  "updatedAt": "2026-07-01T20:06:49.493Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -73,16 +73,6 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Ismaïla Sarr",
-      "teamId": "SEN",
-      "teamName": "Senegal",
-      "nationality": "Senegal",
-      "dateOfBirth": "1998-02-25",
-      "goals": 3,
-      "assists": 1,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Johan Manzambi",
       "teamId": "SUI",
       "teamName": "Switzerland",
@@ -98,6 +88,16 @@
       "teamName": "Netherlands",
       "nationality": "Netherlands",
       "dateOfBirth": "1999-05-07",
+      "goals": 3,
+      "assists": 1,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Ismaïla Sarr",
+      "teamId": "SEN",
+      "teamName": "Senegal",
+      "nationality": "Senegal",
+      "dateOfBirth": "1998-02-25",
       "goals": 3,
       "assists": 1,
       "playedMatches": 4
