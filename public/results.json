@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T01:06:46.158Z",
+  "updatedAt": "2026-07-01T02:28:45.351Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -756,9 +756,10 @@
       "secondHalfStartedAt": "2026-06-30T18:11:15.065Z"
     },
     "M79": {
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
-      "status": "IN_PLAY"
+      "status": "IN_PLAY",
+      "winnerCode": "MEX"
     }
   }
 }
