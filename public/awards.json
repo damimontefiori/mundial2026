@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T02:28:45.627Z",
+  "updatedAt": "2026-07-01T02:36:47.112Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -93,6 +93,16 @@
       "playedMatches": 4
     },
     {
+      "playerName": "Julián Quiñones",
+      "teamId": "MEX",
+      "teamName": "Mexico",
+      "nationality": "Colombia",
+      "dateOfBirth": "1997-03-24",
+      "goals": 3,
+      "assists": 1,
+      "playedMatches": 4
+    },
+    {
       "playerName": "Yoane Wissa",
       "teamId": "COD",
       "teamName": "Congo DR",
@@ -148,16 +158,6 @@
       "teamName": "Canada",
       "nationality": "Canada",
       "dateOfBirth": "2000-01-14",
-      "goals": 3,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
-      "playerName": "Julián Quiñones",
-      "teamId": "MEX",
-      "teamName": "Mexico",
-      "nationality": "Colombia",
-      "dateOfBirth": "1997-03-24",
       "goals": 3,
       "assists": null,
       "playedMatches": 4
@@ -233,16 +233,6 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Daniel Muñoz",
-      "teamId": "COL",
-      "teamName": "Colombia",
-      "nationality": "Colombia",
-      "dateOfBirth": "1996-05-26",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 2
-    },
-    {
       "playerName": "Amad Diallo",
       "teamId": "CIV",
       "teamName": "Ivory Coast",
@@ -288,6 +278,16 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Raúl Jiménez",
+      "teamId": "MEX",
+      "teamName": "Mexico",
+      "nationality": "Mexico",
+      "dateOfBirth": "1991-05-05",
       "goals": 2,
       "assists": null,
       "playedMatches": 4
