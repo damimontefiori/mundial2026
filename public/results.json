@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T02:36:46.515Z",
+  "updatedAt": "2026-07-01T02:58:43.406Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -758,8 +758,12 @@
     "M79": {
       "homeGoals": 2,
       "awayGoals": 0,
-      "status": "IN_PLAY",
-      "winnerCode": "MEX"
+      "status": "PAUSED",
+      "winnerCode": "MEX",
+      "halfTime": {
+        "homeGoals": 2,
+        "awayGoals": 0
+      }
     }
   }
 }
