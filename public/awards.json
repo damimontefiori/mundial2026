@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T22:26:44.797Z",
+  "updatedAt": "2026-07-01T22:48:49.219Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -243,16 +243,6 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Folarin Balogun",
-      "teamId": "USA",
-      "teamName": "United States",
-      "nationality": "USA",
-      "dateOfBirth": "2001-07-03",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Marko Arnautovic",
       "teamId": "AUT",
       "teamName": "Austria",
@@ -278,6 +268,16 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Folarin Balogun",
+      "teamId": "USA",
+      "teamName": "United States",
+      "nationality": "USA",
+      "dateOfBirth": "2001-07-03",
       "goals": 2,
       "assists": null,
       "playedMatches": 4
