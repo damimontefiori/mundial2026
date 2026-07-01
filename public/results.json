@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-01T21:54:44.401Z",
+  "updatedAt": "2026-07-01T21:56:45.872Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -778,10 +778,9 @@
       "secondHalfStartedAt": "2026-07-01T17:14:46.258Z"
     },
     "M82": {
-      "homeGoals": 1,
+      "homeGoals": 2,
       "awayGoals": 2,
       "status": "IN_PLAY",
-      "winnerCode": "SEN",
       "halfTime": {
         "homeGoals": 0,
         "awayGoals": 1
