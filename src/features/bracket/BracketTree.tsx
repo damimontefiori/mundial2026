@@ -99,7 +99,7 @@ function MatchCell({
       ) : null}
       <div
         className={cn(
-          'w-40 rounded-lg border bg-card p-1 shadow-sm',
+          'w-40 min-h-[94px] rounded-lg border bg-card p-1 shadow-sm',
           isLocked ? 'border-success/50' : 'border-border',
         )}
       >
@@ -173,14 +173,6 @@ function HalfColumn({
   const hasLeft = side === 'left' ? !isFirst : true;
   const hasRight = side === 'left' ? true : !isLast;
 
-  // Par de partidos que comparten el mismo match en la ronda siguiente.
-  const pairs: Match[][] = [];
-  for (let i = 0; i < col.matches.length; i += 2) {
-    pairs.push(col.matches.slice(i, i + 2));
-  }
-  const isSingle = col.matches.length === 1;
-  const pairClass = side === 'left' ? 'bracket-pair-l' : 'bracket-pair-r';
-
   return (
     <div
       data-round={side === 'right' ? roundKey + '-right' : roundKey}
@@ -207,25 +199,18 @@ function HalfColumn({
             {col.matches.length}/{col.matches.length} ✓
           </span>
         </div>
-      ) : isSingle ? (
-        /* SF: una sola tarjeta, sin wrapper de par */
-        <div className="flex flex-1 flex-col justify-around">
-          <MatchCell
-            match={col.matches[0]}
-            view={view}
-            favoriteId={favoriteId}
-            locked={locked}
-            official={official}
-            ratings={ratings}
-            hasLeft={hasLeft}
-            hasRight={hasRight}
-          />
-        </div>
-      ) : (
-        /* R32, R16, QF: pares de tarjetas con conector vertical */
-        <div className="flex flex-1 flex-col justify-around gap-2">
-          {pairs.map((pair, pairIdx) => (
-            <div key={pairIdx} className={cn(pairClass, 'flex flex-col gap-2')}>
+      ) : col.key === 'R32' ? (
+        /* R32 agrupa de a pares para dibujar los conectores verticales bracket-pair-l/r.
+           Con min-h-[94px] en todos los cards, los 8 cards × 94px llenan exactamente la
+           columna (sin free space en justify-around) → el R16, QF y SF quedan centrados
+           entre sus pares feeder porque el math de justify-around individual coincide. */
+        <div className="flex flex-1 flex-col gap-2">
+          {col.matches.reduce<Match[][]>((pairs, m, i) => {
+            if (i % 2 === 0) pairs.push([m]);
+            else pairs[pairs.length - 1].push(m);
+            return pairs;
+          }, []).map((pair) => (
+            <div key={pair[0].id} className={side === 'left' ? 'bracket-pair-l' : 'bracket-pair-r'}>
               {pair.map((match) => (
                 <MatchCell
                   key={match.id}
@@ -240,6 +225,24 @@ function HalfColumn({
                 />
               ))}
             </div>
+          ))}
+        </div>
+      ) : (
+        /* R16/QF/SF: cards individuales con justify-around. Cada card queda centrado
+           entre el par de cards de la ronda anterior gracias a que todos tienen min-h-[94px]. */
+        <div className="flex flex-1 flex-col justify-around gap-2">
+          {col.matches.map((match) => (
+            <MatchCell
+              key={match.id}
+              match={match}
+              view={view}
+              favoriteId={favoriteId}
+              locked={locked}
+              official={official}
+              ratings={ratings}
+              hasLeft={hasLeft}
+              hasRight={hasRight}
+            />
           ))}
         </div>
       )}
@@ -317,8 +320,9 @@ export function BracketTree({
     };
   }, []);
 
-  // Auto-scroll al centro (Final) al montar: el usuario ve la sala de trofeos primero
-  // y puede scrollear a izquierda o derecha para ver las rondas anteriores.
+  // Auto-scroll al centro (Final) al montar: centra horizontal y verticalmente para que
+  // la Final quede visible en el primer vistazo. El usuario puede scrollear en cualquier
+  // dirección para ver las rondas anteriores.
   useEffect(() => {
     const pane = paneRef.current;
     if (!pane) return;
@@ -329,7 +333,19 @@ export function BracketTree({
         0,
         target.offsetLeft - (pane.offsetWidth - target.offsetWidth) / 2,
       );
-      pane.scrollTo({ left: scrollLeft, behavior: 'auto' });
+      // Centra verticalmente usando getBoundingClientRect para posicionamiento exacto.
+      // Busca el match card de la Final y lo ubica al 35% desde el tope del pane,
+      // dejando espacio abajo para que el usuario sepa que puede scrollear.
+      const finalCard = target.querySelector<HTMLElement>('.relative.shrink-0');
+      let scrollTop = Math.max(0, (pane.scrollHeight - pane.offsetHeight) / 2);
+      if (finalCard) {
+        const paneRect = pane.getBoundingClientRect();
+        const cardRect = finalCard.getBoundingClientRect();
+        const cardCenterInContent =
+          cardRect.top - paneRect.top + pane.scrollTop + finalCard.offsetHeight / 2;
+        scrollTop = Math.max(0, cardCenterInContent - pane.offsetHeight * 0.35);
+      }
+      pane.scrollTo({ left: scrollLeft, top: scrollTop, behavior: 'auto' });
     });
     return () => cancelAnimationFrame(raf);
   }, []);
