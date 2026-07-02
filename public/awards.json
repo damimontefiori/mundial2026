@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-02T06:04:49.587Z",
+  "updatedAt": "2026-07-02T19:56:45.226Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -108,6 +108,16 @@
       "teamName": "Mexico",
       "nationality": "Colombia",
       "dateOfBirth": "1997-03-24",
+      "goals": 3,
+      "assists": 1,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Mikel Oyarzabal",
+      "teamId": "ESP",
+      "teamName": "Spain",
+      "nationality": "Spain",
+      "dateOfBirth": "1997-04-21",
       "goals": 3,
       "assists": 1,
       "playedMatches": 4
@@ -233,31 +243,11 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Jude Bellingham",
-      "teamId": "ENG",
-      "teamName": "England",
-      "nationality": "England",
-      "dateOfBirth": "2003-06-29",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 4
-    },
-    {
       "playerName": "Amad Diallo",
       "teamId": "CIV",
       "teamName": "Ivory Coast",
       "nationality": "Ivory Coast",
       "dateOfBirth": "2002-07-11",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
-    },
-    {
-      "playerName": "Marko Arnautovic",
-      "teamId": "AUT",
-      "teamName": "Austria",
-      "nationality": "Austria",
-      "dateOfBirth": "1989-04-19",
       "goals": 2,
       "assists": null,
       "playedMatches": 3
@@ -278,6 +268,16 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Marko Arnautovic",
+      "teamId": "AUT",
+      "teamName": "Austria",
+      "nationality": "Austria",
+      "dateOfBirth": "1989-04-19",
       "goals": 2,
       "assists": null,
       "playedMatches": 4
