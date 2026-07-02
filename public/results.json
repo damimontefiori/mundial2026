@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-02T01:11:22.343Z",
+  "updatedAt": "2026-07-02T01:16:44.225Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -780,18 +780,20 @@
     "M81": {
       "homeGoals": 1,
       "awayGoals": 0,
-      "status": "PAUSED",
+      "status": "IN_PLAY",
       "winnerCode": "USA",
       "halfTime": {
         "homeGoals": 1,
         "awayGoals": 0
-      }
+      },
+      "secondHalfStartedAt": "2026-07-02T01:16:44.225Z"
     },
     "M82": {
       "homeGoals": 3,
       "awayGoals": 2,
       "status": "FINISHED",
       "winnerCode": "BEL",
+      "duration": "EXTRA_TIME",
       "halfTime": {
         "homeGoals": 0,
         "awayGoals": 1
