@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-02T20:56:45.316Z",
+  "updatedAt": "2026-07-02T21:04:53.756Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -803,7 +803,7 @@
     "M84": {
       "homeGoals": 3,
       "awayGoals": 0,
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "winnerCode": "ESP",
       "halfTime": {
         "homeGoals": 1,
