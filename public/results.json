@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-02T02:08:52.493Z",
+  "updatedAt": "2026-07-02T02:12:45.531Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -780,7 +780,7 @@
     "M81": {
       "homeGoals": 2,
       "awayGoals": 0,
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "winnerCode": "USA",
       "halfTime": {
         "homeGoals": 1,
