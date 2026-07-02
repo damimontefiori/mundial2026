@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-02T00:44:45.082Z",
+  "updatedAt": "2026-07-02T00:48:49.757Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -143,6 +143,16 @@
       "playedMatches": 4
     },
     {
+      "playerName": "Folarin Balogun",
+      "teamId": "USA",
+      "teamName": "United States",
+      "nationality": "USA",
+      "dateOfBirth": "2001-07-03",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
       "playerName": "Ismael Saibari",
       "teamId": "MAR",
       "teamName": "Morocco",
@@ -268,16 +278,6 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
-      "playerName": "Folarin Balogun",
-      "teamId": "USA",
-      "teamName": "United States",
-      "nationality": "USA",
-      "dateOfBirth": "2001-07-03",
       "goals": 2,
       "assists": null,
       "playedMatches": 4
