@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-02T01:08:52.687Z",
+  "updatedAt": "2026-07-02T01:11:22.343Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -792,7 +792,6 @@
       "awayGoals": 2,
       "status": "FINISHED",
       "winnerCode": "BEL",
-      "duration": "EXTRA_TIME",
       "halfTime": {
         "homeGoals": 0,
         "awayGoals": 1
