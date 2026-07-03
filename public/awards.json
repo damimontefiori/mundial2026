@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T03:06:50.327Z",
+  "updatedAt": "2026-07-03T03:16:50.571Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -93,21 +93,21 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Cody Gakpo",
-      "teamId": "NED",
-      "teamName": "Netherlands",
-      "nationality": "Netherlands",
-      "dateOfBirth": "1999-05-07",
-      "goals": 3,
-      "assists": 1,
-      "playedMatches": 4
-    },
-    {
       "playerName": "Johan Manzambi",
       "teamId": "SUI",
       "teamName": "Switzerland",
       "nationality": "Switzerland",
       "dateOfBirth": "2005-10-14",
+      "goals": 3,
+      "assists": 2,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Cody Gakpo",
+      "teamId": "NED",
+      "teamName": "Netherlands",
+      "nationality": "Netherlands",
+      "dateOfBirth": "1999-05-07",
       "goals": 3,
       "assists": 1,
       "playedMatches": 4
@@ -213,6 +213,16 @@
       "playedMatches": 4
     },
     {
+      "playerName": "Breel Embolo",
+      "teamId": "SUI",
+      "teamName": "Switzerland",
+      "nationality": "Switzerland",
+      "dateOfBirth": "1997-02-14",
+      "goals": 2,
+      "assists": 2,
+      "playedMatches": 4
+    },
+    {
       "playerName": "Crysencio Summerville",
       "teamId": "NED",
       "teamName": "Netherlands",
@@ -241,16 +251,6 @@
       "goals": 2,
       "assists": 1,
       "playedMatches": 3
-    },
-    {
-      "playerName": "Bradley Barcola",
-      "teamId": "FRA",
-      "teamName": "France",
-      "nationality": "France",
-      "dateOfBirth": "2002-09-02",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 4
     },
     {
       "playerName": "Amad Diallo",

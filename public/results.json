@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T03:06:49.942Z",
+  "updatedAt": "2026-07-03T03:16:49.546Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -823,9 +823,10 @@
       "secondHalfStartedAt": "2026-07-02T20:12:50.980Z"
     },
     "M85": {
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
-      "status": "IN_PLAY"
+      "status": "IN_PLAY",
+      "winnerCode": "SUI"
     }
   }
 }
