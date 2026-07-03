@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T18:06:51.445Z",
+  "updatedAt": "2026-07-03T18:18:46.872Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -243,16 +243,6 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Ramin Rezaeian",
-      "teamId": "IRN",
-      "teamName": "Iran",
-      "nationality": "Iran",
-      "dateOfBirth": "1990-03-21",
-      "goals": 2,
-      "assists": 1,
-      "playedMatches": 3
-    },
-    {
       "playerName": "Amad Diallo",
       "teamId": "CIV",
       "teamName": "Ivory Coast",
@@ -278,6 +268,16 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
+      "playerName": "Emam Ashour",
+      "teamId": "EGY",
+      "teamName": "Egypt",
+      "nationality": "Egypt",
+      "dateOfBirth": "1998-02-20",
       "goals": 2,
       "assists": null,
       "playedMatches": 4

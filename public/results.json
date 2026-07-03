@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T18:06:51.159Z",
+  "updatedAt": "2026-07-03T18:18:46.612Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -835,8 +835,9 @@
     },
     "M88": {
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "IN_PLAY"
+      "awayGoals": 1,
+      "status": "IN_PLAY",
+      "winnerCode": "EGY"
     }
   }
 }
