@@ -1,7 +1,17 @@
 {
-  "updatedAt": "2026-07-03T22:06:48.942Z",
+  "updatedAt": "2026-07-03T22:34:54.921Z",
   "source": "football-data.org",
   "scorers": [
+    {
+      "playerName": "Lionel Messi",
+      "teamId": "ARG",
+      "teamName": "Argentina",
+      "nationality": "Argentina",
+      "dateOfBirth": "1987-06-24",
+      "goals": 7,
+      "assists": null,
+      "playedMatches": 4
+    },
     {
       "playerName": "Kylian Mbappé",
       "teamId": "FRA",
@@ -10,16 +20,6 @@
       "dateOfBirth": "1998-12-20",
       "goals": 6,
       "assists": 2,
-      "playedMatches": 4
-    },
-    {
-      "playerName": "Lionel Messi",
-      "teamId": "ARG",
-      "teamName": "Argentina",
-      "nationality": "Argentina",
-      "dateOfBirth": "1987-06-24",
-      "goals": 6,
-      "assists": null,
       "playedMatches": 4
     },
     {
