@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T23:11:20.690Z",
+  "updatedAt": "2026-07-03T23:26:50.472Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -835,9 +835,8 @@
     },
     "M86": {
       "homeGoals": 1,
-      "awayGoals": 0,
+      "awayGoals": 1,
       "status": "IN_PLAY",
-      "winnerCode": "ARG",
       "halfTime": {
         "homeGoals": 1,
         "awayGoals": 0
