@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T18:18:46.612Z",
+  "updatedAt": "2026-07-03T18:56:44.117Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -836,8 +836,12 @@
     "M88": {
       "homeGoals": 0,
       "awayGoals": 1,
-      "status": "IN_PLAY",
-      "winnerCode": "EGY"
+      "status": "PAUSED",
+      "winnerCode": "EGY",
+      "halfTime": {
+        "homeGoals": 0,
+        "awayGoals": 1
+      }
     }
   }
 }
