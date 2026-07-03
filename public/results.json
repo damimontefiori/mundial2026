@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T00:32:49.799Z",
+  "updatedAt": "2026-07-03T00:58:49.366Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -801,9 +801,10 @@
       "secondHalfStartedAt": "2026-07-01T21:12:47.980Z"
     },
     "M83": {
-      "homeGoals": 1,
+      "homeGoals": 2,
       "awayGoals": 1,
       "status": "IN_PLAY",
+      "winnerCode": "POR",
       "halfTime": {
         "homeGoals": 0,
         "awayGoals": 0
