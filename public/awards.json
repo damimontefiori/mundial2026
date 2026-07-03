@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T20:56:47.297Z",
+  "updatedAt": "2026-07-03T22:06:48.942Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -20,7 +20,7 @@
       "dateOfBirth": "1987-06-24",
       "goals": 6,
       "assists": null,
-      "playedMatches": 3
+      "playedMatches": 4
     },
     {
       "playerName": "Erling Haaland",
