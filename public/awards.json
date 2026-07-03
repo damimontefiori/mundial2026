@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03T00:18:45.732Z",
+  "updatedAt": "2026-07-03T00:32:50.870Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -153,6 +153,16 @@
       "playedMatches": 4
     },
     {
+      "playerName": "Cristiano Ronaldo",
+      "teamId": "POR",
+      "teamName": "Portugal",
+      "nationality": "Portugal",
+      "dateOfBirth": "1985-02-05",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 4
+    },
+    {
       "playerName": "Folarin Balogun",
       "teamId": "USA",
       "teamName": "United States",
@@ -268,16 +278,6 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
-      "playerName": "Marko Arnautovic",
-      "teamId": "AUT",
-      "teamName": "Austria",
-      "nationality": "Austria",
-      "dateOfBirth": "1989-04-19",
       "goals": 2,
       "assists": null,
       "playedMatches": 4
