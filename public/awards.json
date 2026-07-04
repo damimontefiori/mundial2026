@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T06:11:28.566Z",
+  "updatedAt": "2026-07-04T17:06:56.747Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -9,7 +9,7 @@
       "nationality": "Argentina",
       "dateOfBirth": "1987-06-24",
       "goals": 7,
-      "assists": 1,
+      "assists": null,
       "playedMatches": 4
     },
     {
@@ -173,26 +173,6 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Ismael Saibari",
-      "teamId": "MAR",
-      "teamName": "Morocco",
-      "nationality": "Morocco",
-      "dateOfBirth": "2001-01-28",
-      "goals": 3,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
-      "playerName": "Jonathan David",
-      "teamId": "CAN",
-      "teamName": "Canada",
-      "nationality": "Canada",
-      "dateOfBirth": "2000-01-14",
-      "goals": 3,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
       "playerName": "Kai Havertz",
       "teamId": "GER",
       "teamName": "Germany",
@@ -211,6 +191,26 @@
       "goals": 3,
       "assists": null,
       "playedMatches": 4
+    },
+    {
+      "playerName": "Ismael Saibari",
+      "teamId": "MAR",
+      "teamName": "Morocco",
+      "nationality": "Morocco",
+      "dateOfBirth": "2001-01-28",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 5
+    },
+    {
+      "playerName": "Jonathan David",
+      "teamId": "CAN",
+      "teamName": "Canada",
+      "nationality": "Canada",
+      "dateOfBirth": "2000-01-14",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 5
     },
     {
       "playerName": "Breel Embolo",
@@ -253,16 +253,6 @@
       "playedMatches": 3
     },
     {
-      "playerName": "Cyle Larin",
-      "teamId": "CAN",
-      "teamName": "Canada",
-      "nationality": "Canada",
-      "dateOfBirth": "1995-04-17",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
       "playerName": "Daichi Kamada",
       "teamId": "JPN",
       "teamName": "Japan",
@@ -301,6 +291,16 @@
       "goals": 2,
       "assists": null,
       "playedMatches": 4
+    },
+    {
+      "playerName": "Cyle Larin",
+      "teamId": "CAN",
+      "teamName": "Canada",
+      "nationality": "Canada",
+      "dateOfBirth": "1995-04-17",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 5
     }
   ]
 }
