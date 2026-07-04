@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T02:56:45.842Z",
+  "updatedAt": "2026-07-04T03:36:43.874Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -848,7 +848,7 @@
     "M87": {
       "homeGoals": 2,
       "awayGoals": 0,
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "winnerCode": "COL",
       "halfTime": {
         "homeGoals": 1,
