@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T00:36:52.608Z",
+  "updatedAt": "2026-07-04T00:38:45.404Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -838,6 +838,7 @@
       "awayGoals": 2,
       "status": "PAUSED",
       "winnerCode": "ARG",
+      "duration": "EXTRA_TIME",
       "halfTime": {
         "homeGoals": 1,
         "awayGoals": 0
