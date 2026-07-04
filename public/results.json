@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T19:08:47.152Z",
+  "updatedAt": "2026-07-04T19:11:26.815Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -871,7 +871,7 @@
     "M90": {
       "homeGoals": 0,
       "awayGoals": 3,
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "winnerCode": "MAR",
       "halfTime": {
         "homeGoals": 0,
