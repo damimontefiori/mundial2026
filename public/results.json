@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T05:44:46.605Z",
+  "updatedAt": "2026-07-04T06:06:50.650Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -860,6 +860,7 @@
       "homeGoals": 3,
       "awayGoals": 5,
       "status": "FINISHED",
+      "winnerCode": "EGY",
       "duration": "PENALTY_SHOOTOUT",
       "halfTime": {
         "homeGoals": 0,
