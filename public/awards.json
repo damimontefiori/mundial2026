@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T19:11:28.353Z",
+  "updatedAt": "2026-07-04T21:06:47.814Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -20,7 +20,7 @@
       "dateOfBirth": "1998-12-20",
       "goals": 6,
       "assists": 2,
-      "playedMatches": 4
+      "playedMatches": 5
     },
     {
       "playerName": "Erling Haaland",
@@ -50,7 +50,7 @@
       "dateOfBirth": "1997-05-15",
       "goals": 4,
       "assists": 2,
-      "playedMatches": 4
+      "playedMatches": 5
     },
     {
       "playerName": "Ismaïla Sarr",
