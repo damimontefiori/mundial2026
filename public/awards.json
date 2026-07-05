@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-05T21:12:44.220Z",
+  "updatedAt": "2026-07-05T21:46:48.526Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -23,6 +23,16 @@
       "playedMatches": 4
     },
     {
+      "playerName": "Erling Haaland",
+      "teamId": "NOR",
+      "teamName": "Norway",
+      "nationality": "Norway",
+      "dateOfBirth": "2000-07-21",
+      "goals": 6,
+      "assists": null,
+      "playedMatches": 5
+    },
+    {
       "playerName": "Harry Kane",
       "teamId": "ENG",
       "teamName": "England",
@@ -31,16 +41,6 @@
       "goals": 5,
       "assists": null,
       "playedMatches": 4
-    },
-    {
-      "playerName": "Erling Haaland",
-      "teamId": "NOR",
-      "teamName": "Norway",
-      "nationality": "Norway",
-      "dateOfBirth": "2000-07-21",
-      "goals": 5,
-      "assists": null,
-      "playedMatches": 5
     },
     {
       "playerName": "Ousmane Dembélé",
