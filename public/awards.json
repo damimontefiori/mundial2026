@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-04T23:11:22.903Z",
+  "updatedAt": "2026-07-05T20:06:46.438Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -23,16 +23,6 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Erling Haaland",
-      "teamId": "NOR",
-      "teamName": "Norway",
-      "nationality": "Norway",
-      "dateOfBirth": "2000-07-21",
-      "goals": 5,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
       "playerName": "Harry Kane",
       "teamId": "ENG",
       "teamName": "England",
@@ -41,6 +31,16 @@
       "goals": 5,
       "assists": null,
       "playedMatches": 4
+    },
+    {
+      "playerName": "Erling Haaland",
+      "teamId": "NOR",
+      "teamName": "Norway",
+      "nationality": "Norway",
+      "dateOfBirth": "2000-07-21",
+      "goals": 5,
+      "assists": null,
+      "playedMatches": 5
     },
     {
       "playerName": "Ousmane Dembélé",
@@ -80,7 +80,7 @@
       "dateOfBirth": "2000-07-12",
       "goals": 4,
       "assists": 1,
-      "playedMatches": 4
+      "playedMatches": 5
     },
     {
       "playerName": "Deniz Undav",
@@ -183,16 +183,6 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Matheus Cunha",
-      "teamId": "BRA",
-      "teamName": "Brazil",
-      "nationality": "Brazil",
-      "dateOfBirth": "1999-05-27",
-      "goals": 3,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
       "playerName": "Ismael Saibari",
       "teamId": "MAR",
       "teamName": "Morocco",
@@ -208,6 +198,16 @@
       "teamName": "Canada",
       "nationality": "Canada",
       "dateOfBirth": "2000-01-14",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 5
+    },
+    {
+      "playerName": "Matheus Cunha",
+      "teamId": "BRA",
+      "teamName": "Brazil",
+      "nationality": "Brazil",
+      "dateOfBirth": "1999-05-27",
       "goals": 3,
       "assists": null,
       "playedMatches": 5
