@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-05T21:46:48.526Z",
+  "updatedAt": "2026-07-05T21:56:53.854Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -28,7 +28,7 @@
       "teamName": "Norway",
       "nationality": "Norway",
       "dateOfBirth": "2000-07-21",
-      "goals": 6,
+      "goals": 7,
       "assists": null,
       "playedMatches": 5
     },
