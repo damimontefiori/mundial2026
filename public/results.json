@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-05T21:56:51.215Z",
+  "updatedAt": "2026-07-05T22:08:54.662Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -891,7 +891,7 @@
       "secondHalfStartedAt": "2026-07-04T18:16:51.332Z"
     },
     "M91": {
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 2,
       "status": "IN_PLAY",
       "winnerCode": "NOR",
