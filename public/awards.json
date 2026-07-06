@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-06T02:28:51.052Z",
+  "updatedAt": "2026-07-06T02:36:46.374Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -223,6 +223,16 @@
       "playedMatches": 5
     },
     {
+      "playerName": "Raúl Jiménez",
+      "teamId": "MEX",
+      "teamName": "Mexico",
+      "nationality": "Mexico",
+      "dateOfBirth": "1991-05-05",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 5
+    },
+    {
       "playerName": "Breel Embolo",
       "teamId": "SUI",
       "teamName": "Switzerland",
@@ -288,16 +298,6 @@
       "teamName": "Canada",
       "nationality": "Canada",
       "dateOfBirth": "1995-04-17",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 5
-    },
-    {
-      "playerName": "Raúl Jiménez",
-      "teamId": "MEX",
-      "teamName": "Mexico",
-      "nationality": "Mexico",
-      "dateOfBirth": "1991-05-05",
       "goals": 2,
       "assists": null,
       "playedMatches": 5
