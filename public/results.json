@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-06T20:14:13.220Z",
+  "updatedAt": "2026-07-06T20:14:48.625Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -920,7 +920,7 @@
         "homeGoals": 0,
         "awayGoals": 0
       },
-      "secondHalfStartedAt": "2026-07-06T20:14:13.220Z"
+      "secondHalfStartedAt": "2026-07-06T20:14:48.625Z"
     }
   }
 }
