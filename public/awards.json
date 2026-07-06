@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-05T22:11:26.376Z",
+  "updatedAt": "2026-07-06T01:06:52.133Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -40,7 +40,7 @@
       "dateOfBirth": "1993-07-28",
       "goals": 5,
       "assists": null,
-      "playedMatches": 4
+      "playedMatches": 5
     },
     {
       "playerName": "Ousmane Dembélé",
@@ -120,7 +120,7 @@
       "dateOfBirth": "1997-03-24",
       "goals": 3,
       "assists": 1,
-      "playedMatches": 4
+      "playedMatches": 5
     },
     {
       "playerName": "Elijah Just",
@@ -273,16 +273,6 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Raúl Jiménez",
-      "teamId": "MEX",
-      "teamName": "Mexico",
-      "nationality": "Mexico",
-      "dateOfBirth": "1991-05-05",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
       "playerName": "Yasin Ayari",
       "teamId": "SWE",
       "teamName": "Sweden",
@@ -298,6 +288,16 @@
       "teamName": "Canada",
       "nationality": "Canada",
       "dateOfBirth": "1995-04-17",
+      "goals": 2,
+      "assists": null,
+      "playedMatches": 5
+    },
+    {
+      "playerName": "Raúl Jiménez",
+      "teamId": "MEX",
+      "teamName": "Mexico",
+      "nationality": "Mexico",
+      "dateOfBirth": "1991-05-05",
       "goals": 2,
       "assists": null,
       "playedMatches": 5
