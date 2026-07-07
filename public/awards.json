@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-07T01:26:52.207Z",
+  "updatedAt": "2026-07-07T02:02:02.382Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -131,6 +131,16 @@
       "goals": 3,
       "assists": 1,
       "playedMatches": 4
+    },
+    {
+      "playerName": "Romelu Lukaku",
+      "teamId": "BEL",
+      "teamName": "Belgium",
+      "nationality": "Belgium",
+      "dateOfBirth": "1993-05-13",
+      "goals": 3,
+      "assists": 1,
+      "playedMatches": 5
     },
     {
       "playerName": "Elijah Just",
@@ -268,16 +278,6 @@
       "teamName": "Japan",
       "nationality": "Japan",
       "dateOfBirth": "1996-08-05",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
-      "playerName": "Emam Ashour",
-      "teamId": "EGY",
-      "teamName": "Egypt",
-      "nationality": "Egypt",
-      "dateOfBirth": "1998-02-20",
       "goals": 2,
       "assists": null,
       "playedMatches": 4
