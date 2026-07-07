@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-07T17:14:53.651Z",
+  "updatedAt": "2026-07-07T17:28:46.610Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -936,7 +936,7 @@
     },
     "M95": {
       "homeGoals": 0,
-      "awayGoals": 1,
+      "awayGoals": 2,
       "status": "IN_PLAY",
       "winnerCode": "EGY",
       "halfTime": {
