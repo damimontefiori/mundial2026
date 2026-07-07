@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-07T00:06:50.193Z",
+  "updatedAt": "2026-07-07T00:14:45.216Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -925,8 +925,9 @@
     },
     "M94": {
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "IN_PLAY"
+      "awayGoals": 1,
+      "status": "IN_PLAY",
+      "winnerCode": "BEL"
     }
   }
 }
