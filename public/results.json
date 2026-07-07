@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-07T00:58:44.725Z",
+  "updatedAt": "2026-07-07T01:14:46.086Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -926,12 +926,13 @@
     "M94": {
       "homeGoals": 1,
       "awayGoals": 2,
-      "status": "PAUSED",
+      "status": "IN_PLAY",
       "winnerCode": "BEL",
       "halfTime": {
         "homeGoals": 1,
         "awayGoals": 2
-      }
+      },
+      "secondHalfStartedAt": "2026-07-07T01:14:46.086Z"
     }
   }
 }
