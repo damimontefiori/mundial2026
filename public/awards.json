@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-07T18:11:33.668Z",
+  "updatedAt": "2026-07-07T20:06:53.057Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -243,16 +243,6 @@
       "playedMatches": 5
     },
     {
-      "playerName": "Breel Embolo",
-      "teamId": "SUI",
-      "teamName": "Switzerland",
-      "nationality": "Switzerland",
-      "dateOfBirth": "1997-02-14",
-      "goals": 2,
-      "assists": 2,
-      "playedMatches": 4
-    },
-    {
       "playerName": "Crysencio Summerville",
       "teamId": "NED",
       "teamName": "Netherlands",
@@ -261,6 +251,16 @@
       "goals": 2,
       "assists": 2,
       "playedMatches": 4
+    },
+    {
+      "playerName": "Breel Embolo",
+      "teamId": "SUI",
+      "teamName": "Switzerland",
+      "nationality": "Switzerland",
+      "dateOfBirth": "1997-02-14",
+      "goals": 2,
+      "assists": 2,
+      "playedMatches": 5
     },
     {
       "playerName": "Amad Diallo",
