@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-07T02:04:47.576Z",
+  "updatedAt": "2026-07-07T16:06:47.839Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -13,21 +13,21 @@
       "playedMatches": 5
     },
     {
-      "playerName": "Lionel Messi",
-      "teamId": "ARG",
-      "teamName": "Argentina",
-      "nationality": "Argentina",
-      "dateOfBirth": "1987-06-24",
-      "goals": 7,
-      "assists": null,
-      "playedMatches": 4
-    },
-    {
       "playerName": "Erling Haaland",
       "teamId": "NOR",
       "teamName": "Norway",
       "nationality": "Norway",
       "dateOfBirth": "2000-07-21",
+      "goals": 7,
+      "assists": null,
+      "playedMatches": 5
+    },
+    {
+      "playerName": "Lionel Messi",
+      "teamId": "ARG",
+      "teamName": "Argentina",
+      "nationality": "Argentina",
+      "dateOfBirth": "1987-06-24",
       "goals": 7,
       "assists": null,
       "playedMatches": 5
