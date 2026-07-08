@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-08T06:11:36.864Z",
+  "updatedAt": "2026-07-08T06:12:46.388Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -949,7 +949,6 @@
       "homeGoals": 4,
       "awayGoals": 3,
       "status": "FINISHED",
-      "winnerCode": "SUI",
       "duration": "PENALTY_SHOOTOUT",
       "halfTime": {
         "homeGoals": 0,
