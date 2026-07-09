@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-09T21:31:51.191Z",
+  "updatedAt": "2026-07-09T21:36:46.179Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -958,7 +958,7 @@
       "secondHalfStartedAt": "2026-07-07T21:11:35.012Z"
     },
     "M97": {
-      "homeGoals": 1,
+      "homeGoals": 2,
       "awayGoals": 0,
       "status": "IN_PLAY",
       "winnerCode": "FRA",
