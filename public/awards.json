@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-08T06:14:50.758Z",
+  "updatedAt": "2026-07-09T20:06:51.398Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -20,7 +20,7 @@
       "dateOfBirth": "1998-12-20",
       "goals": 7,
       "assists": 2,
-      "playedMatches": 5
+      "playedMatches": 6
     },
     {
       "playerName": "Erling Haaland",
@@ -50,7 +50,7 @@
       "dateOfBirth": "1997-05-15",
       "goals": 4,
       "assists": 2,
-      "playedMatches": 5
+      "playedMatches": 6
     },
     {
       "playerName": "Ismaïla Sarr",
@@ -203,16 +203,6 @@
       "playedMatches": 5
     },
     {
-      "playerName": "Ismael Saibari",
-      "teamId": "MAR",
-      "teamName": "Morocco",
-      "nationality": "Morocco",
-      "dateOfBirth": "2001-01-28",
-      "goals": 3,
-      "assists": null,
-      "playedMatches": 5
-    },
-    {
       "playerName": "Jonathan David",
       "teamId": "CAN",
       "teamName": "Canada",
@@ -241,6 +231,16 @@
       "goals": 3,
       "assists": null,
       "playedMatches": 5
+    },
+    {
+      "playerName": "Ismael Saibari",
+      "teamId": "MAR",
+      "teamName": "Morocco",
+      "nationality": "Morocco",
+      "dateOfBirth": "2001-01-28",
+      "goals": 3,
+      "assists": null,
+      "playedMatches": 6
     },
     {
       "playerName": "Crysencio Summerville",
