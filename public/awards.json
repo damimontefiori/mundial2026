@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-10T21:06:51.985Z",
+  "updatedAt": "2026-07-11T21:06:50.216Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -30,7 +30,7 @@
       "dateOfBirth": "2000-07-21",
       "goals": 7,
       "assists": null,
-      "playedMatches": 5
+      "playedMatches": 6
     },
     {
       "playerName": "Harry Kane",
@@ -40,7 +40,7 @@
       "dateOfBirth": "1993-07-28",
       "goals": 6,
       "assists": 1,
-      "playedMatches": 5
+      "playedMatches": 6
     },
     {
       "playerName": "Ousmane Dembélé",
@@ -63,16 +63,6 @@
       "playedMatches": 4
     },
     {
-      "playerName": "Jude Bellingham",
-      "teamId": "ENG",
-      "teamName": "England",
-      "nationality": "England",
-      "dateOfBirth": "2003-06-29",
-      "goals": 4,
-      "assists": 1,
-      "playedMatches": 5
-    },
-    {
       "playerName": "Julián Quiñones",
       "teamId": "MEX",
       "teamName": "Mexico",
@@ -91,6 +81,16 @@
       "goals": 4,
       "assists": 1,
       "playedMatches": 5
+    },
+    {
+      "playerName": "Jude Bellingham",
+      "teamId": "ENG",
+      "teamName": "England",
+      "nationality": "England",
+      "dateOfBirth": "2003-06-29",
+      "goals": 4,
+      "assists": 1,
+      "playedMatches": 6
     },
     {
       "playerName": "Mikel Oyarzabal",
