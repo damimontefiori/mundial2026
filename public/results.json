@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-11T21:06:49.097Z",
+  "updatedAt": "2026-07-12T03:52:49.639Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -901,17 +901,6 @@
       },
       "secondHalfStartedAt": "2026-07-05T21:12:42.378Z"
     },
-    "M92": {
-      "homeGoals": 2,
-      "awayGoals": 3,
-      "status": "FINISHED",
-      "winnerCode": "ENG",
-      "halfTime": {
-        "homeGoals": 1,
-        "awayGoals": 2
-      },
-      "secondHalfStartedAt": "2026-07-06T02:12:45.415Z"
-    },
     "M93": {
       "homeGoals": 0,
       "awayGoals": 1,
@@ -979,10 +968,16 @@
       },
       "secondHalfStartedAt": "2026-07-10T20:14:52.326Z"
     },
-    "M99": {
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "IN_PLAY"
+    "M100": {
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "status": "FINISHED",
+      "winnerCode": "ARG",
+      "duration": "EXTRA_TIME",
+      "halfTime": {
+        "homeGoals": 1,
+        "awayGoals": 0
+      }
     }
   }
 }

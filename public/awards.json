@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-11T21:06:50.216Z",
+  "updatedAt": "2026-07-12T03:52:51.102Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -19,8 +19,8 @@
       "nationality": "Argentina",
       "dateOfBirth": "1987-06-24",
       "goals": 8,
-      "assists": 1,
-      "playedMatches": 5
+      "assists": 2,
+      "playedMatches": 6
     },
     {
       "playerName": "Erling Haaland",
@@ -38,6 +38,16 @@
       "teamName": "England",
       "nationality": "England",
       "dateOfBirth": "1993-07-28",
+      "goals": 6,
+      "assists": 1,
+      "playedMatches": 6
+    },
+    {
+      "playerName": "Jude Bellingham",
+      "teamId": "ENG",
+      "teamName": "England",
+      "nationality": "England",
+      "dateOfBirth": "2003-06-29",
       "goals": 6,
       "assists": 1,
       "playedMatches": 6
@@ -81,16 +91,6 @@
       "goals": 4,
       "assists": 1,
       "playedMatches": 5
-    },
-    {
-      "playerName": "Jude Bellingham",
-      "teamId": "ENG",
-      "teamName": "England",
-      "nationality": "England",
-      "dateOfBirth": "2003-06-29",
-      "goals": 4,
-      "assists": 1,
-      "playedMatches": 6
     },
     {
       "playerName": "Mikel Oyarzabal",
@@ -270,7 +270,7 @@
       "dateOfBirth": "1997-02-14",
       "goals": 2,
       "assists": 2,
-      "playedMatches": 5
+      "playedMatches": 6
     },
     {
       "playerName": "Amad Diallo",
