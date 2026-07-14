@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-14T19:06:46.539Z",
+  "updatedAt": "2026-07-14T19:28:52.186Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -63,6 +63,16 @@
       "playedMatches": 7
     },
     {
+      "playerName": "Mikel Oyarzabal",
+      "teamId": "ESP",
+      "teamName": "Spain",
+      "nationality": "Spain",
+      "dateOfBirth": "1997-04-21",
+      "goals": 5,
+      "assists": 1,
+      "playedMatches": 7
+    },
+    {
       "playerName": "Ismaïla Sarr",
       "teamId": "SEN",
       "teamName": "Senegal",
@@ -91,16 +101,6 @@
       "goals": 4,
       "assists": 1,
       "playedMatches": 5
-    },
-    {
-      "playerName": "Mikel Oyarzabal",
-      "teamId": "ESP",
-      "teamName": "Spain",
-      "nationality": "Spain",
-      "dateOfBirth": "1997-04-21",
-      "goals": 4,
-      "assists": 1,
-      "playedMatches": 7
     },
     {
       "playerName": "Deniz Undav",

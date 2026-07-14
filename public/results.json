@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-14T19:06:46.173Z",
+  "updatedAt": "2026-07-14T19:28:49.664Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -1002,8 +1002,9 @@
     },
     "M101": {
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "IN_PLAY"
+      "awayGoals": 1,
+      "status": "IN_PLAY",
+      "winnerCode": "ESP"
     }
   }
 }
