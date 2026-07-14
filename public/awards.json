@@ -1,17 +1,7 @@
 {
-  "updatedAt": "2026-07-12T06:04:47.722Z",
+  "updatedAt": "2026-07-14T19:06:46.539Z",
   "source": "football-data.org",
   "scorers": [
-    {
-      "playerName": "Kylian Mbappé",
-      "teamId": "FRA",
-      "teamName": "France",
-      "nationality": "France",
-      "dateOfBirth": "1998-12-20",
-      "goals": 8,
-      "assists": 2,
-      "playedMatches": 6
-    },
     {
       "playerName": "Lionel Messi",
       "teamId": "ARG",
@@ -21,6 +11,16 @@
       "goals": 8,
       "assists": 2,
       "playedMatches": 6
+    },
+    {
+      "playerName": "Kylian Mbappé",
+      "teamId": "FRA",
+      "teamName": "France",
+      "nationality": "France",
+      "dateOfBirth": "1998-12-20",
+      "goals": 8,
+      "assists": 2,
+      "playedMatches": 7
     },
     {
       "playerName": "Erling Haaland",
@@ -60,7 +60,7 @@
       "dateOfBirth": "1997-05-15",
       "goals": 5,
       "assists": 2,
-      "playedMatches": 6
+      "playedMatches": 7
     },
     {
       "playerName": "Ismaïla Sarr",
@@ -100,7 +100,7 @@
       "dateOfBirth": "1997-04-21",
       "goals": 4,
       "assists": 1,
-      "playedMatches": 6
+      "playedMatches": 7
     },
     {
       "playerName": "Deniz Undav",
