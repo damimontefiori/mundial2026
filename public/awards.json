@@ -1,23 +1,23 @@
 {
-  "updatedAt": "2026-07-15T20:21:41.595Z",
+  "updatedAt": "2026-07-15T20:51:35.331Z",
   "source": "football-data.org",
   "scorers": [
-    {
-      "playerName": "Kylian Mbappé",
-      "teamId": "FRA",
-      "teamName": "France",
-      "nationality": "France",
-      "dateOfBirth": "1998-12-20",
-      "goals": 8,
-      "assists": 2,
-      "playedMatches": 7
-    },
     {
       "playerName": "Lionel Messi",
       "teamId": "ARG",
       "teamName": "Argentina",
       "nationality": "Argentina",
       "dateOfBirth": "1987-06-24",
+      "goals": 8,
+      "assists": 3,
+      "playedMatches": 7
+    },
+    {
+      "playerName": "Kylian Mbappé",
+      "teamId": "FRA",
+      "teamName": "France",
+      "nationality": "France",
+      "dateOfBirth": "1998-12-20",
       "goals": 8,
       "assists": 2,
       "playedMatches": 7
