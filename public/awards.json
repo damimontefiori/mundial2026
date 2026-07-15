@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-15T20:51:35.331Z",
+  "updatedAt": "2026-07-15T20:58:52.263Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -153,6 +153,16 @@
       "playedMatches": 6
     },
     {
+      "playerName": "Lautaro Martínez",
+      "teamId": "ARG",
+      "teamName": "Argentina",
+      "nationality": "Argentina",
+      "dateOfBirth": "1997-08-22",
+      "goals": 3,
+      "assists": 1,
+      "playedMatches": 7
+    },
+    {
       "playerName": "Elijah Just",
       "teamId": "NZL",
       "teamName": "New Zealand",
@@ -271,16 +281,6 @@
       "goals": 2,
       "assists": 2,
       "playedMatches": 6
-    },
-    {
-      "playerName": "Amad Diallo",
-      "teamId": "CIV",
-      "teamName": "Ivory Coast",
-      "nationality": "Ivory Coast",
-      "dateOfBirth": "2002-07-11",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 3
     },
     {
       "playerName": "Daichi Kamada",
