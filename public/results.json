@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-18T22:14:47.277Z",
+  "updatedAt": "2026-07-18T22:18:48.179Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -1023,7 +1023,7 @@
       "secondHalfStartedAt": "2026-07-15T20:11:38.605Z"
     },
     "M103": {
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 4,
       "status": "IN_PLAY",
       "winnerCode": "ENG",

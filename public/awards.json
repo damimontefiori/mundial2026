@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-18T22:14:52.222Z",
+  "updatedAt": "2026-07-18T22:18:49.301Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -9,7 +9,7 @@
       "nationality": "France",
       "dateOfBirth": "1998-12-20",
       "goals": 9,
-      "assists": 3,
+      "assists": 4,
       "playedMatches": 8
     },
     {
@@ -163,6 +163,16 @@
       "playedMatches": 7
     },
     {
+      "playerName": "Bradley Barcola",
+      "teamId": "FRA",
+      "teamName": "France",
+      "nationality": "France",
+      "dateOfBirth": "2002-09-02",
+      "goals": 3,
+      "assists": 1,
+      "playedMatches": 8
+    },
+    {
       "playerName": "Elijah Just",
       "teamId": "NZL",
       "teamName": "New Zealand",
@@ -281,16 +291,6 @@
       "goals": 2,
       "assists": 2,
       "playedMatches": 6
-    },
-    {
-      "playerName": "Daichi Kamada",
-      "teamId": "JPN",
-      "teamName": "Japan",
-      "nationality": "Japan",
-      "dateOfBirth": "1996-08-05",
-      "goals": 2,
-      "assists": null,
-      "playedMatches": 4
     },
     {
       "playerName": "Cyle Larin",
