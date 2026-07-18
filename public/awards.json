@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-15T21:11:32.936Z",
+  "updatedAt": "2026-07-18T21:06:51.237Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -19,8 +19,8 @@
       "nationality": "France",
       "dateOfBirth": "1998-12-20",
       "goals": 8,
-      "assists": 2,
-      "playedMatches": 7
+      "assists": 3,
+      "playedMatches": 8
     },
     {
       "playerName": "Erling Haaland",
@@ -40,7 +40,7 @@
       "dateOfBirth": "1993-07-28",
       "goals": 6,
       "assists": 1,
-      "playedMatches": 7
+      "playedMatches": 8
     },
     {
       "playerName": "Jude Bellingham",
@@ -50,7 +50,7 @@
       "dateOfBirth": "2003-06-29",
       "goals": 6,
       "assists": 1,
-      "playedMatches": 7
+      "playedMatches": 8
     },
     {
       "playerName": "Ousmane Dembélé",
@@ -60,7 +60,7 @@
       "dateOfBirth": "1997-05-15",
       "goals": 5,
       "assists": 2,
-      "playedMatches": 7
+      "playedMatches": 8
     },
     {
       "playerName": "Mikel Oyarzabal",
