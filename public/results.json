@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-18T23:06:50.300Z",
+  "updatedAt": "2026-07-18T23:08:43.474Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -1025,7 +1025,7 @@
     "M103": {
       "homeGoals": 4,
       "awayGoals": 6,
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "winnerCode": "ENG",
       "halfTime": {
         "homeGoals": 0,
