@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-19T22:08:47.105Z",
+  "updatedAt": "2026-07-19T22:12:51.471Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -1038,7 +1038,6 @@
       "awayGoals": 0,
       "status": "FINISHED",
       "winnerCode": "ESP",
-      "duration": "EXTRA_TIME",
       "halfTime": {
         "homeGoals": 0,
         "awayGoals": 0
