@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-18T23:08:43.673Z",
+  "updatedAt": "2026-07-19T19:06:51.893Z",
   "source": "football-data.org",
   "scorers": [
     {
@@ -20,7 +20,7 @@
       "dateOfBirth": "1987-06-24",
       "goals": 8,
       "assists": 4,
-      "playedMatches": 7
+      "playedMatches": 8
     },
     {
       "playerName": "Jude Bellingham",
@@ -70,7 +70,7 @@
       "dateOfBirth": "1997-04-21",
       "goals": 5,
       "assists": 1,
-      "playedMatches": 7
+      "playedMatches": 8
     },
     {
       "playerName": "Ismaïla Sarr",
@@ -163,21 +163,21 @@
       "playedMatches": 6
     },
     {
-      "playerName": "Lautaro Martínez",
-      "teamId": "ARG",
-      "teamName": "Argentina",
-      "nationality": "Argentina",
-      "dateOfBirth": "1997-08-22",
-      "goals": 3,
-      "assists": 1,
-      "playedMatches": 7
-    },
-    {
       "playerName": "Bradley Barcola",
       "teamId": "FRA",
       "teamName": "France",
       "nationality": "France",
       "dateOfBirth": "2002-09-02",
+      "goals": 3,
+      "assists": 1,
+      "playedMatches": 8
+    },
+    {
+      "playerName": "Lautaro Martínez",
+      "teamId": "ARG",
+      "teamName": "Argentina",
+      "nationality": "Argentina",
+      "dateOfBirth": "1997-08-22",
       "goals": 3,
       "assists": 1,
       "playedMatches": 8
