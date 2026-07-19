@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-19T20:01:29.013Z",
+  "updatedAt": "2026-07-19T20:28:45.286Z",
   "source": "football-data.org",
   "results": {
     "M1": {
@@ -1036,11 +1036,12 @@
     "M104": {
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "PAUSED",
+      "status": "IN_PLAY",
       "halfTime": {
         "homeGoals": 0,
         "awayGoals": 0
-      }
+      },
+      "secondHalfStartedAt": "2026-07-19T20:28:45.286Z"
     }
   }
 }
